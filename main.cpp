@@ -40,4 +40,13 @@ int main(int argc, char *argv[])
 
         db.close();
     }
+
+   // --- Dodanie obsługi formularzy --- //
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+  // --- Pierwszy główny -------------- //
 }

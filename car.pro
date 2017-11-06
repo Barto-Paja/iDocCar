@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += sql
+QT       += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,6 +15,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    r_costs.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    r_costs.h
+
+FORMS += \
+    ui_mainwindow.ui \
+    r_costs.ui
