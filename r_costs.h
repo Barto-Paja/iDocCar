@@ -10,6 +10,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QAreaSeries>
+#include <QtCharts/QCategoryAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -25,6 +26,9 @@ class r_Costs : public QMainWindow
 public:
     explicit r_Costs(QWidget *parent = 0);
     ~r_Costs();
+
+private slots:
+
 
 private:
     Ui::r_Costs *ui;

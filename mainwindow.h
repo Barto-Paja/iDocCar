@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include <r_costs.h>
+#include <sql.h>
+
 namespace Ui {
 class MainWindow;
 }

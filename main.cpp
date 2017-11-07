@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     SQL p;
     p.test();
-    return 1;
+    //return 1;
   
      // --- Dodanie obsługi formularzy --- //
 

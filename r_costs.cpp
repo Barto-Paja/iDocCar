@@ -10,14 +10,36 @@ r_Costs::r_Costs(QWidget *parent) :
     ui->setupUi(this);
 
     QLineSeries *series0 = new QLineSeries();
-       QLineSeries *series1 = new QLineSeries();
+    QLineSeries *series1 = new QLineSeries();
 
-       series0->append(0,1);
-       series0->append(1,1);
-       series0->append(2,3);
-       series0->append(3,7);
-       series0->append(5,4);
-       series0->append(7,1);
+       series0->append(0,5.7);
+       series0->append(1,5.2);
+       series0->append(2,5.0);
+       series0->append(3,4.5);
+       series0->append(4,4.7);
+       series0->append(6,4.3);
+       series0->append(7,5.0);
+       series0->append(8,4.6);
+       series0->append(9,4.9);
+       series0->append(10,5.1);
+       series0->append(11,5.2);
+       series0->append(12,6.3);
+
+    QCategoryAxis *axisX = new QCategoryAxis();
+
+    axisX->append("Styczeń", 1);
+    axisX->append("Luty", 2);
+    axisX->append("Marzec", 3);
+    axisX->append("Kwiecień",4);
+    axisX->append("Maj",5);
+    axisX->append("Czerwiec",6);
+    axisX->append("Lipiec",7);
+    axisX->append("Sierpień",8);
+    axisX->append("Wrzesień",9);
+    axisX->append("Październik",10);
+    axisX->append("Listopad",11);
+    axisX->append("Grudzień",12);
+    axisX->setRange(0, 12);
 
                /*<< QPointF(1, 5) << QPointF(2, 1) << QPointF(4, 3) << QPointF(6, 5) << QPointF(8, 5);*/
 //       *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
@@ -40,20 +62,17 @@ r_Costs::r_Costs(QWidget *parent) :
 
        QChart *chart = new QChart();
        chart->addSeries(series0);
-       chart->setTitle("Simple areachart example");
+       chart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca");
        chart->createDefaultAxes();
-       chart->axisX()->setRange(0, 20);
-       chart->axisY()->setRange(0, 10);
+       chart->setAxisX(axisX,series0);
+       chart->axisX()->setRange(0, 12);
+       chart->axisY()->setRange(0, 7);
 
        QChartView *chartView = new QChartView(chart, ui->widget);
        chartView->setRenderHint(QPainter::Antialiasing);
        ui->widget->resize((this->width()-5),(this->height()-5));
        chartView->resize((this->width()-10),(this->height()-10));
 
-
-
-
-//       ui->widget->s
 }
 
 r_Costs::~r_Costs()
