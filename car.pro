@@ -16,9 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    r_costs.cpp
+        sql.cpp \
+        r_costs.h
 
 HEADERS  += mainwindow.h \
+    sql.h \
     r_costs.h
 
 FORMS += \

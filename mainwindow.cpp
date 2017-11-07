@@ -1,4 +1,3 @@
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <r_costs.h>
