@@ -14,6 +14,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    sql.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    sql.h
