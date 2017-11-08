@@ -6,17 +6,22 @@
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
-SQL::SQL()
+int USR=1;
+
+SQL::SQL(QString dbHost, QString dbName, QString dbUser, QString dbPass)
 {
-    db.setHostName("localhost");
-    db.setDatabaseName("idoccar");
-    db.setUserName("root");
-    db.setPassword("");
+    db.setHostName(dbHost);
+    db.setDatabaseName(dbName);
+    db.setUserName(dbUser);
+    db.setPassword(dbPass);
 
     if(!db.open())
-        qDebug() << "Nieudane polaczenie z baza danych";
-    else
-        qDebug() << "Połączono z baza danych";
+        qDebug() << "Nieudane połączenie z bazą danych";
+}
+
+SQL::~SQL()
+{
+    db.close();
 }
 
 void SQL::test()
@@ -40,9 +45,104 @@ void SQL::test()
 
             qDebug() << a << b << c << d << e << f;
         }
+
+//        QSqlQuery laczenie;
+//        laczenie.prepare("SELECT * FROM cars WHERE VIN = :vin");
+//        laczenie.bindValue(0,VIN);
+//        laczenie.exec();
+
+//        if(laczenie.exec())
+//        {
+//            if(laczenie.first())
+//            {
+//                CARID = laczenie.value(0).toInt();
+//            }
+//        }else
+//        {
+//             qDebug() << "Błąd pobrania ID pojazdu";
+//        }
+
+//        QSqlQuery polacz;
+//        polacz.prepare("INSERT INTO connect (`USER`, `CAR`) "
+//                        "VALUES (:USER,:CARID)");
+//        polacz.bindValue(0,USR);
+//        polacz.bindValue(1,CARID);
+
+//        if(!polacz.exec())
+//             qDebug() << "Błąd przypisania pojazdu do konta";
+
+
+
 }
 
-SQL::~SQL()
+void SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
 {
-    db.close();
+    QSqlQuery insert;
+    insert.prepare("INSERT INTO cars (`MARK`, `MODEL`, `PLATE`, `VIN`, `YEAR`, `INSURANCE`, `TANKS`, `TANK1`, `TANK2`, `MILAGE`, `USER`) "
+                    "VALUES (:MARK,:MODEL,:PLATE,:VIN,:YEAR,:INSURANCE,:TANKS,:TANK1,:TANK2,:MILAGE,:USER)");
+    insert.bindValue(0,MARK);
+    insert.bindValue(1,MODEL);
+    insert.bindValue(2,PLATE);
+    insert.bindValue(3,VIN);
+    insert.bindValue(4,YEAR);
+    insert.bindValue(5,INSURANCE);
+    insert.bindValue(6,TANKS);
+    insert.bindValue(7,TANK1);
+    insert.bindValue(8,TANK2);
+    insert.bindValue(9,MILAGE);
+    insert.bindValue(10,USR);
+
+    if(!insert.exec())
+         qDebug() << "Błąd dodania pojazdu";
+}
+
+void SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL)
+{
+    QSqlQuery insert;
+    insert.prepare("INSERT INTO users (`FIRST_NAME`, `LAST_NAME`, `LOGIN`, `PASS`, `EMAIL`) "
+                    "VALUES (:FNAME,:LNAME,:LOGIN,:PASS,:EMAIL)");
+    insert.bindValue(0,FNAME);
+    insert.bindValue(1,LNAME);
+    insert.bindValue(2,LOGIN);
+    insert.bindValue(3,PASS);
+    insert.bindValue(4,EMAIL);
+
+    if(!insert.exec())
+         qDebug() << "Błąd dodania użytkownika";
+}
+
+void SQL::insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int MILAGE, float COST, int CARID)
+{
+    QSqlQuery insert;
+    insert.prepare("INSERT INTO costs (`TITLE`, `DATE`, `TYPE`, `NOTES`, `MILAGE`, `COST`, `CARID`) "
+                    "VALUES (:TITLE,:DATE,:TYPE,:NOTES,:MILAGE,:COST,:CARID)");
+    insert.bindValue(0,TITLE);
+    insert.bindValue(1,DATE);
+    insert.bindValue(2,TYPE);
+    insert.bindValue(3,NOTES);
+    insert.bindValue(4,MILAGE);
+    insert.bindValue(5,COST);
+    insert.bindValue(6,CARID);
+
+
+    if(!insert.exec())
+         qDebug() << "Błąd dodania kosztu";
+}
+
+void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float COMBUSTION, int TANK, QString NOTES, int CARID)
+{
+    QSqlQuery insert;
+    insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                   "VALUES (:DATE,:FUEL,:PRICE,:MILAGE,:COMBUSTION,:TANK,:NOTES,:CARID)");
+    insert.bindValue(0,DATE);
+    insert.bindValue(1,FUEL);
+    insert.bindValue(2,PRICE);
+    insert.bindValue(3,MILAGE);
+    insert.bindValue(4,COMBUSTION);
+    insert.bindValue(5,TANK);
+    insert.bindValue(6,NOTES);
+    insert.bindValue(7,CARID);
+
+    if(!insert.exec())
+         qDebug() << "Błąd dodania tankowania";
 }
