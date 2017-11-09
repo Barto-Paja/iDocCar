@@ -1,6 +1,7 @@
 #ifndef SQL_H
 #define SQL_H
-
+#include <QSqlQuery>
+#include <QString>
 
 class SQL
 {
@@ -12,6 +13,9 @@ public:
     void insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL);
     void insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int MILAGE, float COST, int CARID);
     void insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float COMBUSTION, int TANK, QString NOTES, int CARID);
+    QString select_user(int col, int id);
+    QSqlQuery list_cost_types();
+    QSqlQuery list_cars(int id_user);
 };
 
 #endif // SQL_H

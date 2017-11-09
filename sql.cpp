@@ -45,34 +45,6 @@ void SQL::test()
 
             qDebug() << a << b << c << d << e << f;
         }
-
-//        QSqlQuery laczenie;
-//        laczenie.prepare("SELECT * FROM cars WHERE VIN = :vin");
-//        laczenie.bindValue(0,VIN);
-//        laczenie.exec();
-
-//        if(laczenie.exec())
-//        {
-//            if(laczenie.first())
-//            {
-//                CARID = laczenie.value(0).toInt();
-//            }
-//        }else
-//        {
-//             qDebug() << "Błąd pobrania ID pojazdu";
-//        }
-
-//        QSqlQuery polacz;
-//        polacz.prepare("INSERT INTO connect (`USER`, `CAR`) "
-//                        "VALUES (:USER,:CARID)");
-//        polacz.bindValue(0,USR);
-//        polacz.bindValue(1,CARID);
-
-//        if(!polacz.exec())
-//             qDebug() << "Błąd przypisania pojazdu do konta";
-
-
-
 }
 
 void SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
@@ -145,4 +117,36 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
 
     if(!insert.exec())
          qDebug() << "Błąd dodania tankowania";
+}
+//wyciąganie danych usera po kolumnie
+QString SQL::select_user(int col, int id)
+{
+    QSqlQuery pobieranie;
+    pobieranie.prepare("SELECT * from users where ID = 1");
+    pobieranie.bindValue(0,id);
+    pobieranie.exec();
+
+    if(pobieranie.first())
+    {
+        QString result = pobieranie.value(col).toString();
+        return result;
+    }else
+        return "Błąd";
+
+}
+//wyciaganie typów kosztów
+QSqlQuery SQL::list_cost_types()
+{
+    QSqlQuery select;
+    select.exec("SELECT * FROM costtypes");
+    return select;
+}
+//wyciąganie samochodów
+QSqlQuery SQL::list_cars(int id_user)
+{
+    QSqlQuery select;
+    select.prepare("SELECT * FROM cars WHERE USER = :id");
+    select.bindValue(0,id_user);
+    select.exec();
+    return select;
 }
