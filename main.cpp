@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 //    p.insert_fuel("2015-01-01",29.59,59.62,25000,7.1,1,"Notka tankowania",1);
 //    QString test = p.select_user(3,1);
 //    p.tables(3);
-
-    QSqlQuery pobieranie = p.rekord();
+    QSqlQuery pobieranie;
+    pobieranie = p.list_cars(1);
             while(pobieranie.next())
             {
                 QString a = pobieranie.value(0).toString();
@@ -26,6 +26,15 @@ int main(int argc, char *argv[])
 
                 qDebug() << a << b << c << d << e << f;
             }
+
+    pobieranie = p.list_cost_types();
+    while(pobieranie.next())
+    {
+        int ID = pobieranie.value(0).toInt();
+        QString name = pobieranie.value(1).toString();
+
+        qDebug() << ID << name;
+    }
     return 1;
 
 }

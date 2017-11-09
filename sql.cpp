@@ -118,7 +118,7 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
     if(!insert.exec())
          qDebug() << "Błąd dodania tankowania";
 }
-
+//wyciąganie danych usera po kolumnie
 QString SQL::select_user(int col, int id)
 {
     QSqlQuery pobieranie;
@@ -134,25 +134,19 @@ QString SQL::select_user(int col, int id)
         return "Błąd";
 
 }
-
-//void SQL::tables(int col)
-//{
-//    QSqlQuery pobieranie;
-//    QString quer;
-//    pobieranie.exec("SELECT * from users");
-//    QStringList test;
-//    while(pobieranie.next()){
-//        quer=pobieranie.value(col).toString();
-//        test.join(quer);
-//    }
-//    for(int i=0;i<test.size();i++)
-//        qDebug() << tables.at(i);
-//}
-QSqlQuery SQL::rekord()
+//wyciaganie typów kosztów
+QSqlQuery SQL::list_cost_types()
 {
-    QSqlQuery pobieranie;
-    if(!pobieranie.exec("SELECT * FROM users"))
-        qDebug() << "Brak rekordów w tabeli Users";
-    else
-        return pobieranie;
+    QSqlQuery select;
+    select.exec("SELECT * FROM costtypes");
+    return select;
+}
+//wyciąganie samochodów
+QSqlQuery SQL::list_cars(int id_user)
+{
+    QSqlQuery select;
+    select.prepare("SELECT * FROM cars WHERE USER = :id");
+    select.bindValue(0,id_user);
+    select.exec();
+    return select;
 }

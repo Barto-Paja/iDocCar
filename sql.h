@@ -14,8 +14,8 @@ public:
     void insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int MILAGE, float COST, int CARID);
     void insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float COMBUSTION, int TANK, QString NOTES, int CARID);
     QString select_user(int col, int id);
-//    void tables(int col);
-    QSqlQuery rekord();
+    QSqlQuery list_cost_types();
+    QSqlQuery list_cars(int id_user);
 };
 
 #endif // SQL_H
