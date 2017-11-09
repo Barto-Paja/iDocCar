@@ -27,6 +27,14 @@ public:
     explicit r_Costs(QWidget *parent = 0);
     ~r_Costs();
 
+private:
+    QCategoryAxis *axisX;
+    QCategoryAxis *axisY;
+    QCategoryAxis *axisZ;
+
+    QChart *mainChart;
+    QChartView *chartView;
+
 private slots:
 
 

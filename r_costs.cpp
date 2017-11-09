@@ -25,7 +25,7 @@ r_Costs::r_Costs(QWidget *parent) :
        series0->append(11,5.2);
        series0->append(12,6.3);
 
-    QCategoryAxis *axisX = new QCategoryAxis();
+    axisX = new QCategoryAxis();
 
     axisX->append("Styczeń", 1);
     axisX->append("Luty", 2);
@@ -45,11 +45,11 @@ r_Costs::r_Costs(QWidget *parent) :
 //       *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
 //                << QPointF(16, 4) << QPointF(18, 3);
 
+
        QAreaSeries *series = new QAreaSeries(series0/*, series1*/);
        series->setName("Batman");
        series->setBrush(Qt::NoBrush);
        QPen pen(0x059605);
-       //0x059605
        pen.setWidth(3);
        qDebug() << pen.isSolid();
        series->setPen(pen);
@@ -60,18 +60,18 @@ r_Costs::r_Costs(QWidget *parent) :
 //       gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 //       series->setBrush(gradient);
 
-       QChart *chart = new QChart();
-       chart->addSeries(series0);
-       chart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca");
-       chart->createDefaultAxes();
-       chart->setAxisX(axisX,series0);
-       chart->axisX()->setRange(0, 12);
-       chart->axisY()->setRange(0, 7);
+       mainChart = new QChart();
+       mainChart->addSeries(series0);
+       mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca");
+       mainChart->createDefaultAxes();
+       mainChart->setAxisX(axisX,series0);
+       mainChart->axisX()->setRange(0, 12);
+       mainChart->axisY()->setRange(0, 7);
 
-       QChartView *chartView = new QChartView(chart, ui->widget);
+       chartView = new QChartView(mainChart, ui->widget);
        chartView->setRenderHint(QPainter::Antialiasing);
-       ui->widget->resize((this->width()-5),(this->height()-5));
-       chartView->resize((this->width()-10),(this->height()-10));
+//       ui->widget->resize((this->width()-5),(this->height()-5));
+       chartView->resize((ui->widget->width()-10),(ui->widget->height()-10));
 
 }
 
