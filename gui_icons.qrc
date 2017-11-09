@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/main_ui">
+        <file>images/car-insurance.png</file>
+    </qresource>
+</RCC>
