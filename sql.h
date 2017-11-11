@@ -16,6 +16,7 @@ public:
     QString select_user(int col, int id);
     QSqlQuery list_cost_types();
     QSqlQuery list_cars(int id_user);
+    QSqlQuery list_costs(int carID, QString date_start, QString date_end);
 };
 
 #endif // SQL_H

@@ -150,3 +150,14 @@ QSqlQuery SQL::list_cars(int id_user)
     select.exec();
     return select;
 }
+// wyciąganie kosztów
+QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
+{
+    QSqlQuery select;
+    select.prepare("SELECT * FROM costs WHERE DATE BETWEEN :date_s AND :date_e AND CARID = :id");
+    select.bindValue(0,date_start);
+    select.bindValue(1,date_end);
+    select.bindValue(2,carID);
+    select.exec();
+    return select;
+}
