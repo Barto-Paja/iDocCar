@@ -5,6 +5,7 @@
 
 #include <r_costs.h>
 #include <sql.h>
+#include <mainmenugui.h>
 
 namespace Ui {
 class MainWindow;
@@ -20,10 +21,12 @@ public:
     ~MainWindow();
 
 private slots:
-
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;
+
+    SQL *connector;
 };
 
 #endif // MAINWINDOW_H

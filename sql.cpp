@@ -17,6 +17,8 @@ SQL::SQL(QString dbHost, QString dbName, QString dbUser, QString dbPass)
 
     if(!db.open())
         qDebug() << "Nieudane połączenie z bazą danych";
+
+    query = new QSqlQuery;
 }
 
 SQL::~SQL()
@@ -149,4 +151,28 @@ QSqlQuery SQL::list_cars(int id_user)
     select.bindValue(0,id_user);
     select.exec();
     return select;
+}
+
+bool SQL::isOpen()
+{
+    if(db.isOpen())
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+bool SQL::isUser(QString login, QString password)
+{
+    query->prepare("SELECT * FROM users WHERE LOGIN = :login AND PASS = :password");
+    query->bindValue(0,login);
+    query->bindValue(1,password);
+    query->exec();
+    if(query->next())
+    {
+        return true;
+    }
+    else
+        return false;
 }

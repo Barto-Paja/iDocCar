@@ -16,6 +16,13 @@ public:
     QString select_user(int col, int id);
     QSqlQuery list_cost_types();
     QSqlQuery list_cars(int id_user);
+
+    bool isOpen();
+    bool isUser(QString login, QString password);
+
+private:
+
+    QSqlQuery *query;
 };
 
 #endif // SQL_H

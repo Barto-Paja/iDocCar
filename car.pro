@@ -17,15 +17,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
         sql.cpp \
-        r_costs.cpp
+        r_costs.cpp \
+    mainmenugui.cpp \
+    newcar.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
-    r_costs.h
+    r_costs.h \
+    mainmenugui.h \
+    newcar.h
 
 FORMS += \
     r_costs.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    mainmenugui.ui \
+    newcar.ui
 
 RESOURCES += \
     gui_icons.qrc
