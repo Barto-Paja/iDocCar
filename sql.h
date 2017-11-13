@@ -23,6 +23,7 @@ public:
 private:
 
     QSqlQuery *query;
+    QSqlQuery list_costs(int carID, QString date_start, QString date_end);
 };
 
 #endif // SQL_H
