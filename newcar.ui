@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Nowy samochód</string>
   </property>
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
@@ -19,19 +19,19 @@
      <x>20</x>
      <y>170</y>
      <width>271</width>
-     <height>41</height>
+     <height>48</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="l_insurance">
       <property name="text">
        <string>Ważność OC/AC</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QDateEdit" name="de_insurance"/>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="lineEdit"/>
     </item>
    </layout>
   </widget>

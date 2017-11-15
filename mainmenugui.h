@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <newcar.h>
+#include <sql.h>
 
 namespace Ui {
 class MainMenuGUI;
@@ -21,6 +22,8 @@ private slots:
 
 private:
     Ui::MainMenuGUI *ui;
+
+    SQL *connector;
 };
 
 #endif // MAINMENUGUI_H

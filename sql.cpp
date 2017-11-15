@@ -1,10 +1,9 @@
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QString>
 #include "sql.h"
 
+
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+
+int SQL::userId = -1;
 
 int USR=1;
 
@@ -49,7 +48,7 @@ void SQL::test()
         }
 }
 
-void SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
+bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
 {
     QSqlQuery insert;
     insert.prepare("INSERT INTO cars (`MARK`, `MODEL`, `PLATE`, `VIN`, `YEAR`, `INSURANCE`, `TANKS`, `TANK1`, `TANK2`, `MILAGE`, `USER`) "
@@ -64,10 +63,20 @@ void SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
     insert.bindValue(7,TANK1);
     insert.bindValue(8,TANK2);
     insert.bindValue(9,MILAGE);
-    insert.bindValue(10,USR);
+    insert.bindValue(10,userId);
+    insert.exec();
 
-    if(!insert.exec())
-         qDebug() << "Błąd dodania pojazdu";
+    qDebug() << insert.lastQuery();
+    qDebug() << insert.lastError().text();
+
+//    if(!insert.exec()){
+//        qDebug() << "Błąd dodania pojazdu";
+
+//        return false;
+//    }
+//    else
+//        return true;
+
 }
 
 void SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL)
@@ -172,10 +181,25 @@ bool SQL::isUser(QString login, QString password)
     query->exec();
     if(query->next())
     {
+        query->prepare("SELECT users.id FROM users WHERE LOGIN =:login");
+        query->bindValue(0,login);
+        query->exec();
+        query->first();
+        userId = query->value(0).toInt();
         return true;
     }
     else
         return false;
+}
+
+QString SQL::welcomeFunc()
+{
+    qDebug() << userId;
+    query->prepare("SELECT CONCAT(first_name,' ',last_name) from users where users.id = :id");
+    query->bindValue(0,userId);
+    query->exec();
+    query->first();
+    return query->value(0).toString();
 }
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)

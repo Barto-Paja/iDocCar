@@ -2,6 +2,8 @@
 #define NEWCAR_H
 
 #include <QDialog>
+#include <QMessageBox>
+#include <sql.h>
 
 namespace Ui {
 class newCar;
@@ -26,6 +28,9 @@ private slots:
 
 private:
     Ui::newCar *ui;
+
+    bool formularCheck();
+    SQL *connector;
 };
 
 #endif // NEWCAR_H
