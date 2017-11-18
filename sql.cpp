@@ -116,7 +116,7 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
 {
     QSqlQuery insert;
     insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
-                   "VALUES (:DATE,:FUEL,:PRICE,:MILAGE,:COMBUSTION,:TANK,:NOTES,:CARID)");
+                   "VALUES (:DATE,:FUEL,:PRICE,:MILAGE,:COMBUSTION,:TANK,:NOTES,:CARID,:USERID)");
     insert.bindValue(0,DATE);
     insert.bindValue(1,FUEL);
     insert.bindValue(2,PRICE);
@@ -125,6 +125,7 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
     insert.bindValue(5,TANK);
     insert.bindValue(6,NOTES);
     insert.bindValue(7,CARID);
+    insert.bindValue(8,userId);
 
     if(!insert.exec())
          qDebug() << "Błąd dodania tankowania";
@@ -192,6 +193,20 @@ bool SQL::isUser(QString login, QString password)
         return false;
 }
 
+bool SQL::getCarName(QString &stream)
+{
+
+    if(query->next())
+    {
+        QString result = query->value(0).toString() + " " + query->value(1).toString();
+        stream = result;
+        qDebug() << stream;
+        return true;
+    }
+    else
+        return false;
+}
+
 QString SQL::welcomeFunc()
 {
     qDebug() << userId;
@@ -211,4 +226,11 @@ QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
     select.bindValue(2,carID);
     select.exec();
     return select;
+}
+
+void SQL::CarName()
+{
+    query->prepare("SELECT mark, model FROM cars WHERE user = :userid");
+    query->bindValue(0,userId);
+    query->exec();
 }

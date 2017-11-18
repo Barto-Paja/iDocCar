@@ -2,7 +2,10 @@
 #define MAINMENUGUI_H
 
 #include <QMainWindow>
+
 #include <newcar.h>
+#include <newtank.h>
+
 #include <sql.h>
 
 namespace Ui {
@@ -19,6 +22,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::MainMenuGUI *ui;

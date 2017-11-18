@@ -21,3 +21,9 @@ void MainMenuGUI::on_pushButton_clicked()
     newCar *form = new newCar;
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_2_clicked()
+{
+    newTank *form = new newTank;
+    form->show();
+}

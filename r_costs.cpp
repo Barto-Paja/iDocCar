@@ -25,6 +25,19 @@ r_Costs::r_Costs(QWidget *parent) :
        series0->append(11,5.2);
        series0->append(12,6.3);
 
+       series1->append(0,12.7);
+       series1->append(1,11.2);
+       series1->append(2,10.0);
+       series1->append(3,9.5);
+       series1->append(4,14.7);
+       series1->append(6,13.3);
+       series1->append(7,10.0);
+       series1->append(8,12.6);
+       series1->append(9,11.9);
+       series1->append(10,10.1);
+       series1->append(11,16.2);
+       series1->append(12,17.3);
+
     axisX = new QCategoryAxis();
 
     axisX->append("Styczeń", 1);
@@ -41,12 +54,15 @@ r_Costs::r_Costs(QWidget *parent) :
     axisX->append("Grudzień",12);
     axisX->setRange(0, 12);
 
+    series0->setName("Renault Laguna II");
+    series1->setName("CAT 352F 2017");
+
                /*<< QPointF(1, 5) << QPointF(2, 1) << QPointF(4, 3) << QPointF(6, 5) << QPointF(8, 5);*/
 //       *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
 //                << QPointF(16, 4) << QPointF(18, 3);
 
 
-       QAreaSeries *series = new QAreaSeries(series0/*, series1*/);
+       QAreaSeries *series = new QAreaSeries(series0, series1);
        series->setName("Batman");
        series->setBrush(Qt::NoBrush);
        QPen pen(0x059605);
@@ -62,16 +78,40 @@ r_Costs::r_Costs(QWidget *parent) :
 
        mainChart = new QChart();
        mainChart->addSeries(series0);
-       mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca");
+       mainChart->addSeries(series1);
+//       if(true)
+//       {
+//           mainChart->addSeries(series1);
+//       }
+//       else
+//       {
+//           mainChart->addSeries(series0);
+//       }
+
+       mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca zestawienie roczne");
        mainChart->createDefaultAxes();
        mainChart->setAxisX(axisX,series0);
+       mainChart->setAxisX(axisX,series1);
+//       if(true)
+//       {
+//           mainChart->setAxisX(axisX,series1);
+//       }
+//       else
+//       {
+//           mainChart->setAxisX(axisX,series0);
+//       }
+
        mainChart->axisX()->setRange(0, 12);
-       mainChart->axisY()->setRange(0, 7);
+       mainChart->axisY()->setRange(0, 20);
+
+       mainChart->legend()->setVisible(true);
+
 
        chartView = new QChartView(mainChart, ui->widget);
        chartView->setRenderHint(QPainter::Antialiasing);
 //       ui->widget->resize((this->width()-5),(this->height()-5));
        chartView->resize((ui->widget->width()-10),(ui->widget->height()-10));
+
 
 }
 

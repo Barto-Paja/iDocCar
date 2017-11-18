@@ -24,12 +24,16 @@ public:
     bool isOpen();
     bool isUser(QString login, QString password);
 
+    void CarName();
+    bool getCarName(QString &stream);
     QString welcomeFunc();
 
 private:
 
     QSqlQuery *query;
     QSqlQuery list_costs(int carID, QString date_start, QString date_end);
+
+
 
     static int userId;
 };
