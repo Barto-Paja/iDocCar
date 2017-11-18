@@ -50,6 +50,7 @@ void SQL::test()
 
 bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
 {
+    QDate date(QDate::currentDate());
     QSqlQuery insert;
     insert.prepare("INSERT INTO cars (`MARK`, `MODEL`, `PLATE`, `VIN`, `YEAR`, `INSURANCE`, `TANKS`, `TANK1`, `TANK2`, `MILAGE`, `USER`) "
                     "VALUES (:MARK,:MODEL,:PLATE,:VIN,:YEAR,:INSURANCE,:TANKS,:TANK1,:TANK2,:MILAGE,:USER)");
@@ -68,6 +69,31 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
 
     qDebug() << insert.lastQuery();
     qDebug() << insert.lastError().text();
+
+    insert.prepare("SELECT id from cars order by id DESC");
+    insert.exec();
+    insert.first();
+
+    qDebug() << insert.lastQuery();
+    qDebug() << insert.lastError().text();
+
+    int idcar = insert.value(0).toInt();
+
+    qDebug() << idcar;
+
+    qDebug() << date.toString("yyyy-MM-dd");
+    QString stream = date.toString("yyyy-MM-dd");
+
+    insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                   "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','Note',:CARID)");
+    insert.bindValue(0,stream);
+    insert.bindValue(1,MILAGE);
+    insert.bindValue(2,idcar);
+    insert.exec();
+
+    qDebug() << insert.lastQuery();
+    qDebug() << insert.lastError().text();
+
 
 //    if(!insert.exec()){
 //        qDebug() << "Błąd dodania pojazdu";
@@ -116,7 +142,7 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
 {
     QSqlQuery insert;
     insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
-                   "VALUES (:DATE,:FUEL,:PRICE,:MILAGE,:COMBUSTION,:TANK,:NOTES,:CARID,:USERID)");
+                   "VALUES (:DATE,:FUEL,:PRICE,:MILAGE,:COMBUSTION,:TANK,:NOTES,:CARID)");
     insert.bindValue(0,DATE);
     insert.bindValue(1,FUEL);
     insert.bindValue(2,PRICE);
@@ -125,10 +151,9 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
     insert.bindValue(5,TANK);
     insert.bindValue(6,NOTES);
     insert.bindValue(7,CARID);
-    insert.bindValue(8,userId);
 
     if(!insert.exec())
-         qDebug() << "Błąd dodania tankowania";
+         qDebug() << "Błąd dodania tankowania" << insert.lastError();
 }
 //wyciąganie danych usera po kolumnie
 QString SQL::select_user(int col, int id)
@@ -193,14 +218,16 @@ bool SQL::isUser(QString login, QString password)
         return false;
 }
 
-bool SQL::getCarName(QString &stream)
+bool SQL::getCarName(QString &stream, int &idcar)
 {
 
     if(query->next())
     {
-        QString result = query->value(0).toString() + " " + query->value(1).toString();
+        QString result = query->value(1).toString() + " " + query->value(2).toString();
         stream = result;
         qDebug() << stream;
+        idcar = query->value(0).toInt();
+        qDebug() << idcar;
         return true;
     }
     else
@@ -216,6 +243,15 @@ QString SQL::welcomeFunc()
     query->first();
     return query->value(0).toString();
 }
+
+int SQL::lastMilage(int idcar)
+{
+    query->prepare("SELECT milage FROM fuel where carid =:idcar ORDER BY date DESC");
+    query->bindValue(0,idcar);
+    query->exec();
+    query->first();
+    return query->value(0).toInt();
+}
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 {
@@ -230,7 +266,7 @@ QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 
 void SQL::CarName()
 {
-    query->prepare("SELECT mark, model FROM cars WHERE user = :userid");
+    query->prepare("SELECT id,mark, model FROM cars WHERE user = :userid");
     query->bindValue(0,userId);
     query->exec();
 }

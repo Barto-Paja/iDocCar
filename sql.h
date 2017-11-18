@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QString>
 #include <QSqlError>
+#include <QDate>
 
 class SQL
 {
@@ -25,8 +26,9 @@ public:
     bool isUser(QString login, QString password);
 
     void CarName();
-    bool getCarName(QString &stream);
+    bool getCarName(QString &stream, int &idcar);
     QString welcomeFunc();
+    int lastMilage(int idcar);
 
 private:
 
