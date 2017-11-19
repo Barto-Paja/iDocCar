@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent):
     form->show();
 
     //--- SQL Connector def ---//
-    connector = new SQL("localhost","idoccar","root","");
+    connector = new SQL();
 
     if(connector->isOpen())
     {
