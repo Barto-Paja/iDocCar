@@ -223,7 +223,7 @@ bool SQL::getCarName(QString &stream, int &idcar)
 
     if(query->next())
     {
-        QString result = query->value(1).toString() + " " + query->value(2).toString();
+        QString result = query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString();
         stream = result;
         qDebug() << stream;
         idcar = query->value(0).toInt();
@@ -252,6 +252,19 @@ int SQL::lastMilage(int idcar)
     query->first();
     return query->value(0).toInt();
 }
+
+void SQL::tankType(int tankid)
+{
+    //return query->value(4).toInt();
+
+    query->prepare("SELECT id,mark, model, plate, tanks FROM cars WHERE user = :userid AND tanks =:tank");
+    query->bindValue(0,userId);
+    query->bindValue(1,tankid);
+    query->exec();
+
+    qDebug() << query->lastQuery();
+    qDebug() << query->lastError().text();
+}
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 {
@@ -266,7 +279,7 @@ QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 
 void SQL::CarName()
 {
-    query->prepare("SELECT id,mark, model FROM cars WHERE user = :userid");
+    query->prepare("SELECT id,mark, model, plate, tanks FROM cars WHERE user = :userid");
     query->bindValue(0,userId);
     query->exec();
 }

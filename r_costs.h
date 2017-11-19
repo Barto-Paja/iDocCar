@@ -14,6 +14,7 @@
 
 QT_CHARTS_USE_NAMESPACE
 
+#include <sql.h>
 
 namespace Ui {
 class r_Costs;
@@ -38,8 +39,14 @@ private:
 private slots:
 
 
+    void on_chb_on_clicked();
+
 private:
     Ui::r_Costs *ui;
+
+    void loadComboBox(int tanktype);
+
+    SQL *connector;
 };
 
 #endif // R_COSTS_H

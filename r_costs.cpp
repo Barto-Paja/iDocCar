@@ -9,6 +9,11 @@ r_Costs::r_Costs(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connector = new SQL("localhost","idoccar","root","");
+    connector->test();
+
+//------------------------------------------
+
     QLineSeries *series0 = new QLineSeries();
     QLineSeries *series1 = new QLineSeries();
 
@@ -118,4 +123,32 @@ r_Costs::r_Costs(QWidget *parent) :
 r_Costs::~r_Costs()
 {
     delete ui;
+}
+
+void r_Costs::loadComboBox(int tanktype)
+{
+    ui->cb_carid->clear();
+    QString stream;
+    int i=0;
+
+    if(tanktype==0)
+    {
+        ui->cb_carid->clear();
+        connector->tankType(1);
+        //connector->CarName();
+        while (connector->getCarName(stream,i)) {
+        ui->cb_carid->addItem(stream,i);
+    }
+
+//    connector->CarName();
+//    while (connector->getCarName(stream,i)) {
+//        ui->cb_carid->addItem(stream,i);
+//      }
+        ui->cb_carid->update();
+}
+}
+
+void r_Costs::on_chb_on_clicked()
+{
+    loadComboBox(0);
 }

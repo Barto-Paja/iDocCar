@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent):
     else
         ui->l_message->setText("Błąd C-001 - Nie połączono z bazą danych");
 
+    //ui->pushButton_3->setVisible(false);
+
 }
 
 MainWindow::~MainWindow()

@@ -30,6 +30,10 @@ public:
     QString welcomeFunc();
     int lastMilage(int idcar);
 
+    //--- For Charts --- //
+    void tankType(int tankid);
+    //bool getCarName_C(QString &stream, int &idcar);
+
 private:
 
     QSqlQuery *query;
