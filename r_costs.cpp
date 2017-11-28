@@ -12,52 +12,21 @@ r_Costs::r_Costs(QWidget *parent) :
     connector = new SQL("localhost","idoccar","root","");
     connector->test();
 
-//------------------------------------------
+//    series = new QAreaSeries();
+    series0 = new QLineSeries();
+    series1 = new QLineSeries();
+    series2 = new QLineSeries();
+    series3 = new QLineSeries();
 
-    QLineSeries *series0 = new QLineSeries();
-    QLineSeries *series1 = new QLineSeries();
-
-       series0->append(0,5.7);
-       series0->append(1,5.2);
-       series0->append(2,5.0);
-       series0->append(3,4.5);
-       series0->append(4,4.7);
-       series0->append(6,4.3);
-       series0->append(7,5.0);
-       series0->append(8,4.6);
-       series0->append(9,4.9);
-       series0->append(10,5.1);
-       series0->append(11,5.2);
-       series0->append(12,6.3);
-
-       series1->append(0,12.7);
-       series1->append(1,11.2);
-       series1->append(2,10.0);
-       series1->append(3,9.5);
-       series1->append(4,14.7);
-       series1->append(6,13.3);
-       series1->append(7,10.0);
-       series1->append(8,12.6);
-       series1->append(9,11.9);
-       series1->append(10,10.1);
-       series1->append(11,16.2);
-       series1->append(12,17.3);
 
     axisX = new QCategoryAxis();
+    axisY = new QCategoryAxis();
 
-    axisX->append("Styczeń", 1);
-    axisX->append("Luty", 2);
-    axisX->append("Marzec", 3);
-    axisX->append("Kwiecień",4);
-    axisX->append("Maj",5);
-    axisX->append("Czerwiec",6);
-    axisX->append("Lipiec",7);
-    axisX->append("Sierpień",8);
-    axisX->append("Wrzesień",9);
-    axisX->append("Październik",10);
-    axisX->append("Listopad",11);
-    axisX->append("Grudzień",12);
-    axisX->setRange(0, 12);
+    mainChart = new QChart();
+    mainChart->addSeries(series0);
+
+
+//------------------------------------------
 
     series0->setName("Renault Laguna II");
     series1->setName("CAT 352F 2017");
@@ -67,7 +36,7 @@ r_Costs::r_Costs(QWidget *parent) :
 //                << QPointF(16, 4) << QPointF(18, 3);
 
 
-       QAreaSeries *series = new QAreaSeries(series0, series1);
+       QAreaSeries *series = new QAreaSeries(series0);
        series->setName("Batman");
        series->setBrush(Qt::NoBrush);
        QPen pen(0x059605);
@@ -81,22 +50,9 @@ r_Costs::r_Costs(QWidget *parent) :
 //       gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 //       series->setBrush(gradient);
 
-       mainChart = new QChart();
-       mainChart->addSeries(series0);
-       mainChart->addSeries(series1);
-//       if(true)
-//       {
-//           mainChart->addSeries(series1);
-//       }
-//       else
-//       {
-//           mainChart->addSeries(series0);
-//       }
-
        mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca zestawienie roczne");
        mainChart->createDefaultAxes();
        mainChart->setAxisX(axisX,series0);
-       mainChart->setAxisX(axisX,series1);
 //       if(true)
 //       {
 //           mainChart->setAxisX(axisX,series1);
@@ -106,8 +62,8 @@ r_Costs::r_Costs(QWidget *parent) :
 //           mainChart->setAxisX(axisX,series0);
 //       }
 
-       mainChart->axisX()->setRange(0, 12);
-       mainChart->axisY()->setRange(0, 20);
+//       mainChart->axisX()->setRange(0, 12);
+//       mainChart->axisY()->setRange(0, 20);
 
        mainChart->legend()->setVisible(true);
 
@@ -145,7 +101,116 @@ void r_Costs::loadComboBox(int tanktype)
 //        ui->cb_carid->addItem(stream,i);
 //      }
         ui->cb_carid->update();
+    }
 }
+
+void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
+{
+    QString date;
+    int fuelId;
+    float fuelCon;
+    int i=0, *temp_day;
+
+    connector->fuelInfo(carId);
+
+    while(connector->fuelInfoQuest(fuelId,date,fuelCon))
+    {
+        QDate temp_date(Qt::DateFormat("yyyy-MM-dd"));
+        temp_date = date;
+        temp_day = temp_date.day();
+        float temp_day_v = temp_day/30;
+        int month = -1;
+        month = temp_date.month();
+        switch(month)
+        {
+        case 1:
+            seriesN->append((1+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 2:
+            seriesN->append((2+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 3:
+            seriesN->append((3+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 4:
+            seriesN->append((4+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 5:
+            seriesN->append((5+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 6:
+            seriesN->append((6+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 7:
+            seriesN->append((7+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 8:
+            seriesN->append((8+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 9:
+            seriesN->append((9+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 10:
+            seriesN->append((10+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 11:
+            seriesN->append((11+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 12:
+            seriesN->append((12+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        default:
+            break;
+        }
+
+    }
+
+}
+
+void r_Costs::setXAxis()
+{
+    axisX->append("Styczeń", 1);
+    axisX->append("Luty", 2);
+    axisX->append("Marzec", 3);
+    axisX->append("Kwiecień",4);
+    axisX->append("Maj",5);
+    axisX->append("Czerwiec",6);
+    axisX->append("Lipiec",7);
+    axisX->append("Sierpień",8);
+    axisX->append("Wrzesień",9);
+    axisX->append("Październik",10);
+    axisX->append("Listopad",11);
+    axisX->append("Grudzień",12);
+    axisX->setRange(0, 12);
+}
+
+void r_Costs::setYAxis()
+{
+    axisY->setRange(yMin,yMax);
+}
+
+void r_Costs::setyMaxMin(float v)
+{
+    if(fuelCon<yMin)
+    {
+        yMin=v;
+    }
+    else if(fuelCon>yMax)
+    {
+        yMax=v;
+    }
 }
 
 void r_Costs::on_chb_on_clicked()

@@ -265,6 +265,39 @@ void SQL::tankType(int tankid)
     qDebug() << query->lastQuery();
     qDebug() << query->lastError().text();
 }
+
+void SQL::fuelInfo(int carId)
+{
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid");
+    query->bindValue(0,carId);
+    query->exec();
+}
+
+int SQL::fuelInfoCount(int carId)
+{
+    query->prepare("SELECT COUNT(1) FROM (SELECT * FROM `fuel` where CARID = :carid) AS tempTable");
+    query->bindValue(0,carId);
+    query->exec();
+    query->first();
+    if(query->result())
+    {
+        return query->value(0).toInt();
+    }
+}
+
+bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
+{
+    if(query->next())
+    {
+        fId=query->value(0).toInt();
+        fdate=query->value(1).toString();
+        fcon=query->value(2).toFloat();
+        return true;
+    }
+    else
+        return false;
+
+}
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 {
