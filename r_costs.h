@@ -30,9 +30,8 @@ public:
 
 private slots:
 
-    void on_chb_on_clicked();
 
-    void on_cb_carid_currentIndexChanged(const QString &arg1);
+    void on_chb_on_clicked();
 
 private:
     Ui::r_Costs *ui;
