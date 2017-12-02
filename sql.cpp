@@ -292,6 +292,9 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
         fId=query->value(0).toInt();
         fdate=query->value(1).toString();
         fcon=query->value(2).toFloat();
+
+        qDebug() << fdate;
+
         return true;
     }
     else

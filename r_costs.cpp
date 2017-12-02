@@ -109,14 +109,14 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
     QString date;
     int fuelId;
     float fuelCon;
-    int i=0, *temp_day;
+    int i=0, temp_day;
 
     connector->fuelInfo(carId);
 
     while(connector->fuelInfoQuest(fuelId,date,fuelCon))
     {
-        QDate temp_date(Qt::DateFormat("yyyy-MM-dd"));
-        temp_date = date;
+        QDate temp_date;
+        temp_date = QDate::fromString(date,"yyyy-MM-dd");
         temp_day = temp_date.day();
         float temp_day_v = temp_day/30;
         int month = -1;
@@ -203,11 +203,11 @@ void r_Costs::setYAxis()
 
 void r_Costs::setyMaxMin(float v)
 {
-    if(fuelCon<yMin)
+    if(v<yMin)
     {
         yMin=v;
     }
-    else if(fuelCon>yMax)
+    else if(v>yMax)
     {
         yMax=v;
     }
@@ -216,4 +216,13 @@ void r_Costs::setyMaxMin(float v)
 void r_Costs::on_chb_on_clicked()
 {
     loadComboBox(0);
+    //ui->cb_carid->currentIndexChanged();
+}
+
+
+void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
+{
+    int i;
+    i = ui->cb_carid->currentData().toInt();
+    qDebug() << "reaguje: " + QString::number(i);
 }
