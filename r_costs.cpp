@@ -28,6 +28,20 @@ r_Costs::r_Costs(QWidget *parent) :
 
 //------------------------------------------
 
+    //loadSeries(series0,36);
+
+    //series0->append(1,1);
+    //series0->append(1.5,1.5);
+
+    int gh = 0;
+    while(gh<20)
+    {
+        series0->append(gh/2,(4+(gh*0.1)));
+        gh++;
+    }
+
+    setXAxis();
+
     series0->setName("Renault Laguna II");
     series1->setName("CAT 352F 2017");
 
@@ -62,8 +76,8 @@ r_Costs::r_Costs(QWidget *parent) :
 //           mainChart->setAxisX(axisX,series0);
 //       }
 
-//       mainChart->axisX()->setRange(0, 12);
-//       mainChart->axisY()->setRange(0, 20);
+       mainChart->axisX()->setRange(0, 12);
+       mainChart->axisY()->setRange(0, 12);
 
        mainChart->legend()->setVisible(true);
 
@@ -111,71 +125,82 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
     float fuelCon;
     int i=0, temp_day;
 
-    connector->fuelInfo(carId);
+//    while(i<400)
+//    {
+//        series0->append((1+(i/30)),(4+(0.01*i)));
+//        ++i;
+//    }
+//    while (i<12) {
 
-    while(connector->fuelInfoQuest(fuelId,date,fuelCon))
-    {
-        QDate temp_date;
-        temp_date = QDate::fromString(date,"yyyy-MM-dd");
-        temp_day = temp_date.day();
-        float temp_day_v = temp_day/30;
-        int month = -1;
-        month = temp_date.month();
-        switch(month)
-        {
-        case 1:
-            seriesN->append((1+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 2:
-            seriesN->append((2+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 3:
-            seriesN->append((3+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 4:
-            seriesN->append((4+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 5:
-            seriesN->append((5+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 6:
-            seriesN->append((6+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 7:
-            seriesN->append((7+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 8:
-            seriesN->append((8+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 9:
-            seriesN->append((9+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 10:
-            seriesN->append((10+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 11:
-            seriesN->append((11+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        case 12:
-            seriesN->append((12+temp_day_v),fuelCon);
-            setyMaxMin(fuelCon);
-            break;
-        default:
-            break;
-        }
+//        series0->append(i,i);
+//    }
 
-    }
+        SQL *test = new SQL("localhost","idoccar","root","");
+        test->fuelInfo(carId);
+
+//    while(connector->fuelInfoQuest(fuelId,date,fuelCon))
+//    {
+//        QDate temp_date;
+//        temp_date = QDate::fromString(date,"yyyy-MM-dd");
+//        temp_day = temp_date.day();
+//        float temp_day_v = temp_day/30;
+//        int month = -1;
+//        month = temp_date.month();
+////        switch(month)
+////        {
+////        case 1:
+////            seriesN->append((1+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 2:
+////            seriesN->append((2+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 3:
+////            seriesN->append((3+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 4:
+////            seriesN->append((4+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 5:
+////            seriesN->append((5+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 6:
+////            seriesN->append((6+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 7:
+////            seriesN->append((7+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 8:
+////            seriesN->append((8+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 9:
+////            seriesN->append((9+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 10:
+////            seriesN->append((10+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 11:
+////            seriesN->append((11+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        case 12:
+////            seriesN->append((12+temp_day_v),fuelCon);
+////            setyMaxMin(fuelCon);
+////            break;
+////        default:
+////            break;
+////        }
+
+//    }
 
 }
 
@@ -225,4 +250,11 @@ void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
     int i;
     i = ui->cb_carid->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
+
+    loadSeries(series0,i);
+    //loadComboBox(0);
+
+    chartView->repaint();
+    //ui->widget->repaint();
+    ui->widget->update();
 }
