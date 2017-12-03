@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>786</width>
+    <height>719</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -132,7 +132,7 @@
       <x>10</x>
       <y>270</y>
       <width>771</width>
-      <height>281</height>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -153,30 +153,6 @@
       </spacer>
      </item>
      <item row="7" column="2">
-      <widget class="QLabel" name="l_message">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLineEdit" name="le_login">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QLineEdit" name="le_pass">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="2">
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -192,6 +168,13 @@
        </property>
       </spacer>
      </item>
+     <item row="4" column="2">
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>--&gt;&gt; Wejście &lt;&lt;--</string>
+       </property>
+      </widget>
+     </item>
      <item row="3" column="1">
       <widget class="QLabel" name="label_5">
        <property name="text">
@@ -199,10 +182,20 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="2">
-      <widget class="QPushButton" name="pushButton_3">
-       <property name="text">
-        <string>--&gt;&gt; Wejście &lt;&lt;--</string>
+     <item row="3" column="2">
+      <widget class="QLineEdit" name="le_pass">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLineEdit" name="le_login">
+       <property name="enabled">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -228,6 +221,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="text">
+        <string>--&gt;&gt; Reconnect &lt;&lt;--</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1" colspan="2">
       <spacer name="verticalSpacer">
@@ -257,12 +257,32 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="2">
-      <widget class="QPushButton" name="pushButton_4">
+     <item row="8" column="2">
+      <widget class="QLabel" name="l_message">
        <property name="text">
-        <string>--&gt;&gt; Reconnect &lt;&lt;--</string>
+        <string/>
        </property>
       </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QPushButton" name="p_register">
+       <property name="text">
+        <string>--&gt;&gt; Załóż nowe konto &lt;&lt;--</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -272,7 +292,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>786</width>
      <height>26</height>
     </rect>
    </property>

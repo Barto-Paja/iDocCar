@@ -33,6 +33,8 @@ public:
     QString welcomeFunc();
     int lastMilage(int idcar);
 
+    void error();
+
 private:
 
     QSqlQuery *query;

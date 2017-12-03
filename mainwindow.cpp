@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent):
 
     r_Costs* form = new r_Costs;
     form->show();
-
     ui->pushButton_4->clicked();
 }
 
@@ -61,4 +60,9 @@ void MainWindow::on_pushButton_4_clicked()
         ui->le_pass->setEnabled(false);
     }
 
+}
+
+void MainWindow::on_p_register_clicked()
+{
+   connector->error();
 }

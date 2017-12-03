@@ -1,5 +1,7 @@
 #include "sql.h"
 
+#include <QMessageBox>
+
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
@@ -253,6 +255,12 @@ int SQL::lastMilage(int idcar)
     query->exec();
     query->first();
     return query->value(0).toInt();
+}
+
+void SQL::error()
+{
+    QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");
+
 }
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
