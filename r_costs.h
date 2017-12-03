@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QTableView>
+#include <QComboBox>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
@@ -34,10 +35,20 @@ private slots:
 
     void on_cb_carid_currentIndexChanged(const QString &arg1);
 
+    void on_chb_pb_clicked();
+
+    void on_chb_lpg_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_cb_carid_2_currentIndexChanged(const QString &arg1);
+
+    void on_cb_carid_3_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::r_Costs *ui;
 
-    void loadComboBox(int tanktype);
+    void loadComboBox(int tanktype, QComboBox *combo);
     void loadSeries(QLineSeries *seriesN, int carId);
     void setXAxis();
     void setYAxis();
