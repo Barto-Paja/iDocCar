@@ -262,12 +262,14 @@ void r_Costs::on_pushButton_clicked()
         ui->gridLayoutWidget_2->setVisible(true);
         ui->cb_carid_2->setVisible(true);
         loadComboBox(1,ui->cb_carid_2);
+        mainChart->addSeries(series1);
     }
     else if(ui->chb_on->isChecked() && ui->cb_carid_2->isVisible())
     {
         ui->l_carname3->setVisible(true);
         ui->cb_carid_3->setVisible(true);
         loadComboBox(1,ui->cb_carid_3);
+        mainChart->addSeries(series2);
     }
 
 
@@ -296,7 +298,6 @@ void r_Costs::on_cb_carid_2_currentIndexChanged(const QString &arg1)
 
 
     loadSeries(series1,i);
-    mainChart->addSeries(series1);
 
     chartView->repaint(); // <-- tutaj ma ładować 2 serie
     ui->widget->update();

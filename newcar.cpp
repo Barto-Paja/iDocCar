@@ -52,10 +52,18 @@ void newCar::on_b_send_clicked()
         }
         else
         {
-            connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),1,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
-            QMessageBox::information(0,"Sukces","Dodano pojazd");
-            this->close();
-            this->deleteLater();
+            if(ui->radioButton->isChecked())
+            {
+                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),0,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
+                QMessageBox::information(0,"Sukces","Dodano pojazd");
+                this->close();
+                this->deleteLater();
+            }
+            else
+                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),1,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
+                QMessageBox::information(0,"Sukces","Dodano pojazd");
+                this->close();
+                this->deleteLater();
         }
     }
 }
