@@ -33,7 +33,17 @@ public:
     QString welcomeFunc();
     int lastMilage(int idcar);
 
+
+    //--- For Charts --- //
+    void tankType(int tankid);
+    void fuelInfo(int carId);
+    int fuelInfoCount(int carId);
+    bool fuelInfoQuest(int &fId, QString &fdate, float &fcon);
+    //bool getCarName_C(QString &stream, int &idcar);
+
+    //--- SQL errors --- // 
     void error();
+
 
 private:
 

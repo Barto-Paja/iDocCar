@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QTableView>
+#include <QComboBox>
 
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
@@ -14,6 +15,7 @@
 
 QT_CHARTS_USE_NAMESPACE
 
+#include <sql.h>
 
 namespace Ui {
 class r_Costs;
@@ -27,19 +29,50 @@ public:
     explicit r_Costs(QWidget *parent = 0);
     ~r_Costs();
 
+private slots:
+
+    void on_chb_on_clicked();
+
+    void on_cb_carid_currentIndexChanged(const QString &arg1);
+
+    void on_chb_pb_clicked();
+
+    void on_chb_lpg_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_cb_carid_2_currentIndexChanged(const QString &arg1);
+
+    void on_cb_carid_3_currentIndexChanged(const QString &arg1);
+
 private:
+    Ui::r_Costs *ui;
+
+    void loadComboBox(int tanktype, QComboBox *combo);
+    void loadSeries(QLineSeries *seriesN, int carId);
+    void setXAxis();
+    void setYAxis();
+    void setyMaxMin(float v);
+
+    SQL *connector;
+
+    //--- Axises ---
+
+    float yMax = 0;
+    float yMin = 0;
+
     QCategoryAxis *axisX;
     QCategoryAxis *axisY;
     QCategoryAxis *axisZ;
 
     QChart *mainChart;
     QChartView *chartView;
+//    QAreaSeries *series;
 
-private slots:
-
-
-private:
-    Ui::r_Costs *ui;
+    QLineSeries *series0;
+    QLineSeries *series1;
+    QLineSeries *series2;
+    QLineSeries *series3;
 };
 
 #endif // R_COSTS_H

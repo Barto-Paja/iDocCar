@@ -227,7 +227,7 @@ bool SQL::getCarName(QString &stream, int &idcar)
 
     if(query->next())
     {
-        QString result = query->value(1).toString() + " " + query->value(2).toString();
+        QString result = query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString();
         stream = result;
         qDebug() << stream;
         idcar = query->value(0).toInt();
@@ -257,9 +257,58 @@ int SQL::lastMilage(int idcar)
     return query->value(0).toInt();
 }
 
+void SQL::tankType(int tankid)
+{
+    //return query->value(4).toInt();
+
+    query->prepare("SELECT id,mark, model, plate, tanks FROM cars WHERE user = :userid AND tanks =:tank");
+    query->bindValue(0,userId);
+    query->bindValue(1,tankid);
+    query->exec();
+
+    qDebug() << query->lastQuery();
+    qDebug() << query->lastError().text();
+}
+
+void SQL::fuelInfo(int carId)
+{
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid");
+    query->bindValue(0,carId);
+    query->exec();
+}
+
+int SQL::fuelInfoCount(int carId)
+{
+    query->prepare("SELECT COUNT(1) FROM (SELECT * FROM `fuel` where CARID = :carid) AS tempTable");
+    query->bindValue(0,carId);
+    query->exec();
+    query->first();
+    if(query->result())
+    {
+        return query->value(0).toInt();
+    }
+}
+
+bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
+{
+    if(query->next())
+    {
+        fId=query->value(0).toInt();
+        fdate=query->value(1).toString();
+        fcon=query->value(5).toFloat();
+
+        qDebug() << fdate;
+
+        return true;
+    }
+    else
+        return false;
+}
+
 void SQL::error()
 {
     QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");
+
 
 }
 // wyciąganie kosztów
@@ -276,7 +325,7 @@ QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 
 void SQL::CarName()
 {
-    query->prepare("SELECT id,mark, model FROM cars WHERE user = :userid");
+    query->prepare("SELECT id,mark, model, plate, tanks FROM cars WHERE user = :userid");
     query->bindValue(0,userId);
     query->exec();
 }

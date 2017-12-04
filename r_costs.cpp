@@ -9,50 +9,25 @@ r_Costs::r_Costs(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QLineSeries *series0 = new QLineSeries();
-    QLineSeries *series1 = new QLineSeries();
+    connector = new SQL("localhost","idoccar","root","");
+    connector->test();
 
-       series0->append(0,5.7);
-       series0->append(1,5.2);
-       series0->append(2,5.0);
-       series0->append(3,4.5);
-       series0->append(4,4.7);
-       series0->append(6,4.3);
-       series0->append(7,5.0);
-       series0->append(8,4.6);
-       series0->append(9,4.9);
-       series0->append(10,5.1);
-       series0->append(11,5.2);
-       series0->append(12,6.3);
+//    series = new QAreaSeries();
+    series0 = new QLineSeries();
+    series1 = new QLineSeries();
+    series2 = new QLineSeries();
+    series3 = new QLineSeries();
 
-       series1->append(0,12.7);
-       series1->append(1,11.2);
-       series1->append(2,10.0);
-       series1->append(3,9.5);
-       series1->append(4,14.7);
-       series1->append(6,13.3);
-       series1->append(7,10.0);
-       series1->append(8,12.6);
-       series1->append(9,11.9);
-       series1->append(10,10.1);
-       series1->append(11,16.2);
-       series1->append(12,17.3);
 
     axisX = new QCategoryAxis();
+    axisY = new QCategoryAxis();
 
-    axisX->append("Styczeń", 1);
-    axisX->append("Luty", 2);
-    axisX->append("Marzec", 3);
-    axisX->append("Kwiecień",4);
-    axisX->append("Maj",5);
-    axisX->append("Czerwiec",6);
-    axisX->append("Lipiec",7);
-    axisX->append("Sierpień",8);
-    axisX->append("Wrzesień",9);
-    axisX->append("Październik",10);
-    axisX->append("Listopad",11);
-    axisX->append("Grudzień",12);
-    axisX->setRange(0, 12);
+    mainChart = new QChart();
+    mainChart->addSeries(series0);
+
+
+    ui->gridLayoutWidget_2->setVisible(false);
+//------------------------------------------
 
     series0->setName("Renault Laguna II");
     series1->setName("CAT 352F 2017");
@@ -62,7 +37,7 @@ r_Costs::r_Costs(QWidget *parent) :
 //                << QPointF(16, 4) << QPointF(18, 3);
 
 
-       QAreaSeries *series = new QAreaSeries(series0, series1);
+       QAreaSeries *series = new QAreaSeries(series0);
        series->setName("Batman");
        series->setBrush(Qt::NoBrush);
        QPen pen(0x059605);
@@ -76,34 +51,13 @@ r_Costs::r_Costs(QWidget *parent) :
 //       gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 //       series->setBrush(gradient);
 
-       mainChart = new QChart();
-       mainChart->addSeries(series0);
-       mainChart->addSeries(series1);
-//       if(true)
-//       {
-//           mainChart->addSeries(series1);
-//       }
-//       else
-//       {
-//           mainChart->addSeries(series0);
-//       }
-
        mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca zestawienie roczne");
        mainChart->createDefaultAxes();
-       mainChart->setAxisX(axisX,series0);
-       mainChart->setAxisX(axisX,series1);
-//       if(true)
-//       {
-//           mainChart->setAxisX(axisX,series1);
-//       }
-//       else
-//       {
-//           mainChart->setAxisX(axisX,series0);
-//       }
 
-       mainChart->axisX()->setRange(0, 12);
-       mainChart->axisY()->setRange(0, 20);
+       //mainChart->setAxisX(axisX,series0);
 
+       mainChart->axisX()->setRange(0,12);
+       mainChart->axisY()->setRange(0,12);
        mainChart->legend()->setVisible(true);
 
 
@@ -118,4 +72,245 @@ r_Costs::r_Costs(QWidget *parent) :
 r_Costs::~r_Costs()
 {
     delete ui;
+}
+
+void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
+{
+    combo->clear();
+    QString stream;
+    int i=0;
+
+    if(tanktype==0)
+    {
+        combo->clear();
+        connector->tankType(1); // dla diesla tu musi być 0
+        //connector->CarName();
+        while (connector->getCarName(stream,i)) {
+          combo->addItem(stream,i);
+    }
+    }
+    else if(tanktype==1)
+    {
+         combo->clear();
+         connector->tankType(1); // dla Pb tu musi być 1
+         //connector->CarName();
+         while (connector->getCarName(stream,i)) {
+         combo->addItem(stream,i);
+    }
+    }
+    else if(tanktype==2)
+    {
+          combo->clear();
+          connector->tankType(2); // dla Pb+LPG tu musi być 2
+          //connector->CarName();
+          while (connector->getCarName(stream,i)) {
+          combo->addItem(stream,i);
+    }
+    }
+    else
+      qDebug() << "Błąd wyboru baku";
+
+
+        ui->cb_carid->update();
+
+}
+
+
+void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
+{
+    QString date;
+    int fuelId;
+    float fuelCon;
+    int i=0, temp_day;
+
+        SQL *lS = new SQL("localhost","idoccar","root","");
+        lS->fuelInfo(carId);
+
+    seriesN->clear();
+    seriesN->append(0,6.0);
+    while(lS->fuelInfoQuest(fuelId,date,fuelCon))
+    {
+        QDate temp_date;
+        temp_date = QDate::fromString(date,"yyyy-MM-dd");
+        temp_day = temp_date.day();
+        float temp_day_v = temp_day*0.03;
+        int month = -1;
+        month = temp_date.month();
+        qDebug() << QString::number(month) + " td: " + QString::number(temp_day_v);
+
+        float a = (1+temp_day_v);
+
+        switch(month)
+        {
+        case 1:
+            seriesN->append((1+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 2:
+            seriesN->append((2+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 3:
+            seriesN->append((3+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 4:
+            seriesN->append((4+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 5:
+            seriesN->append((5+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 6:
+            seriesN->append((6+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 7:
+            seriesN->append((7+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 8:
+            seriesN->append((8+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 9:
+            seriesN->append((9+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 10:
+            seriesN->append((10+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 11:
+            seriesN->append((11+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        case 12:
+            seriesN->append((12+temp_day_v),fuelCon);
+            setyMaxMin(fuelCon);
+            break;
+        default:
+            break;
+        }
+
+    }
+
+}
+
+void r_Costs::setXAxis()
+{
+    axisX->append("Styczeń", 1);
+    axisX->append("Luty", 2);
+    axisX->append("Marzec", 3);
+    axisX->append("Kwiecień",4);
+    axisX->append("Maj",5);
+    axisX->append("Czerwiec",6);
+    axisX->append("Lipiec",7);
+    axisX->append("Sierpień",8);
+    axisX->append("Wrzesień",9);
+    axisX->append("Październik",10);
+    axisX->append("Listopad",11);
+    axisX->append("Grudzień",12);
+    //mainChart->axisX()->setRange(0, 12);
+}
+
+void r_Costs::setYAxis()
+{
+    axisY->setRange(yMin,yMax);
+}
+
+void r_Costs::setyMaxMin(float v)
+{
+    if(v<yMin)
+    {
+        yMin=v;
+    }
+    else if(v>yMax)
+    {
+        yMax=v;
+    }
+    //mainChart->axisY()->setRange(yMin,yMax);
+}
+
+void r_Costs::on_chb_on_clicked()
+{
+    ui->gridLayoutWidget_2->setVisible(false);
+    ui->cb_carid_2->clear();
+    ui->cb_carid_3->clear();
+    ui->cb_carid_2->setVisible(false);
+    ui->cb_carid_3->setVisible(false);
+    ui->l_carname3->setVisible(false);
+    loadComboBox(0,ui->cb_carid);
+}
+
+void r_Costs::on_chb_pb_clicked()
+{
+    loadComboBox(1,ui->cb_carid_2);
+}
+
+void r_Costs::on_chb_lpg_clicked()
+{
+    loadComboBox(2,ui->cb_carid_3);
+}
+
+void r_Costs::on_pushButton_clicked()
+{
+
+    if(ui->chb_on->isChecked() && (ui->cb_carid_2->isVisible() == false))
+    {
+        ui->gridLayoutWidget_2->setVisible(true);
+        ui->cb_carid_2->setVisible(true);
+        loadComboBox(1,ui->cb_carid_2);
+    }
+    else if(ui->chb_on->isChecked() && ui->cb_carid_2->isVisible())
+    {
+        ui->l_carname3->setVisible(true);
+        ui->cb_carid_3->setVisible(true);
+        loadComboBox(1,ui->cb_carid_3);
+    }
+
+
+
+
+    // --- rozgrzebane do dopisania --- //
+}
+
+void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
+{
+    int i;
+    i = ui->cb_carid->currentData().toInt();
+    qDebug() << "reaguje: " + QString::number(i);
+
+    loadSeries(series0,i);
+
+    chartView->repaint();
+    ui->widget->update();
+}
+
+void r_Costs::on_cb_carid_2_currentIndexChanged(const QString &arg1)
+{
+    int i;
+    i = ui->cb_carid->currentData().toInt();
+    qDebug() << "reaguje: " + QString::number(i);
+
+
+    loadSeries(series1,i);
+    mainChart->addSeries(series1);
+
+    chartView->repaint(); // <-- tutaj ma ładować 2 serie
+    ui->widget->update();
+}
+
+
+void r_Costs::on_cb_carid_3_currentIndexChanged(const QString &arg1)
+{
+    int i;
+    i = ui->cb_carid->currentData().toInt();
+    qDebug() << "reaguje: " + QString::number(i);
+
+    loadSeries(series2,i);
+
+    chartView->repaint(); // <-- tutaj ma ładować 3 serie
+    ui->widget->update();
 }

@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent):
 
     r_Costs* form = new r_Costs;
     form->show();
+      
     ui->pushButton_4->clicked();
 }
 
