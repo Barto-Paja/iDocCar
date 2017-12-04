@@ -6,7 +6,7 @@ newTank::newTank(QWidget *parent) :
     ui(new Ui::newTank)
 {
     ui->setupUi(this);
-    connector = new SQL("localhost","idoccar","root","");
+    connector = new SQL();
 
     connector->test();
 

@@ -24,16 +24,23 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="1">
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Profil użytkownika</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>Mój samochód</string>
+        <string>Menu</string>
        </property>
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>20</y>
+          <y>30</y>
           <width>101</width>
           <height>23</height>
          </rect>
@@ -46,7 +53,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>50</y>
+          <y>60</y>
           <width>101</width>
           <height>23</height>
          </rect>
@@ -55,13 +62,6 @@
          <string>Dodaj tankowanie</string>
         </property>
        </widget>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="title">
-        <string>Profil użytkownika</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -81,7 +81,7 @@
      </font>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Witaj</string>
     </property>
    </widget>
   </widget>
@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

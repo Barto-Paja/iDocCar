@@ -6,7 +6,7 @@ MainMenuGUI::MainMenuGUI(QWidget *parent) :
     ui(new Ui::MainMenuGUI)
 {
     ui->setupUi(this);
-    connector = new SQL("localhost","idoccar","root","");
+    connector = new SQL();
 
     ui->l_welcome->setText("Witaj "+connector->welcomeFunc()+" !");
 }

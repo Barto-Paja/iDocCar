@@ -19,20 +19,8 @@ MainWindow::MainWindow(QWidget *parent):
 
     r_Costs* form = new r_Costs;
     form->show();
-
-    //--- SQL Connector def ---//
-    connector = new SQL("localhost","idoccar","root","");
-
-    if(connector->isOpen())
-    {
-        ui->le_login->setEnabled(true);
-        ui->le_pass->setEnabled(true);
-    }
-    else
-        ui->l_message->setText("Błąd C-001 - Nie połączono z bazą danych");
-
-    //ui->pushButton_3->setVisible(false);
-
+      
+    ui->pushButton_4->clicked();
 }
 
 MainWindow::~MainWindow()
@@ -51,4 +39,31 @@ void MainWindow::on_pushButton_3_clicked()
         ui->l_message->setText("Błąd U-001 - Niepoprawny login lub hasło");
 
 
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    connector = new SQL();
+    if(connector->isOpen())
+    {
+        ui->le_login->setEnabled(true);
+        ui->le_pass->setEnabled(true);
+        ui->pushButton_3->setVisible(true);
+        ui->pushButton_4->setVisible(false);
+        ui->l_message->setText("Połączono z bazą danych, możesz się zalogować");
+    }
+    else
+    {
+        ui->l_message->setText("Błąd C-001 - Nie połączono z bazą danych");
+        ui->pushButton_3->setVisible(false);
+        ui->pushButton_4->setVisible(true);
+        ui->le_login->setEnabled(false);
+        ui->le_pass->setEnabled(false);
+    }
+
+}
+
+void MainWindow::on_p_register_clicked()
+{
+   connector->error();
 }

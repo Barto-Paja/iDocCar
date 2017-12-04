@@ -1,5 +1,7 @@
 #include "sql.h"
 
+#include <QMessageBox>
+
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 
@@ -7,8 +9,10 @@ int SQL::userId = -1;
 
 int USR=1;
 
-SQL::SQL(QString dbHost, QString dbName, QString dbUser, QString dbPass)
+SQL::SQL()
 {
+    QString dbHost, dbName, dbUser,dbPass;
+    load_config(dbHost,dbUser,dbPass,dbName);
     db.setHostName(dbHost);
     db.setDatabaseName(dbName);
     db.setUserName(dbUser);
@@ -299,6 +303,12 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
     }
     else
         return false;
+}
+
+void SQL::error()
+{
+    QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");
+
 
 }
 // wyciąganie kosztów
@@ -318,4 +328,24 @@ void SQL::CarName()
     query->prepare("SELECT id,mark, model, plate, tanks FROM cars WHERE user = :userid");
     query->bindValue(0,userId);
     query->exec();
+}
+
+void SQL::load_config(QString &lhost, QString &luser, QString &lpass, QString &ldb)
+{
+    QFile file("config.cfg");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&file);
+        out << "host\nuser\ndbname\npass\n";
+        file.close();
+        file.open(QIODevice::ReadOnly | QIODevice::Text);
+    }
+    QTextStream in( & file );
+    in >> lhost;
+    in >> luser;
+    in >> ldb;
+    in >> lpass;
+    qDebug()<<lhost<<luser<<lpass<<ldb;
+    //nie moga byc puste pola w pliku bo sie krzaczy
 }
