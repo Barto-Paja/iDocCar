@@ -9,7 +9,7 @@ r_Costs::r_Costs(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connector = new SQL("localhost","idoccar","root","");
+    connector = new SQL();
     connector->test();
 
 //    series = new QAreaSeries();
@@ -123,7 +123,7 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
     float fuelCon;
     int i=0, temp_day;
 
-        SQL *lS = new SQL("localhost","idoccar","root","");
+        SQL *lS = new SQL();
         lS->fuelInfo(carId);
 
     seriesN->clear();

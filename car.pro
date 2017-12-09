@@ -20,21 +20,24 @@ SOURCES += main.cpp\
         r_costs.cpp \
     mainmenugui.cpp \
     newcar.cpp \
-    newtank.cpp
+    newtank.cpp \
+    workshop.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
     r_costs.h \
     mainmenugui.h \
     newcar.h \
-    newtank.h
+    newtank.h \
+    workshop.h
 
 FORMS += \
     r_costs.ui \
     mainwindow.ui \
     mainmenugui.ui \
     newcar.ui \
-    newtank.ui
+    newtank.ui \
+    workshop.ui
 
 RESOURCES += \
     gui_icons.qrc
