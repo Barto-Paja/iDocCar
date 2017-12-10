@@ -45,6 +45,8 @@ private slots:
 
     void on_cb_carid_3_currentIndexChanged(const QString &arg1);
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::r_Costs *ui;
 

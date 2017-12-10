@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <reg_user.h>
-#include <r_costs.h>
+
+
 #include <sql.h>
 #include <mainmenugui.h>
 

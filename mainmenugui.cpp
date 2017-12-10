@@ -27,3 +27,9 @@ void MainMenuGUI::on_pushButton_2_clicked()
     newTank *form = new newTank;
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_3_clicked()
+{
+    r_Costs *form = new r_Costs;
+    form->show();
+}

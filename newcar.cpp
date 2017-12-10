@@ -41,9 +41,10 @@ void newCar::on_b_send_clicked()
 {
     if(formularCheck())
     {
-        if(ui->checkBox->isEnabled())
+        if(ui->checkBox->isChecked())
         {
-            connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),2,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),ui->le_Tank2->text().toFloat());
+            // +LPG
+            connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->de_year->date().toString("yyyy-MM-dd"),ui->dateEdit->date().toString("yyyy-MM-dd"),2,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),ui->le_Tank2->text().toFloat());
             QMessageBox::information(0,"Sukces","Dodano pojazd");
             this->close();
             this->deleteLater();
@@ -51,14 +52,14 @@ void newCar::on_b_send_clicked()
         else
         {
             if(ui->radioButton->isChecked())
-            {
-                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),0,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
+            {   // ON
+                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->de_year->date().toString("yyyy-MM-dd"),ui->dateEdit->date().toString("yyyy-MM-dd"),0,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
                 QMessageBox::information(0,"Sukces","Dodano pojazd");
                 this->close();
                 this->deleteLater();
             }
-            else
-                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->le_year->text(),ui->lineEdit->text(),1,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
+            else // PB
+                connector->insert_car(ui->le_mark->text(),ui->le_model->text(),ui->le_plate->text(),ui->le_vin->text(),ui->de_year->date().toString("yyyy-MM-dd"),ui->dateEdit->date().toString("yyyy-MM-dd"),1,ui->le_milage->text().toInt(),ui->le_Tank1->text().toFloat(),0);
                 QMessageBox::information(0,"Sukces","Dodano pojazd");
                 this->close();
                 this->deleteLater();
