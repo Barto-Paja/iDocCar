@@ -5,6 +5,7 @@
 
 #include <newcar.h>
 #include <newtank.h>
+#include <r_costs.h>
 
 #include <sql.h>
 
@@ -24,6 +25,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainMenuGUI *ui;

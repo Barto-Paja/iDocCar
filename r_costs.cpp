@@ -82,7 +82,7 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     if(tanktype==0)
     {
         combo->clear();
-        connector->tankType(1); // dla diesla tu musi być 0
+        connector->tankType(0); // dla diesla tu musi być 0
         //connector->CarName();
         while (connector->getCarName(stream,i)) {
           combo->addItem(stream,i);
@@ -240,41 +240,83 @@ void r_Costs::on_chb_on_clicked()
     ui->cb_carid_2->setVisible(false);
     ui->cb_carid_3->setVisible(false);
     ui->l_carname3->setVisible(false);
+    ui->chb_lpg->setChecked(false);
+    ui->chb_pb->setChecked(false);
     loadComboBox(0,ui->cb_carid);
 }
 
 void r_Costs::on_chb_pb_clicked()
 {
-    loadComboBox(1,ui->cb_carid_2);
+    ui->gridLayoutWidget_2->setVisible(false);
+    ui->cb_carid_2->clear();
+    ui->cb_carid_3->clear();
+    ui->cb_carid_2->setVisible(false);
+    ui->cb_carid_3->setVisible(false);
+    ui->l_carname3->setVisible(false);
+    ui->chb_on->setChecked(false);
+    ui->chb_lpg->setChecked(false);
+    loadComboBox(1,ui->cb_carid);
 }
 
 void r_Costs::on_chb_lpg_clicked()
 {
-    loadComboBox(2,ui->cb_carid_3);
+    ui->gridLayoutWidget_2->setVisible(false);
+    ui->cb_carid_2->clear();
+    ui->cb_carid_3->clear();
+    ui->cb_carid_2->setVisible(false);
+    ui->cb_carid_3->setVisible(false);
+    ui->l_carname3->setVisible(false);
+    ui->chb_on->setChecked(false);
+    ui->chb_pb->setChecked(false);
+    loadComboBox(2,ui->cb_carid);
 }
 
 void r_Costs::on_pushButton_clicked()
 {
 
-    if(ui->chb_on->isChecked() && (ui->cb_carid_2->isVisible() == false))
+    if((ui->cb_carid_2->isVisible() == false))
     {
         ui->gridLayoutWidget_2->setVisible(true);
         ui->cb_carid_2->setVisible(true);
-        loadComboBox(1,ui->cb_carid_2);
+        if(ui->chb_on->isChecked())
+        {
+            loadComboBox(0,ui->cb_carid_2);
+        }
+        else if(ui->chb_pb->isChecked())
+        {
+            loadComboBox(1,ui->cb_carid_2);
+        }
+        else if(ui->chb_lpg->isChecked())
+        {
+            loadComboBox(2,ui->cb_carid_2);
+        }
+        else
+            qDebug() << "Bład wyboru baku";
+
+
         mainChart->addSeries(series1);
     }
-    else if(ui->chb_on->isChecked() && ui->cb_carid_2->isVisible())
+    else if(ui->cb_carid_2->isVisible())
     {
         ui->l_carname3->setVisible(true);
         ui->cb_carid_3->setVisible(true);
-        loadComboBox(1,ui->cb_carid_3);
+        if(ui->chb_on->isChecked())
+        {
+            loadComboBox(0,ui->cb_carid_3);
+        }
+        else if(ui->chb_pb->isChecked())
+        {
+            loadComboBox(1,ui->cb_carid_3);
+        }
+        else if(ui->chb_lpg->isChecked())
+        {
+            loadComboBox(2,ui->cb_carid_3);
+        }
+        else
+            qDebug() << "Bład wyboru baku";
+
         mainChart->addSeries(series2);
     }
-
-
-
-
-    // --- rozgrzebane do dopisania --- //
 }
 
 void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
@@ -284,7 +326,7 @@ void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
     qDebug() << "reaguje: " + QString::number(i);
 
     loadSeries(series0,i);
-
+    series0->setName(ui->cb_carid->currentText());
     chartView->repaint();
     ui->widget->update();
 }
@@ -292,12 +334,12 @@ void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
 void r_Costs::on_cb_carid_2_currentIndexChanged(const QString &arg1)
 {
     int i;
-    i = ui->cb_carid->currentData().toInt();
+    i = ui->cb_carid_2->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
 
 
     loadSeries(series1,i);
-
+    series1->setName(ui->cb_carid_2->currentText());
     chartView->repaint(); // <-- tutaj ma ładować 2 serie
     ui->widget->update();
 }
@@ -306,11 +348,16 @@ void r_Costs::on_cb_carid_2_currentIndexChanged(const QString &arg1)
 void r_Costs::on_cb_carid_3_currentIndexChanged(const QString &arg1)
 {
     int i;
-    i = ui->cb_carid->currentData().toInt();
+    i = ui->cb_carid_3->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
 
     loadSeries(series2,i);
-
+    series2->setName(ui->cb_carid_3->currentText());
     chartView->repaint(); // <-- tutaj ma ładować 3 serie
     ui->widget->update();
+}
+
+void r_Costs::on_pushButton_2_clicked()
+{
+    ui->widget->grab().save("image.jpg");
 }

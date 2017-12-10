@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 
-#include <r_costs.h>
 #include <sql.h>
 #include <mainmenugui.h>
 

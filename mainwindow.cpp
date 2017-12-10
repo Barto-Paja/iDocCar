@@ -12,13 +12,6 @@ MainWindow::MainWindow(QWidget *parent):
 
     QDate c_date = QDate::currentDate();
     ui->label->setText(c_date.toString());
-
-
-
-    //--- Wywoływanie okna raportów ---//
-
-    r_Costs* form = new r_Costs;
-    form->show();
       
     ui->pushButton_4->clicked();
 }
