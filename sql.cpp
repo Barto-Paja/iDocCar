@@ -74,16 +74,6 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
 
     qDebug() << insert.lastQuery();
     qDebug() << insert.lastError().text();
-
-
-//    if(!insert.exec()){
-//        qDebug() << "Błąd dodania pojazdu";
-
-//        return false;
-//    }
-//    else
-//        return true;
-
 }
 
 void SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL)
@@ -137,19 +127,18 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
          qDebug() << "Błąd dodania tankowania" << insert.lastError();
 }
 //wyciąganie danych usera po kolumnie
-QString SQL::select_user(int col, int id)
+int SQL::select_login(QString id)
 {
     QSqlQuery pobieranie;
-    pobieranie.prepare("SELECT * from users where ID = 1");
+    pobieranie.prepare("SELECT LOGIN from users where LOGIN =:identyfikator");
     pobieranie.bindValue(0,id);
     pobieranie.exec();
 
     if(pobieranie.first())
     {
-        QString result = pobieranie.value(col).toString();
-        return result;
+        return 1;
     }else
-        return "Błąd";
+        return 0;
 
 }
 //wyciaganie typów kosztów

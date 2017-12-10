@@ -65,5 +65,6 @@ void MainWindow::on_pushButton_4_clicked()
 
 void MainWindow::on_p_register_clicked()
 {
-   connector->error();
+    reg_user *form_reg = new reg_user();
+    form_reg->show();
 }

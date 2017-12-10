@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Register</class>
- <widget class="QDialog" name="Register">
+ <class>reg_user</class>
+ <widget class="QDialog" name="reg_user">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>381</height>
+    <width>390</width>
+    <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
+     <x>10</x>
+     <y>10</y>
      <width>361</width>
-     <height>161</height>
+     <height>169</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -54,46 +54,57 @@
      <widget class="QLineEdit" name="le_mail"/>
     </item>
     <item row="3" column="0">
-     <widget class="QLabel" name="l_haslo">
-      <property name="text">
-       <string>Hasło:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="le_haslo">
-      <property name="echoMode">
-       <enum>QLineEdit::Password</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
      <widget class="QLabel" name="l_login">
       <property name="text">
        <string>Login</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="3" column="1">
      <widget class="QLineEdit" name="le_login"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="l_haslo">
+      <property name="text">
+       <string>Hasło:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="le_haslo">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="le_haslo_2">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="l_haslo_2">
+      <property name="text">
+       <string>Powtórz hasło:</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>180</y>
      <width>361</width>
-     <height>181</height>
+     <height>171</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label">
-      <property name="lineWidth">
-       <number>0</number>
-      </property>
+     <widget class="QLabel" name="l_info">
       <property name="text">
        <string/>
       </property>
@@ -103,16 +114,16 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pb_register">
       <property name="text">
-       <string>PushButton</string>
+       <string>Zarejestruj się</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pb_back">
       <property name="text">
-       <string>PushButton</string>
+       <string>Wróc</string>
       </property>
      </widget>
     </item>
