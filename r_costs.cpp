@@ -10,7 +10,6 @@ r_Costs::r_Costs(QWidget *parent) :
     ui->setupUi(this);
 
     connector = new SQL();
-    connector->test();
 
 //    series = new QAreaSeries();
     series0 = new QLineSeries();

@@ -29,29 +29,6 @@ SQL::~SQL()
     db.close();
 }
 
-void SQL::test()
-{
-        QStringList tables = db.tables();
-        for(int i=0;i<tables.size();i++)
-            qDebug() << tables.at(i);
-
-        QSqlQuery pobieranie;
-        if(!pobieranie.exec("SELECT * FROM users"))
-            qDebug() << "Brak rekordów w tabeli Users";
-
-        while(pobieranie.next())
-        {
-            QString a = pobieranie.value(0).toString();
-            QString b = pobieranie.value(1).toString();
-            QString c = pobieranie.value(2).toString();
-            QString d = pobieranie.value(3).toString();
-            QString e = pobieranie.value(4).toString();
-            QString f = pobieranie.value(5).toString();
-
-            qDebug() << a << b << c << d << e << f;
-        }
-}
-
 bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2)
 {
     QDate date(QDate::currentDate());

@@ -7,8 +7,6 @@ newCar::newCar(QWidget *parent) :
 {
     ui->setupUi(this);
     connector = new SQL();
-
-    connector->test();
 }
 
 newCar::~newCar()

@@ -8,8 +8,6 @@ newTank::newTank(QWidget *parent) :
     ui->setupUi(this);
     connector = new SQL();
 
-    connector->test();
-
     ui->cb_tanktype->clear();
     ui->cb_tanktype->addItem("ON/Pb",1);
     ui->cb_tanktype->addItem("LPG",2);
