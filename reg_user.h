@@ -21,10 +21,22 @@ private slots:
 
     void on_pb_register_clicked();
 
+    void on_pb_back_clicked();
+
+    void on_le_haslo_2_textEdited(const QString &arg1);
+
+    void on_le_haslo_textEdited(const QString &arg1);
+
+    void on_le_imie_textEdited(const QString &arg1);
+
+    void on_le_nazwisko_textEdited(const QString &arg1);
+
+    void on_le_mail_textEdited(const QString &arg1);
+
 private:
     Ui::reg_user *ui;
     SQL *connector;
-    QString temp_login;
+    int ch_imie, ch_nazwisko, ch_mail,ch_login,ch_haslo,ch_haslo_2 = 0;
 };
 
 #endif // REG_USER_H

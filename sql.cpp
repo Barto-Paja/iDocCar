@@ -76,19 +76,25 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
     qDebug() << insert.lastError().text();
 }
 
-void SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL)
+bool SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL)
 {
     QSqlQuery insert;
-    insert.prepare("INSERT INTO users (`FIRST_NAME`, `LAST_NAME`, `LOGIN`, `PASS`, `EMAIL`) "
-                    "VALUES (:FNAME,:LNAME,:LOGIN,:PASS,:EMAIL)");
+    insert.prepare("INSERT INTO users (`FIRST_NAME`, `LAST_NAME`, `LOGIN`, `PASS`, `EMAIL`, `LVL`) "
+                    "VALUES (:FNAME,:LNAME,:LOGIN,:PASS,:EMAIL,:LVL)");
     insert.bindValue(0,FNAME);
     insert.bindValue(1,LNAME);
     insert.bindValue(2,LOGIN);
     insert.bindValue(3,PASS);
     insert.bindValue(4,EMAIL);
+    insert.bindValue(5,LVL);
 
-    if(!insert.exec())
-         qDebug() << "Błąd dodania użytkownika";
+    if(!insert.exec()){
+        qDebug() << "Błąd dodania użytkownika";
+        return false;
+    }else{
+        qDebug() << "Dodano użytkownika";
+        return true;
+    }
 }
 
 void SQL::insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int MILAGE, float COST, int CARID)

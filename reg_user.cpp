@@ -7,7 +7,6 @@ reg_user::reg_user(QWidget *parent) :
 {
     ui->setupUi(this);
     connector = new SQL();
-    ui->pb_register->setVisible(false);
 }
 
 reg_user::~reg_user()
@@ -16,17 +15,16 @@ reg_user::~reg_user()
 }
 void reg_user::on_le_login_textEdited(const QString &arg1)
 {
-    temp_login=ui->le_login->text();
     if(ui->le_login->text().length()<5){
-        ui->pb_register->setVisible(false);
+        ch_login=0;
         ui->l_info->setText("Login musi skladać się z minimum 5 znaków.");
     }else{
-        if(connector->select_login(temp_login)==1){
+        if(connector->select_login(ui->le_login->text())==1){
             ui->l_info->setText("Login jest już zajęty.");
-            ui->pb_register->setVisible(false);
+            ch_login=0;
         }else{
             ui->l_info->setText("");
-            ui->pb_register->setVisible(true);
+            ch_login=1;
         };
     };
 
@@ -34,5 +32,89 @@ void reg_user::on_le_login_textEdited(const QString &arg1)
 
 void reg_user::on_pb_register_clicked()
 {
+    qDebug() << "imie " << ch_imie;
+    qDebug() << "nazwisko " << ch_nazwisko;
+    qDebug() << "haslo2 " << ch_haslo;
+    qDebug() << "haslo " << ch_haslo_2;
+    qDebug() << "email " << ch_mail;
+    qDebug() << "login " << ch_login;
+    if(ch_haslo==0 or ch_haslo_2==0 or ch_imie==0 or ch_login==0 or ch_mail==0 or ch_nazwisko==0){
+        ui->l_info->setText("Sprawdź poprawność wprowadzonych danych");
+    }else{
+        if(connector->insert_user(ui->le_login->text(),ui->le_haslo->text(),ui->le_imie->text(),ui->le_nazwisko->text(),ui->le_mail->text(),0)==true){
+            ui->l_info->setText("Konto stworzone pomyślnie");
+        }else{
+            ui->l_info->setText("Błąd tworzenia konta SQL-MYSQL");
+        }
+    }
+}
 
+void reg_user::on_pb_back_clicked()
+{
+
+}
+
+void reg_user::on_le_haslo_2_textEdited(const QString &arg1)
+{
+    if(ui->le_haslo_2->text().length()<4){
+        ui->l_info->setText("Hasło za krótkie");
+        ch_haslo_2=0;
+    }else{
+        if(ui->le_haslo_2->text() != ui->le_haslo->text()){
+            ui->l_info->setText("Hasła się różnią");
+            ch_haslo_2=0;
+        }else{
+            ui->l_info->setText("");
+            ch_haslo_2=1;
+        }
+    }
+}
+
+void reg_user::on_le_haslo_textEdited(const QString &arg1)
+{
+    if(ui->le_haslo->text().length()<4){
+        ui->l_info->setText("Hasło za krótkie");
+        ch_haslo=0;
+    }else{
+        if(ui->le_haslo_2->text() != ui->le_haslo->text()){
+            ui->l_info->setText("Hasła się różnią");
+            ch_haslo=0;
+        }else{
+            ui->l_info->setText("");
+            ch_haslo=1;
+        }
+    }
+}
+
+void reg_user::on_le_imie_textEdited(const QString &arg1)
+{
+    if(ui->le_imie->text().length()<3){
+        ui->l_info->setText("Za krótkie imię.");
+        ch_imie=0;
+    }else{
+        ui->l_info->setText("");
+        ch_imie=1;
+    }
+}
+
+void reg_user::on_le_nazwisko_textEdited(const QString &arg1)
+{
+    if(ui->le_nazwisko->text().length()<3){
+        ui->l_info->setText("Za krótkie nazwisko.");
+        ch_nazwisko=0;
+    }else{
+        ui->l_info->setText("");
+        ch_nazwisko=1;
+    }
+}
+
+void reg_user::on_le_mail_textEdited(const QString &arg1)
+{
+    if(ui->le_mail->text().length()<5){
+        ui->l_info->setText("Błędny adres e-mail");
+        ch_mail=0;
+    }else{
+        ui->l_info->setText("");
+        ch_mail=1;
+    }
 }
