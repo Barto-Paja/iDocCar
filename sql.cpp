@@ -1,6 +1,6 @@
 #include "sql.h"
 
-#include <QMessageBox>
+
 
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -280,6 +280,20 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
     }
     else
         return false;
+}
+
+float SQL::fuelsCosts(int fuelType)
+{
+    int cost =0;
+    query->prepare("SELECT price FROM fuel WHERE tank =:fuelType");
+    query->bindValue(0,fuelType);
+    query->exec();
+    while(query->next())
+    {
+        cost=cost+query->value(0).toFloat();
+    }
+
+    return cost;
 }
 
 void SQL::error()

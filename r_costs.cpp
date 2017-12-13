@@ -1,6 +1,7 @@
 #include "r_costs.h"
 #include "ui_r_costs.h"
 
+#include <QBarCategoryAxis>
 #include <QDebug>
 
 r_Costs::r_Costs(QWidget *parent) :
@@ -17,6 +18,9 @@ r_Costs::r_Costs(QWidget *parent) :
     series2 = new QLineSeries();
     series3 = new QLineSeries();
 
+    barset0 = new QBarSet("ON");
+    barset1 = new QBarSet("Pb");
+    barset2 = new QBarSet("LPG");
 
     axisX = new QCategoryAxis();
     axisY = new QCategoryAxis();
@@ -122,8 +126,8 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
     float fuelCon;
     int i=0, temp_day;
 
-        SQL *lS = new SQL();
-        lS->fuelInfo(carId);
+    SQL *lS = new SQL();
+    lS->fuelInfo(carId);
 
     seriesN->clear();
     seriesN->append(0,6.0);
@@ -194,11 +198,10 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
         }
 
     }
-
 }
 
 void r_Costs::setXAxis()
-{
+{    
     axisX->append("Styczeń", 1);
     axisX->append("Luty", 2);
     axisX->append("Marzec", 3);
@@ -230,6 +233,13 @@ void r_Costs::setyMaxMin(float v)
         yMax=v;
     }
     //mainChart->axisY()->setRange(yMin,yMax);
+}
+
+void r_Costs::loadBars(QBarSet *barsetN)
+{
+    SQL *bS = new SQL;
+    qDebug() << QString::number(bS->fuelsCosts(1));
+    *barsetN << (bS->fuelsCosts(1));
 }
 
 void r_Costs::on_chb_on_clicked()
@@ -360,4 +370,41 @@ void r_Costs::on_cb_carid_3_currentIndexChanged(const QString &arg1)
 void r_Costs::on_pushButton_2_clicked()
 {
     ui->widget->grab().save("image.jpg");
+}
+
+void r_Costs::on_b_fuel_clicked()
+{
+    t_Cost = 0;
+    mainChart->setTitle("Średnie spalanie paliwa w ciągu roku");
+    ui->widget->update();
+}
+
+void r_Costs::on_b_workshop_clicked()
+{
+    t_Cost = 1;
+    mainChart->setTitle("Koszty konserwacji auta w ciągu roku");
+    ui->widget->update();
+}
+
+void r_Costs::on_b_fuels_clicked()
+{
+    t_Cost = 2;
+    loadBars(barset0);
+    QBarSeries *seriesX = new QBarSeries();
+    seriesX->append(barset0);
+
+    mainChart->setTitle("Zakup paliw");
+    mainChart->removeAllSeries();
+    mainChart->addSeries(seriesX);
+
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
+    axis->append(categories);
+    mainChart->createDefaultAxes();
+    mainChart->setAxisX(axis, seriesX);
+
+    ui->widget->repaint();
+    ui->widget->update();
 }

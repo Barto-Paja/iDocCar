@@ -8,6 +8,7 @@
 #include <QSqlError>
 #include <QDate>
 #include <QFile>
+#include <QMessageBox>
 
 class SQL
 {
@@ -40,6 +41,7 @@ public:
     int fuelInfoCount(int carId);
     bool fuelInfoQuest(int &fId, QString &fdate, float &fcon);
     //bool getCarName_C(QString &stream, int &idcar);
+    float fuelsCosts(int fuelType);
 
     //--- SQL errors --- // 
     void error();
