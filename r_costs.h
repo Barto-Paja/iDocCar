@@ -14,6 +14,7 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QBarSeries>
+#include <QtCharts/QBarCategoryAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -49,22 +50,27 @@ private slots:
 
     void on_pushButton_2_clicked();
 
-    void on_b_fuel_clicked();
+    void on_b_search_clicked();
 
-    void on_b_workshop_clicked();
-
-    void on_b_fuels_clicked();
+    void on_b_quantity_clicked();
 
 private:
     Ui::r_Costs *ui;
 
+    void chart0init();
+    void chart1init();
+
     void loadComboBox(int tanktype, QComboBox *combo);
-    void loadSeries(QLineSeries *seriesN, int carId);
+    void loadSeries(QLineSeries *seriesN, int carId, int typeSeries);
     void setXAxis();
     void setYAxis();
-    void setyMaxMin(float v);
+    void setyMinMax(float v);
+    void setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2);
+    void setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, float yMin3, float yMax3);
+    void setyMaxMin(float v, float &tempyMin, float &tempyMax);
 
-    void loadBars(QBarSet *barsetN);
+    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart);
+    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID);
 
     SQL *connector;
 
@@ -72,6 +78,9 @@ private:
 
     float yMax = 0;
     float yMin = 0;
+
+    float temp_yMin1 = 0, temp_yMin2 = 0, temp_yMin3 = 0;
+    float temp_yMax1 = 0, temp_yMax2 = 0, temp_yMax3 = 0;
 
     int t_Cost =-1;
 
@@ -81,6 +90,7 @@ private:
 
     QChart *mainChart;
     QChartView *chartView;
+    QChartView *chartViewbeta;
 //    QAreaSeries *series;
 
     QLineSeries *series0;
@@ -88,9 +98,15 @@ private:
     QLineSeries *series2;
     QLineSeries *series3;
 
+    QChart *barChart;
+    QChartView *barChartView;
+
     QBarSet *barset0;
     QBarSet *barset1;
     QBarSet *barset2;
+
+    QBarSeries *seriesX;
+    QBarCategoryAxis *axis;
 };
 
 #endif // R_COSTS_H

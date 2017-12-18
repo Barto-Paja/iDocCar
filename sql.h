@@ -40,8 +40,12 @@ public:
     void fuelInfo(int carId);
     int fuelInfoCount(int carId);
     bool fuelInfoQuest(int &fId, QString &fdate, float &fcon);
+    int fuelInfoQuest();
     //bool getCarName_C(QString &stream, int &idcar);
-    float fuelsCosts(int fuelType);
+    float fuelsCosts(int fuelType, int elderyear, int nowyear, int month);
+    float fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int carID);
+    float fuelQuantity(int fuelType, int elderyear, int nowyear, int month);
+    float fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int carID);
 
     //--- SQL errors --- // 
     void error();

@@ -1,7 +1,6 @@
 #include "r_costs.h"
 #include "ui_r_costs.h"
 
-#include <QBarCategoryAxis>
 #include <QDebug>
 
 r_Costs::r_Costs(QWidget *parent) :
@@ -26,50 +25,12 @@ r_Costs::r_Costs(QWidget *parent) :
     axisY = new QCategoryAxis();
 
     mainChart = new QChart();
-    mainChart->addSeries(series0);
+    chart0init();
 
+    barChart = new QChart();
+    chart1init();
 
     ui->gridLayoutWidget_2->setVisible(false);
-//------------------------------------------
-
-    series0->setName("Renault Laguna II");
-    series1->setName("CAT 352F 2017");
-
-               /*<< QPointF(1, 5) << QPointF(2, 1) << QPointF(4, 3) << QPointF(6, 5) << QPointF(8, 5);*/
-//       *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
-//                << QPointF(16, 4) << QPointF(18, 3);
-
-
-       QAreaSeries *series = new QAreaSeries(series0);
-       series->setName("Batman");
-       series->setBrush(Qt::NoBrush);
-       QPen pen(0x059605);
-       pen.setWidth(3);
-       qDebug() << pen.isSolid();
-       series->setPen(pen);
-
-//       QLinearGradient gradient(QPointF(0, 0), QPointF(0, 1));
-//       gradient.setColorAt(0.0, 0x3cc63c);
-//       gradient.setColorAt(1.0, 0x26f626);
-//       gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-//       series->setBrush(gradient);
-
-       mainChart->setTitle("Simple chart - średnie spalanie w ciągu miesiąca zestawienie roczne");
-       mainChart->createDefaultAxes();
-
-       //mainChart->setAxisX(axisX,series0);
-
-       mainChart->axisX()->setRange(0,12);
-       mainChart->axisY()->setRange(0,12);
-       mainChart->legend()->setVisible(true);
-
-
-       chartView = new QChartView(mainChart, ui->widget);
-       chartView->setRenderHint(QPainter::Antialiasing);
-//       ui->widget->resize((this->width()-5),(this->height()-5));
-       chartView->resize((ui->widget->width()-10),(ui->widget->height()-10));
-
-
 }
 
 r_Costs::~r_Costs()
@@ -87,7 +48,6 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     {
         combo->clear();
         connector->tankType(0); // dla diesla tu musi być 0
-        //connector->CarName();
         while (connector->getCarName(stream,i)) {
           combo->addItem(stream,i);
     }
@@ -96,16 +56,16 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     {
          combo->clear();
          connector->tankType(1); // dla Pb tu musi być 1
-         //connector->CarName();
          while (connector->getCarName(stream,i)) {
-         combo->addItem(stream,i);
-    }
+         combo->addItem(stream,i);}
+         connector->tankType(2);
+         while(connector->getCarName(stream,i)){ // dołożenie aut Pb+LPG
+         combo->addItem(stream,i);}
     }
     else if(tanktype==2)
     {
           combo->clear();
           connector->tankType(2); // dla Pb+LPG tu musi być 2
-          //connector->CarName();
           while (connector->getCarName(stream,i)) {
           combo->addItem(stream,i);
     }
@@ -119,7 +79,7 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
 }
 
 
-void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
+void r_Costs::loadSeries(QLineSeries *seriesN, int carId, int typeSeries)
 {
     QString date;
     int fuelId;
@@ -130,7 +90,7 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
     lS->fuelInfo(carId);
 
     seriesN->clear();
-    seriesN->append(0,6.0);
+
     while(lS->fuelInfoQuest(fuelId,date,fuelCon))
     {
         QDate temp_date;
@@ -146,52 +106,64 @@ void r_Costs::loadSeries(QLineSeries *seriesN, int carId)
         switch(month)
         {
         case 1:
-            seriesN->append((1+temp_day_v),fuelCon);
+            seriesN->append((0+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 2:
-            seriesN->append((2+temp_day_v),fuelCon);
+            seriesN->append((1+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 3:
-            seriesN->append((3+temp_day_v),fuelCon);
+            seriesN->append((2+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 4:
-            seriesN->append((4+temp_day_v),fuelCon);
+            seriesN->append((3+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 5:
-            seriesN->append((5+temp_day_v),fuelCon);
+            seriesN->append((4+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 6:
-            seriesN->append((6+temp_day_v),fuelCon);
+            seriesN->append((5+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 7:
-            seriesN->append((7+temp_day_v),fuelCon);
+            seriesN->append((6+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 8:
-            seriesN->append((8+temp_day_v),fuelCon);
+            seriesN->append((7+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 9:
-            seriesN->append((9+temp_day_v),fuelCon);
+            seriesN->append((8+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 10:
-            seriesN->append((10+temp_day_v),fuelCon);
+            seriesN->append((9+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 11:
-            seriesN->append((11+temp_day_v),fuelCon);
+            seriesN->append((10+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         case 12:
-            seriesN->append((12+temp_day_v),fuelCon);
+            seriesN->append((11+temp_day_v),fuelCon);
             setyMaxMin(fuelCon);
+            qDebug() << QString::number(yMin) + " " + QString::number(yMax);
             break;
         default:
             break;
@@ -214,7 +186,9 @@ void r_Costs::setXAxis()
     axisX->append("Październik",10);
     axisX->append("Listopad",11);
     axisX->append("Grudzień",12);
-    //mainChart->axisX()->setRange(0, 12);
+    mainChart->setAxisX(axisX,series0);
+    //mainChart->axisX()->setLabelsAngle(90);
+    mainChart->axisX()->setRange(0,12);
 }
 
 void r_Costs::setYAxis()
@@ -222,24 +196,175 @@ void r_Costs::setYAxis()
     axisY->setRange(yMin,yMax);
 }
 
-void r_Costs::setyMaxMin(float v)
+void r_Costs::setyMinMax(float v)
 {
-    if(v<yMin)
+    if(v<=yMin)
     {
         yMin=v;
     }
-    else if(v>yMax)
+    else if(v>=yMax)
     {
         yMax=v;
     }
-    //mainChart->axisY()->setRange(yMin,yMax);
 }
 
-void r_Costs::loadBars(QBarSet *barsetN)
+void r_Costs::setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2)
+{
+    if(yMin<yMin1 && yMin<yMin2)
+    {
+        if(yMin1<yMin2)
+        {
+            yMin=yMin1;
+        }
+        else
+        {
+            yMin=yMin2;
+        }
+    }
+    else
+    {
+        if(yMin1<yMin2)
+        {
+            yMin=yMin1;
+        }
+        else
+        {
+            yMin=yMin2;
+        }
+    }
+
+    if(yMax>yMax1 && yMax>yMax2)
+    {
+        if(yMax1>yMax2)
+        {
+            yMax=yMax1;
+        }
+        else
+        {
+            yMax=yMax2;
+        }
+    }
+    else
+    {
+        if(yMax1>yMax2)
+        {
+            yMax=yMax1;
+        }
+        else
+        {
+            yMax=yMax2;
+        }
+    }
+}
+
+void r_Costs::setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, float yMin3, float yMax3)
+{
+    if(yMin<yMin1 && yMin<yMin2 && yMin<yMin3)
+    {
+        int temp=0;
+        if(yMin1<yMin2)
+        {
+            temp=yMin1;
+        }
+        else
+        {
+            temp=yMin2;
+        }
+
+        if(temp<yMin3)
+        {
+            yMin=temp;
+        }
+        else
+        {
+            yMin=yMin3;
+        }
+    }
+
+    if(yMax>yMax1 && yMax>yMax2 && yMax>yMax3)
+    {
+        int temp=0;
+        if(yMax1>yMax2)
+        {
+            temp = yMax1;
+        }
+        else
+        {
+            temp = yMax2;
+        }
+
+        if(temp>yMax3)
+        {
+            yMax=temp;
+        }
+        else
+        {
+            yMax= yMax3;
+        }
+    }
+}
+
+void r_Costs::setyMaxMin(float v, float &tempyMin, float &tempyMax)
+{
+    if(v<=tempyMin)
+    {
+        tempyMin=v;
+    }
+    else if(v>=tempyMax)
+    {
+        tempyMax=v;
+    }
+}
+
+void r_Costs::loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart)
 {
     SQL *bS = new SQL;
-    qDebug() << QString::number(bS->fuelsCosts(1));
-    *barsetN << (bS->fuelsCosts(1));
+    if(typeChart==1)
+    {
+        int i=1;
+        while (i<13) {
+            *barsetN << (bS->fuelsCosts(fuelType,elderyear,nowyear,i));
+            setyMaxMin(bS->fuelsCosts(fuelType,elderyear,nowyear,i));
+            ++i;
+        }
+    }
+    else
+    {
+        int i=1;
+        while(i<13)
+        {
+            *barsetN <<(bS->fuelQuantity(fuelType,elderyear,nowyear,i));
+            setyMaxMin(bS->fuelQuantity(fuelType,elderyear,nowyear,i));
+            ++i;
+        }
+    }
+
+
+}
+
+void r_Costs::loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID)
+{
+    SQL *bS = new SQL;
+    //qDebug() << "Suma: " + QString::number(bS->fuelsCosts(1,2017,4));
+    if(typeChart==1)
+    {
+        int i=1;
+        while (i<13) {
+            *barsetN << (bS->fuelsCosts(fuelType,elderyear,nowyear,i,carID));
+            setyMaxMin(bS->fuelsCosts(fuelType,elderyear,nowyear,i,carID));
+            ++i;
+        }
+    }
+    else
+    {
+        int i=1;
+        while(i<13)
+        {
+            *barsetN <<(bS->fuelQuantity(fuelType,elderyear,nowyear,i,carID));
+            setyMaxMin(bS->fuelQuantity(fuelType,elderyear,nowyear,i,carID));
+            ++i;
+        }
+    }
 }
 
 void r_Costs::on_chb_on_clicked()
@@ -331,32 +456,78 @@ void r_Costs::on_pushButton_clicked()
 
 void r_Costs::on_cb_carid_currentIndexChanged(const QString &arg1)
 {
+    QDate today;
+    int td = today.currentDate().year();
+
+
+    SQL *tempCon = new SQL;
+
     int i;
     i = ui->cb_carid->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
 
+    yMax=1;yMin=0;
+
     loadSeries(series0,i);
     series0->setName(ui->cb_carid->currentText());
+    mainChart->axisY()->setRange(yMin,yMax);
     chartView->repaint();
     ui->widget->update();
+
+    tempCon->fuelInfo(i);
+
+    barset0->remove(1,12);
+
+    yMax=1;yMin=0;
+    loadBars(barset0,td,td,tempCon->fuelInfoQuest(),i);
+    barset0->setLabel(ui->cb_carid->currentText());
+    barChart->axisY()->setRange(yMin,yMax);
+    barChart->setTitle("Zakup paliw w Litrach");
+    barChartView->repaint();
+    ui->widget_2->update();
 }
 
 void r_Costs::on_cb_carid_2_currentIndexChanged(const QString &arg1)
 {
+    QDate today;
+    int td = today.currentDate().year();
+
+    SQL *tempCon = new SQL;
+
     int i;
     i = ui->cb_carid_2->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
 
+//    yMax=1;yMin=0;
 
     loadSeries(series1,i);
     series1->setName(ui->cb_carid_2->currentText());
     chartView->repaint(); // <-- tutaj ma ładować 2 serie
     ui->widget->update();
+
+    tempCon->fuelInfo(i);
+
+    barset1->remove(1,12);
+
+//    yMax=1;yMin=1;
+    loadBars(barset1,td,td,tempCon->fuelInfoQuest(),i);
+    barset1->setLabel(ui->cb_carid->currentText());
+    barChart->axisY()->setRange(yMin,yMax);
+    //barChart->setTitle("Zakup paliw w Litrach");
+    barChartView->repaint();
+    ui->widget_2->update();
 }
 
 
 void r_Costs::on_cb_carid_3_currentIndexChanged(const QString &arg1)
 {
+    QDate today;
+    int td = today.currentDate().year();
+
+    SQL *tempCon = new SQL;
+
+//    yMax=1;yMin=0;
+
     int i;
     i = ui->cb_carid_3->currentData().toInt();
     qDebug() << "reaguje: " + QString::number(i);
@@ -365,6 +536,19 @@ void r_Costs::on_cb_carid_3_currentIndexChanged(const QString &arg1)
     series2->setName(ui->cb_carid_3->currentText());
     chartView->repaint(); // <-- tutaj ma ładować 3 serie
     ui->widget->update();
+
+    tempCon->fuelInfo(i);
+
+//    yMax=1;yMin=1;
+
+    barset2->remove(1,12);
+
+    loadBars(barset2,td,td,tempCon->fuelInfoQuest(),i);
+    barset2->setLabel(ui->cb_carid->currentText());
+    barChart->axisY()->setRange(yMin,yMax);
+    //barChart->setTitle("Zakup paliw w Litrach");
+    barChartView->repaint();
+    ui->widget_2->update();
 }
 
 void r_Costs::on_pushButton_2_clicked()
@@ -372,39 +556,107 @@ void r_Costs::on_pushButton_2_clicked()
     ui->widget->grab().save("image.jpg");
 }
 
-void r_Costs::on_b_fuel_clicked()
+void r_Costs::chart0init()
 {
-    t_Cost = 0;
-    mainChart->setTitle("Średnie spalanie paliwa w ciągu roku");
-    ui->widget->update();
+    mainChart->addSeries(series0);
+    mainChart->createDefaultAxes();
+    mainChart->legend()->setVisible(true);
+    mainChart->setTitle("Średnia spalania w ciągu roku");
+    setXAxis();
+    chartView = new QChartView(mainChart, ui->widget);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    //chartView->chart()->setTheme(QChart::ChartThemeBlueNcs);
+    chartView->resize((ui->widget->width()-10),(ui->widget->height()-10));
 }
 
-void r_Costs::on_b_workshop_clicked()
+void r_Costs::chart1init()
 {
-    t_Cost = 1;
-    mainChart->setTitle("Koszty konserwacji auta w ciągu roku");
-    ui->widget->update();
-}
 
-void r_Costs::on_b_fuels_clicked()
-{
-    t_Cost = 2;
-    loadBars(barset0);
-    QBarSeries *seriesX = new QBarSeries();
+//    loadBars(barset0,today.currentDate().year(),today.currentDate().year(),1,1);
+//    loadBars(barset1,today.currentDate().year(),today.currentDate().year(),2,1);
+//    loadBars(barset2,today.currentDate().year(),today.currentDate().year(),0,1);
+
+    seriesX = new QBarSeries();
     seriesX->append(barset0);
+    seriesX->append(barset1);
+    seriesX->append(barset2);
 
-    mainChart->setTitle("Zakup paliw");
-    mainChart->removeAllSeries();
-    mainChart->addSeries(seriesX);
+    barChart->setTitle("Zakup paliw w PLN");
+    barChart->addSeries(seriesX);
+
+    barChartView = new QChartView(barChart,ui->widget_2);
+    barChartView->setRenderHint(QPainter::Antialiasing);
+    barChartView->resize((ui->widget_2->width()-10),(ui->widget_2->height()-10));
 
     QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    categories << "Styczeń" << "Luty" << "Marzec" << "Kwiecień" << "Maj" << "Czerwiec" << "Lipiec" << "Sierpień"
+               << "Wrzesień" << "Październik" << "Listopad" << "Grudzień";
 
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
+    axis = new QBarCategoryAxis();
     axis->append(categories);
-    mainChart->createDefaultAxes();
-    mainChart->setAxisX(axis, seriesX);
+    barChart->createDefaultAxes();
+    barChart->setAxisX(axis, seriesX);
 
-    ui->widget->repaint();
-    ui->widget->update();
+    barChartView->repaint();
+    ui->widget_2->repaint();
+    ui->widget_2->update();
+}
+
+
+void r_Costs::on_b_search_clicked()
+{
+    barset0->remove(1,12);
+    barset1->remove(1,12);
+    barset2->remove(1,12);
+
+    int elder = ui->dateEdit->date().year();
+    int younger = ui->dateEdit_2->date().year();
+    if(younger-elder<0)
+    {
+        QMessageBox::information(0,"Błąd","Data 'Od' jest młodsza od daty 'Do'");
+    }
+    else
+    {
+        loadBars(barset0,elder,younger,1,1);
+        loadBars(barset1,elder,younger,2,1);
+        loadBars(barset2,elder,younger,0,1);
+
+        barChart->setTitle("Zakup paliw w PLN");
+        barChartView->repaint();
+        ui->widget_2->repaint();
+        ui->widget_2->update();
+    }
+
+
+}
+
+void r_Costs::on_b_quantity_clicked()
+{
+    barset0->remove(0,12);
+    barset1->remove(0,12);
+    barset2->remove(0,12);
+
+    barChart->axisY()->setRange(-1,1);
+    yMax = 1;
+    yMin = 0;
+
+    int elder = ui->dateEdit->date().year();
+    int younger = ui->dateEdit_2->date().year();
+    if(younger-elder<0)
+    {
+        QMessageBox::information(0,"Błąd","Data 'Od' jest młodsza od daty 'Do'");
+    }
+    else
+    {
+        loadBars(barset0,elder,younger,1,2);
+        loadBars(barset1,elder,younger,2,2);
+        loadBars(barset2,elder,younger,0,2);
+
+        barChart->axisY()->setRange(yMin,yMax);
+
+        barChart->setTitle("Zakup paliw w Litrach");
+        barChartView->repaint();
+        ui->widget_2->repaint();
+        ui->widget_2->update();
+    }
 }
