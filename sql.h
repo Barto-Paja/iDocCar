@@ -38,6 +38,7 @@ public:
     //--- For Charts --- //
     void tankType(int tankid);
     void fuelInfo(int carId);
+    void fuelInfo(int carId, int elderyear, int nowyear, int tt);
     int fuelInfoCount(int carId);
     bool fuelInfoQuest(int &fId, QString &fdate, float &fcon);
     int fuelInfoQuest();

@@ -254,6 +254,14 @@ void SQL::fuelInfo(int carId)
     query->exec();
 }
 
+void SQL::fuelInfo(int carId, int elderyear, int nowyear, int tt)
+{
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231'");
+    query->bindValue(0,carId);
+    query->bindValue(1,tt);
+    query->exec();
+}
+
 int SQL::fuelInfoCount(int carId)
 {
     query->prepare("SELECT COUNT(1) FROM (SELECT * FROM `fuel` where CARID = :carid) AS tempTable");
@@ -279,6 +287,7 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
         return true;
     }
     else
+        qDebug() << "Nima nic";
         return false;
 }
 
@@ -296,13 +305,13 @@ float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month)
     {
         temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
-        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        //qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     else
     {
         temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
-        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        //qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     query->prepare("SELECT price FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2);
     query->bindValue(0,fuelType);
@@ -312,7 +321,7 @@ float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month)
         cost=cost+query->value(0).toFloat();
     }
 
-    qDebug() << QString::number(cost);
+    //qDebug() << QString::number(cost);
     return cost;
 }
 
@@ -324,13 +333,13 @@ float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int c
     {
         temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
-        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        //qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     else
     {
         temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
-        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        //qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     query->prepare("SELECT price FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2+"AND carid =:car");
     query->bindValue(0,fuelType);
@@ -341,7 +350,7 @@ float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int c
         cost=cost+query->value(0).toFloat();
     }
 
-    qDebug() << QString::number(cost);
+    //qDebug() << QString::number(cost);
     return cost;
 }
 

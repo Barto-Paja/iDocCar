@@ -61,7 +61,8 @@ private:
     void chart1init();
 
     void loadComboBox(int tanktype, QComboBox *combo);
-    void loadSeries(QLineSeries *seriesN, int carId, int typeSeries);
+    void loadSeries(QLineSeries *seriesN, int carId, int typeSeries, float & temp_ymin, float & temp_ymax, int elderyear, int nowyear);
+    void loadSeries(QLineSeries *seriesN, int carId, int tankType, float & temp_ymin, float & temp_ymax);
     void setXAxis();
     void setYAxis();
     void setyMinMax(float v);
@@ -69,20 +70,25 @@ private:
     void setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, float yMin3, float yMax3);
     void setyMaxMin(float v, float &tempyMin, float &tempyMax);
 
-    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart);
-    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID);
+    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, float &temp_ymin, float &temp_ymax);
+    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID, float &temp_ymin, float &temp_ymax);
 
     SQL *connector;
 
     //--- Axises ---
 
-    float yMax = 0;
+    float yMax = 1;
     float yMin = 0;
 
+
+    float tmp_yMin1 = 0, tmp_yMin2 = 0, tmp_yMin3 = 0;
+    float tmp_yMax1 = 1, tmp_yMax2 = 1, tmp_yMax3 = 1;
+
     float temp_yMin1 = 0, temp_yMin2 = 0, temp_yMin3 = 0;
-    float temp_yMax1 = 0, temp_yMax2 = 0, temp_yMax3 = 0;
+    float temp_yMax1 = 1, temp_yMax2 = 1, temp_yMax3 = 1;
 
     int t_Cost =-1;
+    int tankTyp =-1; // 0 - ON, 1 - PB, 2 - PB+LPG
 
     QCategoryAxis *axisX;
     QCategoryAxis *axisY;
