@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     mainmenugui.cpp \
     newcar.cpp \
     newtank.cpp \
-    workshop.cpp \
     reg_user.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,8 +29,8 @@ HEADERS  += mainwindow.h \
     mainmenugui.h \
     newcar.h \
     newtank.h \
-    workshop.h \
     reg_user.h
+
 
 FORMS += \
     r_costs.ui \
@@ -39,7 +38,6 @@ FORMS += \
     mainmenugui.ui \
     newcar.ui \
     newtank.ui \
-    workshop.ui \
     reg_user.ui
 
 RESOURCES += \

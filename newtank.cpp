@@ -9,7 +9,8 @@ newTank::newTank(QWidget *parent) :
     connector = new SQL();
 
     ui->cb_tanktype->clear();
-    ui->cb_tanktype->addItem("ON/Pb",1);
+    ui->cb_tanktype->addItem("ON",0);
+    ui->cb_tanktype->addItem("Pb",1);
     ui->cb_tanktype->addItem("LPG",2);
 
     loadComboBox();
@@ -48,14 +49,45 @@ void newTank::on_b_send_clicked()
       {
           QString date = ui->dateEdit->date().toString("yyyy-MM-dd");
 
-          if(ui->cb_tanktype->currentData()==1)
+          if(ui->cb_tanktype->currentData().toInt()==0)
           {
-            connector->insert_fuel(date,ui->le_fuel->text().toFloat(),ui->le_price->text().toFloat(),ui->le_milage->text().toInt(),cont,1,ui->le_notes->text(),ui->cb_carid->currentData().toInt());
-            QMessageBox::information(0,"Dodwanie tankowania","Tankowanie dodane pomyślnie");
-            this->close();
-            this->deleteLater();
+              connector->fuelInfo(ui->cb_carid->currentData().toInt());
+
+              if(connector->fuelInfoQuest()==0)
+              {
+                  connector->insert_fuel(date,ui->le_fuel->text().toFloat(),ui->le_price->text().toFloat(),ui->le_milage->text().toInt(),cont,0,ui->le_notes->text(),ui->cb_carid->currentData().toInt());
+                  QMessageBox::information(0,"Dodwanie tankowania","Tankowanie dodane pomyślnie");
+                  this->close();
+                  this->deleteLater();
+              }
+              else
+              {
+                  QMessageBox::information(0,"Dodwanie tankowania","Dodawanie tankowania nie powiodło się - auto nie używa ON!");
+                  this->close();
+                  this->deleteLater();
+              }
+
+
           }
-          else
+          else if(ui->cb_tanktype->currentData().toInt()==1)
+          {
+
+            connector->fuelInfo(ui->cb_carid->currentData().toInt());
+            if(connector->fuelInfoQuest()>=1)
+            {
+                connector->insert_fuel(date,ui->le_fuel->text().toFloat(),ui->le_price->text().toFloat(),ui->le_milage->text().toInt(),cont,1,ui->le_notes->text(),ui->cb_carid->currentData().toInt());
+                QMessageBox::information(0,"Dodwanie tankowania","Tankowanie dodane pomyślnie");
+                this->close();
+                this->deleteLater();
+            }
+            else
+            {
+                QMessageBox::information(0,"Dodwanie tankowania","Dodawanie tankowania nie powiodło się - auto nie używa Pb!");
+                this->close();
+                this->deleteLater();
+            }
+          }
+          else if(ui->cb_tanktype->currentData().toInt()==2)
           {
              connector->insert_fuel(date,ui->le_fuel->text().toFloat(),ui->le_price->text().toFloat(),ui->le_milage->text().toInt(),contribution,2,ui->le_notes->text(),ui->cb_carid->currentData().toInt());
              QMessageBox::information(0,"Dodwanie tankowania","Tankowanie dodane pomyślnie");

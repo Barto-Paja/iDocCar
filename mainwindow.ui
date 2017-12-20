@@ -250,7 +250,7 @@
         </font>
        </property>
        <property name="text">
-        <string>iDocCar</string>
+        <string>iStatCar</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -293,7 +293,7 @@
      <x>0</x>
      <y>0</y>
      <width>786</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

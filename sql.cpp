@@ -1,6 +1,6 @@
 #include "sql.h"
 
-#include <QMessageBox>
+
 
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
@@ -48,32 +48,49 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
     insert.bindValue(10,userId);
     insert.exec();
 
-    qDebug() << insert.lastQuery();
-    qDebug() << insert.lastError().text();
-
     insert.prepare("SELECT id from cars order by id DESC");
     insert.exec();
     insert.first();
 
-    qDebug() << insert.lastQuery();
-    qDebug() << insert.lastError().text();
-
     int idcar = insert.value(0).toInt();
 
-    qDebug() << idcar;
-
-    qDebug() << date.toString("yyyy-MM-dd");
     QString stream = date.toString("yyyy-MM-dd");
 
-    insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
-                   "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','Note',:CARID)");
-    insert.bindValue(0,stream);
-    insert.bindValue(1,MILAGE);
-    insert.bindValue(2,idcar);
-    insert.exec();
+    if(TANKS==0)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','0','First System Tank for ON',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
+    else if(TANKS==1)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','First System Tank for Pb',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
+    else if(TANKS==2)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','First System Tank for Pb',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
 
-    qDebug() << insert.lastQuery();
-    qDebug() << insert.lastError().text();
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','2','First System Tank for LPG',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
+ 
 }
 
 bool SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL)
@@ -249,6 +266,14 @@ void SQL::fuelInfo(int carId)
     query->exec();
 }
 
+void SQL::fuelInfo(int carId, int elderyear, int nowyear, int tt)
+{
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231'");
+    query->bindValue(0,carId);
+    query->bindValue(1,tt);
+    query->exec();
+}
+
 int SQL::fuelInfoCount(int carId)
 {
     query->prepare("SELECT COUNT(1) FROM (SELECT * FROM `fuel` where CARID = :carid) AS tempTable");
@@ -274,7 +299,128 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
         return true;
     }
     else
+        qDebug() << "Nima nic";
         return false;
+}
+
+int SQL::fuelInfoQuest()
+{
+    query->first();
+    return query->value(6).toInt();
+}
+
+float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month)
+{
+    int cost =0;
+    QString temp_numb, temp_numb2;
+    if(month < 10)
+    {
+        temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
+        //qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    else
+    {
+        temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
+        //qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    query->prepare("SELECT price FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2);
+    query->bindValue(0,fuelType);
+    query->exec();
+    while(query->next())
+    {
+        cost=cost+query->value(0).toFloat();
+    }
+
+    //qDebug() << QString::number(cost);
+    return cost;
+}
+
+float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int carID)
+{
+    int cost =0;
+    QString temp_numb, temp_numb2;
+    if(month < 10)
+    {
+        temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
+        //qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    else
+    {
+        temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
+        //qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    query->prepare("SELECT price FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2+"AND carid =:car");
+    query->bindValue(0,fuelType);
+    query->bindValue(1,carID);
+    query->exec();
+    while(query->next())
+    {
+        cost=cost+query->value(0).toFloat();
+    }
+
+    //qDebug() << QString::number(cost);
+    return cost;
+}
+
+float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month)
+{
+    int fuel =0;
+    QString temp_numb, temp_numb2;
+    if(month < 10)
+    {
+        temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
+        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    else
+    {
+        temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
+        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    query->prepare("SELECT fuel FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2);
+    query->bindValue(0,fuelType);
+    query->exec();
+    while(query->next())
+    {
+        fuel=fuel+query->value(0).toFloat();
+    }
+
+    qDebug() << QString::number(fuel);
+    return fuel;
+}
+
+float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int carID)
+{
+    int fuel =0;
+    QString temp_numb, temp_numb2;
+    if(month < 10)
+    {
+        temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
+        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    else
+    {
+        temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
+        temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
+        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+    }
+    query->prepare("SELECT fuel FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2+"AND carid =:car");
+    query->bindValue(0,fuelType);
+    query->bindValue(1,carID);
+    query->exec();
+    while(query->next())
+    {
+        fuel=fuel+query->value(0).toFloat();
+    }
+
+    qDebug() << QString::number(fuel);
+    return fuel;
 }
 
 void SQL::error()
