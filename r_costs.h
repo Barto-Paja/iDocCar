@@ -54,6 +54,8 @@ private slots:
 
     void on_b_quantity_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::r_Costs *ui;
 
@@ -62,7 +64,6 @@ private:
 
     void loadComboBox(int tanktype, QComboBox *combo);
     void loadSeries(QLineSeries *seriesN, int carId, int typeSeries, float & temp_ymin, float & temp_ymax, int elderyear, int nowyear);
-    void loadSeries(QLineSeries *seriesN, int carId, int tankType, float & temp_ymin, float & temp_ymax);
     void setXAxis();
     void setYAxis();
     void setyMinMax(float v);
@@ -70,7 +71,6 @@ private:
     void setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, float yMin3, float yMax3);
     void setyMaxMin(float v, float &tempyMin, float &tempyMax);
 
-    void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, float &temp_ymin, float &temp_ymax);
     void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID, float &temp_ymin, float &temp_ymax);
 
     SQL *connector;
@@ -89,6 +89,10 @@ private:
 
     int t_Cost =-1;
     int tankTyp =-1; // 0 - ON, 1 - PB, 2 - PB+LPG
+    int elder = -1;
+    int now = -1;
+    int typeChart=1;
+
 
     QCategoryAxis *axisX;
     QCategoryAxis *axisY;

@@ -48,41 +48,48 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
     insert.bindValue(10,userId);
     insert.exec();
 
-//    qDebug() << insert.lastQuery();
-//    qDebug() << insert.lastError().text();
-
     insert.prepare("SELECT id from cars order by id DESC");
     insert.exec();
     insert.first();
 
-//    qDebug() << insert.lastQuery();
-//    qDebug() << insert.lastError().text();
-
     int idcar = insert.value(0).toInt();
 
-//    qDebug() << idcar;
-
-//    qDebug() << date.toString("yyyy-MM-dd");
     QString stream = date.toString("yyyy-MM-dd");
 
-    insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
-                   "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','Note',:CARID)");
-    insert.bindValue(0,stream);
-    insert.bindValue(1,MILAGE);
-    insert.bindValue(2,idcar);
-    insert.exec();
+    if(TANKS==0)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','0','First System Tank for ON',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
+    else if(TANKS==1)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','First System Tank for Pb',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
+    else if(TANKS==2)
+    {
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','1','First System Tank for Pb',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
 
-//    qDebug() << insert.lastQuery();
-//    qDebug() << insert.lastError().text();
-
-
-//    if(!insert.exec()){
-//        qDebug() << "Błąd dodania pojazdu";
-
-//        return false;
-//    }
-//    else
-//        return true;
+        insert.prepare("INSERT INTO fuel (`DATE`, `FUEL`, `PRICE`, `MILAGE`, `COMBUSTION`, `TANK`, `NOTES`, `CARID`) "
+                       "VALUES (:DATE,'0','0',:MILAGE,'0.00','2','First System Tank for LPG',:CARID)");
+        insert.bindValue(0,stream);
+        insert.bindValue(1,MILAGE);
+        insert.bindValue(2,idcar);
+        insert.exec();
+    }
 
 }
 
