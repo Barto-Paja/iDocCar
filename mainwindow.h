@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <reg_user.h>
+
 
 #include <sql.h>
 #include <mainmenugui.h>
