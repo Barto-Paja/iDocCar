@@ -33,3 +33,9 @@ void MainMenuGUI::on_pushButton_3_clicked()
     r_Costs *form = new r_Costs;
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_4_clicked()
+{
+    newRepair *form = new newRepair;
+    form->show();
+}

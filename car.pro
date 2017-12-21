@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     mainmenugui.cpp \
     newcar.cpp \
     newtank.cpp \
-    reg_user.cpp
+    reg_user.cpp \
+    newrepair.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     mainmenugui.h \
     newcar.h \
     newtank.h \
-    reg_user.h
+    reg_user.h \
+    newrepair.h
 
 
 FORMS += \
@@ -38,7 +40,8 @@ FORMS += \
     mainmenugui.ui \
     newcar.ui \
     newtank.ui \
-    reg_user.ui
+    reg_user.ui \
+    newrepair.ui
 
 RESOURCES += \
     gui_icons.qrc
