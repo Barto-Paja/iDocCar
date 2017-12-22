@@ -423,6 +423,27 @@ float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int
     return fuel;
 }
 
+void SQL::CostNames()
+{
+    query->prepare("SELECT * FROM costtypes");
+    query->exec();
+}
+
+bool SQL::getCostName(QString &stream, int &idCost)
+{
+    if(query->next())
+    {
+        QString result = query->value(1).toString();
+        stream = result;
+        qDebug() << stream;
+        idCost = query->value(0).toInt();
+        qDebug() << idCost;
+        return true;
+    }
+    else
+        return false;
+}
+
 void SQL::error()
 {
     QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");

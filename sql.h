@@ -47,6 +47,10 @@ public:
     float fuelQuantity(int fuelType, int elderyear, int nowyear, int month);
     float fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int carID);
 
+    //--- For Workshop --- //
+    void CostNames();
+    bool getCostName(QString &stream, int &idCost);
+
     //--- SQL errors --- // 
     void error();
 
