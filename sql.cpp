@@ -444,6 +444,81 @@ bool SQL::getCostName(QString &stream, int &idCost)
         return false;
 }
 
+QString SQL::CarName(int carid)
+{
+    query->prepare("SELECT CONCAT(mark,' ',model) FROM cars WHERE id =:carid");
+    query->bindValue(0,carid);
+    query->exec();
+    query->first();
+    return query->value(0).toString();
+
+}
+
+QString SQL::getPlate(int carid)
+{
+    query->prepare("SELECT plate FROM cars WHERE id =:carid");
+    query->bindValue(0,carid);
+    query->exec();
+    query->first();
+    return query->value(0).toString();
+}
+
+QString SQL::fuelWInfo(int carid)
+{
+    query->prepare("SELECT tank from cars where id =:carid");
+    query->bindValue(0,carid);
+    query->exec();
+    query->first();
+    int temp = query->value(0).toInt();
+    if(temp==0)
+    {
+        return "Diesel";
+    }
+    else if(temp==1)
+    {
+        return "Pb";
+    }
+    else if(temp==2)
+    {
+        return "Pb+LPG";
+    }
+    else
+        return "error: błąd baku w bazie";
+}
+
+float SQL::fuelCountCost(int carid, int tType)
+{
+    QDate today;
+    QString td = today.currentDate().toString("yyyy");
+    query->prepare("select price from fuel where carid =:carid and tank =:ttype and date between '"+td+"0100' and '"+td+"1231'");
+    query->bindValue(0,carid);
+    query->bindValue(1,tType);
+    query->exec();
+    float cost=0;
+    while(query->next())
+    {
+        cost=cost+query->value(0).toInt();
+    }
+    return cost;
+}
+
+float SQL::costCountCost(int carid, int costtype)
+{
+    QDate today;
+    QString td = today.currentDate().toString("yyyy");
+    query->prepare("select cost from costs where carid =:carid and type =:type and date between '"+td+"0100' and '"+td+"1231'");
+    query->bindValue(0,carid);
+    query->bindValue(1,costtype);
+    query->exec();
+    float cost=0;
+    while(query->next())
+    {
+        cost=cost+query->value(0).toInt();
+    }
+    return cost;
+
+}
+
 void SQL::error()
 {
     QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");

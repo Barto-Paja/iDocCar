@@ -39,3 +39,9 @@ void MainMenuGUI::on_pushButton_4_clicked()
     newRepair *form = new newRepair;
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_5_clicked()
+{
+    r_Workshop *form = new r_Workshop;
+    form->show();
+}

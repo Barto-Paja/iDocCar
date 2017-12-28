@@ -8,6 +8,7 @@
 #include <newrepair.h>
 
 #include <r_costs.h>
+#include <r_workshop.h>
 
 #include <sql.h>
 
@@ -31,6 +32,8 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::MainMenuGUI *ui;

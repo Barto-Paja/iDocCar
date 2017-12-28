@@ -50,6 +50,11 @@ public:
     //--- For Workshop --- //
     void CostNames();
     bool getCostName(QString &stream, int &idCost);
+    QString CarName(int carid);
+    QString getPlate(int carid);
+    QString fuelWInfo(int carid);
+    float fuelCountCost(int carid, int tType);
+    float costCountCost(int carid, int costtype);
 
     //--- SQL errors --- // 
     void error();
