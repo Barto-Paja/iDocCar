@@ -193,6 +193,21 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>le_mark</tabstop>
+  <tabstop>le_model</tabstop>
+  <tabstop>le_plate</tabstop>
+  <tabstop>le_vin</tabstop>
+  <tabstop>de_year</tabstop>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>le_Tank1</tabstop>
+  <tabstop>le_Tank2</tabstop>
+  <tabstop>le_milage</tabstop>
+  <tabstop>b_send</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

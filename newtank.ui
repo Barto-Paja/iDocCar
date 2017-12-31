@@ -122,6 +122,16 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>le_milage</tabstop>
+  <tabstop>le_fuel</tabstop>
+  <tabstop>le_price</tabstop>
+  <tabstop>cb_tanktype</tabstop>
+  <tabstop>cb_carid</tabstop>
+  <tabstop>le_notes</tabstop>
+  <tabstop>b_send</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

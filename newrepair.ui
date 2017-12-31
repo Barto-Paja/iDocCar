@@ -128,6 +128,16 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>le_title</tabstop>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>cb_ctype</tabstop>
+  <tabstop>le_milage</tabstop>
+  <tabstop>le_cost</tabstop>
+  <tabstop>cb_carid</tabstop>
+  <tabstop>le_note</tabstop>
+  <tabstop>b_addnew</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

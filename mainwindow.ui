@@ -299,6 +299,15 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>le_login</tabstop>
+  <tabstop>le_pass</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>p_register</tabstop>
+  <tabstop>b_about</tabstop>
+  <tabstop>b_helpdesk</tabstop>
+ </tabstops>
  <resources>
   <include location="gui_icons.qrc"/>
  </resources>
