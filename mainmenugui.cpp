@@ -45,3 +45,9 @@ void MainMenuGUI::on_pushButton_5_clicked()
     r_Workshop *form = new r_Workshop;
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_6_clicked()
+{
+    admin *form_admin = new admin();
+    form_admin->show();
+}

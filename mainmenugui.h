@@ -11,6 +11,7 @@
 #include <r_workshop.h>
 
 #include <sql.h>
+#include <admin.h>
 
 namespace Ui {
 class MainMenuGUI;
@@ -34,6 +35,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
 
 private:
     Ui::MainMenuGUI *ui;

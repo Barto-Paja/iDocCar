@@ -59,6 +59,10 @@ public:
     //--- SQL errors --- // 
     void error();
 
+    //--- For admin --- //
+    bool getUsers(QString &stream, int &idUser);
+    void Users();
+
 
 private:
 

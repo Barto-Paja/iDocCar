@@ -525,6 +525,28 @@ void SQL::error()
 
 
 }
+
+bool SQL::getUsers(QString &stream, int &idUser)
+{
+    if(query->next())
+    {
+        QString result = query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString();
+        stream = result;
+        qDebug() << stream;
+        idUser = query->value(0).toInt();
+        qDebug() << idUser;
+        return true;
+    }
+    else
+        return false;
+}
+
+void SQL::Users()
+{
+    query->prepare("SELECT * FROM users");
+    query->exec();
+}
+
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 {
