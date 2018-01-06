@@ -44,5 +44,5 @@ void admin::loadCombobox(QComboBox *combo, int cbIndx)
 
 void admin::on_pushButton_2_clicked()
 {
-    delete ui;
+    this->~admin();
 }

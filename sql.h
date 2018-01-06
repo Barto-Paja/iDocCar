@@ -59,9 +59,14 @@ public:
     //--- SQL errors --- // 
     void error();
 
-    //--- For admin --- //
+    //--- For admin ---//
     bool getUsers(QString &stream, int &idUser);
     void Users();
+
+    //--- For ed_user ---//
+    bool getLvl(QString &stream, int &idLvl);
+    bool editUser(QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL);
+    void Lvl();
 
 
 private:

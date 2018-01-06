@@ -547,6 +547,32 @@ void SQL::Users()
     query->exec();
 }
 
+bool SQL::getLvl(QString &stream, int &idLvl)
+{
+    if(query->next())
+    {
+        QString result = query->value(1).toString();
+        stream = result;
+        qDebug() << stream;
+        idLvl = query->value(0).toInt();
+        qDebug() << idLvl;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool SQL::editUser(QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL)
+{
+    return true;
+}
+
+void SQL::Lvl()
+{
+    query->prepare("SELECT * FROM lvl");
+    query->exec();
+}
+
 // wyciąganie kosztów
 QSqlQuery SQL::list_costs(int carID, QString date_start, QString date_end)
 {

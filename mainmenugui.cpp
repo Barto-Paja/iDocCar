@@ -51,3 +51,9 @@ void MainMenuGUI::on_pushButton_6_clicked()
     admin *form_admin = new admin();
     form_admin->show();
 }
+
+void MainMenuGUI::on_pushButton_7_clicked()
+{
+    ed_user *form = new ed_user();
+    form->show();
+}
