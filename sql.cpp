@@ -18,8 +18,8 @@ SQL::SQL()
     db.setUserName(dbUser);
     db.setPassword(dbPass);
 
-    if(!db.open())
-        qDebug() << "Nieudane połączenie z bazą danych";
+    if(!db.open());
+//        qDebug() << "Nieudane połączenie z bazą danych";
 
     query = new QSqlQuery;
 }
@@ -106,10 +106,10 @@ bool SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, 
     insert.bindValue(5,LVL);
 
     if(!insert.exec()){
-        qDebug() << "Błąd dodania użytkownika";
+//        qDebug() << "Błąd dodania użytkownika";
         return false;
     }else{
-        qDebug() << "Dodano użytkownika";
+//        qDebug() << "Dodano użytkownika";
         return true;
     }
 }
@@ -128,8 +128,8 @@ void SQL::insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int 
     insert.bindValue(6,CARID);
 
 
-    if(!insert.exec())
-         qDebug() << "Błąd dodania kosztu";
+    if(!insert.exec());
+//         qDebug() << "Błąd dodania kosztu";
 }
 
 void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float COMBUSTION, int TANK, QString NOTES, int CARID)
@@ -218,9 +218,9 @@ bool SQL::getCarName(QString &stream, int &idcar)
     {
         QString result = query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString();
         stream = result;
-        qDebug() << stream;
+//        qDebug() << stream;
         idcar = query->value(0).toInt();
-        qDebug() << idcar;
+//       qDebug() << idcar;
         return true;
     }
     else
@@ -255,8 +255,8 @@ void SQL::tankType(int tankid)
     query->bindValue(1,tankid);
     query->exec();
 
-    qDebug() << query->lastQuery();
-    qDebug() << query->lastError().text();
+//    qDebug() << query->lastQuery();
+//    qDebug() << query->lastError().text();
 }
 
 void SQL::fuelInfo(int carId)
@@ -294,7 +294,7 @@ bool SQL::fuelInfoQuest(int &fId, QString &fdate, float &fcon)
         fdate=query->value(1).toString();
         fcon=query->value(5).toFloat();
 
-        qDebug() << fdate;
+//        qDebug() << fdate;
 
         return true;
     }
@@ -374,13 +374,13 @@ float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month)
     {
         temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
-        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+//        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     else
     {
         temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
-        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+//        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     query->prepare("SELECT fuel FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2);
     query->bindValue(0,fuelType);
@@ -390,7 +390,7 @@ float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month)
         fuel=fuel+query->value(0).toFloat();
     }
 
-    qDebug() << QString::number(fuel);
+//    qDebug() << QString::number(fuel);
     return fuel;
 }
 
@@ -402,13 +402,13 @@ float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int
     {
         temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
-        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+//        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     else
     {
         temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
-        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+//        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     query->prepare("SELECT fuel FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2+"AND carid =:car");
     query->bindValue(0,fuelType);
@@ -419,8 +419,40 @@ float SQL::fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int
         fuel=fuel+query->value(0).toFloat();
     }
 
-    qDebug() << QString::number(fuel);
+//    qDebug() << QString::number(fuel);
     return fuel;
+}
+
+double SQL::carTankInfo(int carId, int tankId)
+{
+    switch(tankId)
+    {
+    case 0:
+        query->prepare("SELECT tank1 FROM cars WHERE id =:carid");
+        query->bindValue(0,carId);
+        query->exec();
+        query->next();
+        return query->value(0).toFloat();
+        break;
+    case 1:
+        query->prepare("SELECT tank1 FROM cars WHERE id =:carid");
+        query->bindValue(0,carId);
+        query->exec();
+        query->next();
+        return query->value(0).toFloat();
+        break;
+    case 2:
+        query->prepare("SELECT tank2 FROM cars WHERE id =:carid");
+        query->bindValue(0,carId);
+        query->exec();
+        query->next();
+        return query->value(0).toFloat();
+        break;
+    default:
+        qDebug() << "Out of Range";
+        return -1;
+        break;
+    }
 }
 
 void SQL::CostNames()
@@ -435,9 +467,9 @@ bool SQL::getCostName(QString &stream, int &idCost)
     {
         QString result = query->value(1).toString();
         stream = result;
-        qDebug() << stream;
+//       qDebug() << stream;
         idCost = query->value(0).toInt();
-        qDebug() << idCost;
+//        qDebug() << idCost;
         return true;
     }
     else
@@ -532,9 +564,9 @@ bool SQL::getUsers(QString &stream, int &idUser)
     {
         QString result = query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString();
         stream = result;
-        qDebug() << stream;
+//        qDebug() << stream;
         idUser = query->value(0).toInt();
-        qDebug() << idUser;
+//        qDebug() << idUser;
         return true;
     }
     else
@@ -553,9 +585,9 @@ bool SQL::getLvl(QString &stream, int &idLvl)
     {
         QString result = query->value(1).toString();
         stream = result;
-        qDebug() << stream;
+//        qDebug() << stream;
         idLvl = query->value(0).toInt();
-        qDebug() << idLvl;
+//        qDebug() << idLvl;
         return true;
     }
     else
@@ -608,6 +640,6 @@ void SQL::load_config(QString &lhost, QString &luser, QString &lpass, QString &l
     in >> luser;
     in >> ldb;
     in >> lpass;
-    qDebug()<<lhost<<luser<<lpass<<ldb;
+//    qDebug()<<lhost<<luser<<lpass<<ldb;
     //nie moga byc puste pola w pliku bo sie krzaczy
 }

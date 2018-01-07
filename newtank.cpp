@@ -1,6 +1,8 @@
 #include "newtank.h"
 #include "ui_newtank.h"
 
+#include <QDebug>
+
 newTank::newTank(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::newTank)
@@ -36,14 +38,21 @@ void newTank::loadComboBox()
 
 void newTank::on_b_send_clicked()
 {
+
+
       int lastMilage = connector->lastMilage(ui->cb_carid->currentData().toInt());
       float contribution = (ui->le_fuel->text().toFloat()/(ui->le_milage->text().toInt()-lastMilage)*100);
       double cont = contribution;
       qDebug() << contribution << lastMilage;
+      double tankI = connector->carTankInfo(ui->cb_carid->currentData().toInt(),ui->cb_tanktype->currentData().toInt());
 
       if((ui->le_milage->text().toInt()-lastMilage)<0)
       {
          QMessageBox::information(0,"Przebieg","Czy na pewno wprowadziłeś poprawny przebieg? Ostatni przebieg w bazie dla tego auta to: "+QString::number(lastMilage)+"km");
+      }
+      else if(ui->le_fuel->text().toInt()>tankI)
+      {
+          QMessageBox::information(0,"Pojemność Baku","Czy na pewno wprowadziłeś poprawnie ilośc zatankowanego paliwa? Pojemnośc zbiornika tego auta to: "+QString::number(tankI)+" litrów");
       }
       else
       {

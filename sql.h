@@ -10,6 +10,8 @@
 #include <QFile>
 #include <QMessageBox>
 
+
+
 class SQL
 {
 public:
@@ -35,7 +37,7 @@ public:
     int lastMilage(int idcar);
 
 
-    //--- For Charts r_Costs --- //
+    //--- For Charts r_Costs and newTank--- //
     void tankType(int tankid);
     void fuelInfo(int carId);
     void fuelInfo(int carId, int elderyear, int nowyear, int tt);
@@ -46,6 +48,8 @@ public:
     float fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int carID);
     float fuelQuantity(int fuelType, int elderyear, int nowyear, int month);
     float fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int carID);
+    double carTankInfo(int carId, int tankId);
+
 
     //--- For Workshop --- //
     void CostNames();
@@ -68,6 +72,8 @@ public:
     bool editUser(QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL);
     void Lvl();
 
+
+    //--- Test Area ---//
 
 private:
 

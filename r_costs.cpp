@@ -278,7 +278,7 @@ void r_Costs::setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, flo
         {
             yMax= yMax3;
         }
-        qDebug() << "YMAX!!: " + QString::number(yMax);
+ //       qDebug() << "YMAX!!: " + QString::number(yMax);
     }
     else
     {
@@ -300,7 +300,7 @@ void r_Costs::setyMinMax(float yMin1, float yMax1, float yMin2, float yMax2, flo
         {
             yMax= yMax3;
         }
-        qDebug() << "YMAX!!: " + QString::number(yMax);
+//        qDebug() << "YMAX!!: " + QString::number(yMax);
     }
 }
 
@@ -309,12 +309,12 @@ void r_Costs::setyMaxMin(float v, float &tempyMin, float &tempyMax)
     if(v<=tempyMin)
     {
         tempyMin=v;
-        qDebug() << "TempMAx:" + QString::number(tempyMin);
+//        qDebug() << "TempMAx:" + QString::number(tempyMin);
     }
     else if(v>=tempyMax)
     {
         tempyMax=v;
-        qDebug() << "TempMIx:" + QString::number(tempyMax);
+//        qDebug() << "TempMIx:" + QString::number(tempyMax);
     }
 }
 
