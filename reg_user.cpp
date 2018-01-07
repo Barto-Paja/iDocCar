@@ -7,6 +7,12 @@ reg_user::reg_user(QWidget *parent) :
 {
     ui->setupUi(this);
     connector = new SQL();
+    ch_imie=0;
+    ch_nazwisko=0;
+    ch_mail=0;
+    ch_login=0;
+    ch_haslo=0;
+    ch_haslo_2=0;
 }
 
 reg_user::~reg_user()

@@ -149,7 +149,7 @@ void SQL::insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float C
     if(!insert.exec())
          qDebug() << "Błąd dodania tankowania" << insert.lastError();
 }
-//wyciąganie danych usera po kolumnie
+
 int SQL::select_login(QString id)
 {
     QSqlQuery pobieranie;
@@ -589,20 +589,109 @@ bool SQL::getLvl(QString &stream, int &idLvl)
         idLvl = query->value(0).toInt();
 //        qDebug() << idLvl;
         return true;
-    }
-    else
+    }else
         return false;
 }
 
-bool SQL::editUser(QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL)
+bool SQL::editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL)
 {
-    return true;
+    QSqlQuery update;
+    update.prepare("UPDATE users SET FIRST_NAME = :FNAME, LAST_NAME = :LNAME, "
+                   "PASS = :PASS, EMAIL = :EMAIL, LVL = :LVL WHERE ID = :ID_USER");
+    update.bindValue(0,FNAME);
+    update.bindValue(1,LNAME);
+    update.bindValue(2,PASS);
+    update.bindValue(3,EMAIL);
+    update.bindValue(4,LVL);
+    update.bindValue(5,id_user);
+
+    if(!update.exec()){
+        qDebug() << "Nie udało się edytować użytkownika";
+        return false;
+    }else{
+        qDebug() << "Edytowano użytkownika";
+        return true;
+    }
 }
 
 void SQL::Lvl()
 {
     query->prepare("SELECT * FROM lvl");
     query->exec();
+}
+
+QString SQL::select_u_fname(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT FIRST_NAME FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    if (select.first()){
+        return select.value(0).toString();
+    }else{
+        return "Error";
+    }
+}
+
+QString SQL::select_u_lname(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT LAST_NAME FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    if (select.first()){
+        return select.value(0).toString();
+    }else{
+        return "Error";
+    }
+}
+
+QString SQL::selec_u_mail(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT EMAIL FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    if (select.first()){
+        return select.value(0).toString();
+    }else{
+        return "Error";
+    }
+}
+
+QString SQL::select_u_pass(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT PASS FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    if (select.first()){
+        return select.value(0).toString();
+    }else{
+        return "Error";
+    }
+}
+
+int SQL::select_u_lvl(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT LVL FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    select.first();
+    return select.value(0).toInt();
+}
+
+bool SQL::del_user(int id)
+{
+    QSqlQuery del;
+    del.prepare("DELETE FROM users WHERE ID=:id");
+    del.bindValue(0,id);
+    if(del.exec()){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 // wyciąganie kosztów

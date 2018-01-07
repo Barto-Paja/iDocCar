@@ -57,3 +57,9 @@ void MainMenuGUI::on_pushButton_7_clicked()
     ed_user *form = new ed_user();
     form->show();
 }
+
+void MainMenuGUI::on_pushButton_8_clicked()
+{
+    reg_user *form_reg = new reg_user();
+    form_reg->show();
+}

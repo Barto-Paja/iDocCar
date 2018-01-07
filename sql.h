@@ -69,9 +69,14 @@ public:
 
     //--- For ed_user ---//
     bool getLvl(QString &stream, int &idLvl);
-    bool editUser(QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL);
+    bool editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL);
     void Lvl();
-
+    QString select_u_fname(int id);
+    QString select_u_lname(int id);
+    QString selec_u_mail(int id);
+    QString select_u_pass(int id);
+    int select_u_lvl(int id);
+    bool del_user(int id);
 
     //--- Test Area ---//
 
