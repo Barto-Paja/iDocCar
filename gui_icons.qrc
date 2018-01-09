@@ -2,4 +2,7 @@
     <qresource prefix="/main_ui">
         <file>images/car-insurance.png</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>images/data-analysis-symbol.png</file>
+    </qresource>
 </RCC>
