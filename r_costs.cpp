@@ -868,9 +868,9 @@ void r_Costs::on_pushButton_3_clicked()
    image.scaled(200,70,Qt::KeepAspectRatio);
    tc.insertImage(image,QString("Raport"));
 
-   tc.mergeBlockFormat(tbf1);
+   //tc.mergeBlockFormat(tbf1);
    //tc.setBlockFormat(tbf);
-   tc.insertText("Jakiś tekst");
+   //tc.insertText("Jakiś tekst");
 
    QPrinter printer(QPrinter::HighResolution); //= new QPrinter(QPrinter::HighResolution);
             printer.setOutputFormat(QPrinter::PdfFormat);

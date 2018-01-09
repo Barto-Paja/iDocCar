@@ -28,6 +28,8 @@ private slots:
 
     void on_p_register_clicked();
 
+    void on_b_helpdesk_clicked();
+
 private:
     Ui::MainWindow *ui;
 

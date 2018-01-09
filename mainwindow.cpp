@@ -1,6 +1,8 @@
 #include <mainwindow.h>
 #include "ui_mainwindow.h"
 
+#include <QDesktopServices>
+#include <QUrl>
 #include <QDate>
 #include <mainmenugui.h>
 
@@ -62,4 +64,9 @@ void MainWindow::on_p_register_clicked()
 {
     reg_user *form_reg = new reg_user();
     form_reg->show();
+}
+
+void MainWindow::on_b_helpdesk_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Barto-Paja/iDocCar/wiki/FirstAid-%5BPL%5D"));
 }
