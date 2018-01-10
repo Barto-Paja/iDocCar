@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Moduł Analiza v0.2</string>
   </property>
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
@@ -372,6 +372,13 @@
     </item>
     <item>
      <widget class="QComboBox" name="cb_carid"/>
+    </item>
+    <item>
+     <widget class="QDateEdit" name="dateEdit">
+      <property name="displayFormat">
+       <string>yyyy</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="b_load">

@@ -268,7 +268,7 @@ void SQL::fuelInfo(int carId)
 
 void SQL::fuelInfo(int carId, int elderyear, int nowyear, int tt)
 {
-    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231'");
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231' order by DATE asc");
     query->bindValue(0,carId);
     query->bindValue(1,tt);
     query->exec();
@@ -518,11 +518,11 @@ QString SQL::fuelWInfo(int carid)
         return "error: błąd baku w bazie";
 }
 
-float SQL::fuelCountCost(int carid, int tType)
+float SQL::fuelCountCost(int carid, int tType, QString date)
 {
     QDate today;
     QString td = today.currentDate().toString("yyyy");
-    query->prepare("select price from fuel where carid =:carid and tank =:ttype and date between '"+td+"0100' and '"+td+"1231'");
+    query->prepare("select price from fuel where carid =:carid and tank =:ttype and date between '"+date+"0100' and '"+date+"1231'");
     query->bindValue(0,carid);
     query->bindValue(1,tType);
     query->exec();

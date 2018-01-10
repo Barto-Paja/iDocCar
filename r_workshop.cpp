@@ -1,6 +1,9 @@
 #include "r_workshop.h"
 #include "ui_r_workshop.h"
 
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QtPrintSupport>
+
 r_Workshop::r_Workshop(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::r_Workshop)
@@ -24,7 +27,20 @@ r_Workshop::~r_Workshop()
 
 void r_Workshop::on_pushButton_clicked()
 {
-    ui->widget->grab().save("hihi.jpg");
+    auto tmp = ui->widget->grab();
+    QImage image = tmp.toImage();
+
+    QTextDocument doc;
+    QTextCursor tc(&doc);
+    tc.insertImage(image,QString("Raport"));
+
+    QPrinter printer(QPrinter::HighResolution); //= new QPrinter(QPrinter::HighResolution);
+             printer.setOutputFormat(QPrinter::PdfFormat);
+             printer.setOutputFileName("Raport roczny.pdf");
+             printer.setPaperSize(QSizeF(210,297),QPrinter::Millimeter);
+             printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
+     doc.print(&printer);
+
 }
 
 void r_Workshop::loadComboBox(QComboBox *combo)
@@ -51,25 +67,26 @@ void r_Workshop::on_b_load_clicked()
     ui->l_plate->setText(connector->getPlate(i));
     ui->l_vmilage->setText(QString::number(connector->lastMilage(i)));
     ui->l_vtanktype->setText(connector->fuelWInfo(i));
+    QString date = QString::number(ui->dateEdit->date().year());
 
     if(connector->fuelWInfo(i)=="Diesel")
     {
-        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,0)));
-        ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,0))+" zł");
-        w = connector->fuelCountCost(i,0);
+        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,0,date)));
+        ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,0,date))+" zł");
+        w = connector->fuelCountCost(i,0,date);
     }
     else if(connector->fuelWInfo(i)=="Pb")
     {
-        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1)));
-        ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,1))+" zł");
-        w = connector->fuelCountCost(i,1);
+        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1,date)));
+        ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,1,date))+" zł");
+        w = connector->fuelCountCost(i,1,date);
     }
     else if(connector->fuelWInfo(i)=="Pb+LPG")
     {
-        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1)));
-        ui->l_vfuel2->setText(QString::number(connector->fuelCountCost(i,2)));
+        ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1,date)));
+        ui->l_vfuel2->setText(QString::number(connector->fuelCountCost(i,2,date)));
 
-        float temp = connector->fuelCountCost(i,1) + connector->fuelCountCost(i,2);
+        float temp = connector->fuelCountCost(i,1,date) + connector->fuelCountCost(i,2,date);
         ui->l_vf1f2->setText(QString::number(temp)+" zł");
         w = temp;
     }
