@@ -35,6 +35,7 @@ r_Costs::r_Costs(QWidget *parent) :
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit_2->setDate(QDate::currentDate());
     ui->gridLayoutWidget_2->setVisible(false);
+
 }
 
 r_Costs::~r_Costs()
@@ -734,7 +735,6 @@ void r_Costs::on_b_search_clicked()
         barChartView->repaint();
         ui->widget_2->repaint();
         ui->widget_2->update();
-        ui->pushButton_3->setText("Paliwo w PLN");
     }
 
 
@@ -823,7 +823,6 @@ void r_Costs::on_b_quantity_clicked()
         barChartView->repaint();
         ui->widget_2->repaint();
         ui->widget_2->update();
-        ui->pushButton_3->setText("Paliwo w L");
     }
 
 
@@ -857,7 +856,7 @@ void r_Costs::on_pushButton_3_clicked()
    tc.insertImage(image2.scaled(512,512,Qt::KeepAspectRatio),"Test");
    tc.insertText("\n");
    tc.mergeCharFormat(tcf);
-   tc.insertText("Analiza v0.2 alpha - Raport");
+   tc.insertText("Analiza v0.3 alpha - Raport");
 
    tc.mergeBlockFormat(tbf1);
    tc.setBlockFormat(tbf);
@@ -877,5 +876,17 @@ void r_Costs::on_pushButton_3_clicked()
             printer.setOutputFileName("output.pdf");
             printer.setPaperSize(QSizeF(297,210),QPrinter::Millimeter);
             printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
-    doc.print(&printer);
+            doc.print(&printer);
+}
+
+void r_Costs::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+        case Qt::Key_Plus:
+            chartView->setRubberBand(QChartView::HorizontalRubberBand);
+            break;
+        case Qt::Key_Minus:
+            mainChart->zoomReset();
+        break;
+    }
 }

@@ -15,6 +15,7 @@
 #include <QtCharts/QBarSet>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QChartView>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -55,6 +56,10 @@ private slots:
     void on_b_quantity_clicked();
 
     void on_pushButton_3_clicked();
+
+protected:
+
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::r_Costs *ui;
