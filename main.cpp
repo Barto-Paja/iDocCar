@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
     // --- Dodanie obsługi formularzy --- //
 
     QApplication a(argc, argv);
+    a.addLibraryPath(QCoreApplication::applicationDirPath() +"/plugins/");
+
     MainWindow w;
     w.show();
 

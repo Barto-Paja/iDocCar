@@ -104,7 +104,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="gui_icons.qrc">:/main_ui/images/car-insurance.png</pixmap>
+        <pixmap resource="gui_icons.qrc">:/main_ui/images/logo1.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>

@@ -553,7 +553,8 @@ float SQL::costCountCost(int carid, int costtype)
 
 void SQL::error()
 {
-    QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem");
+    query->lastError().text();
+    QMessageBox::information(0,"Brak połączenia z serwerem","W trakcie wykonywania operacji utracono połaczenie z serwerem"+query->lastError().text());
 
 
 }

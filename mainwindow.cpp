@@ -51,6 +51,7 @@ void MainWindow::on_pushButton_4_clicked()
     else
     {
         ui->l_message->setText("Błąd C-001 - Nie połączono z bazą danych");
+        connector->error();
         ui->pushButton_3->setVisible(false);
         ui->p_register->setVisible(false);
         ui->pushButton_4->setVisible(true);
