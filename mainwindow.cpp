@@ -27,8 +27,13 @@ void MainWindow::on_pushButton_3_clicked()
 {
     if(connector->isUser(ui->le_login->text(),ui->le_pass->text()))
     {
-        MainMenuGUI *form2 = new MainMenuGUI;
-        form2->show();
+        if(connector->select_pass_change()==1){
+            ed_pass *ch_pass_form = new ed_pass();
+            ch_pass_form->show();
+        }else{
+            MainMenuGUI *form2 = new MainMenuGUI;
+            form2->show();
+        }
     }
     else
         ui->l_message->setText("Błąd U-001 - Niepoprawny login lub hasło");

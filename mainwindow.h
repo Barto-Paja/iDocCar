@@ -7,6 +7,7 @@
 
 #include <sql.h>
 #include <mainmenugui.h>
+#include <ed_pass.h>
 
 namespace Ui {
 class MainWindow;

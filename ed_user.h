@@ -34,7 +34,7 @@ private slots:
 private:
     Ui::ed_user *ui;
     SQL *connector;
-    int ch_imie, ch_nazwisko, ch_mail,ch_haslo,ch_haslo_2;
+    int ch_imie, ch_nazwisko, ch_mail,ch_haslo,ch_haslo_2, chck_bx;
     int ch_u_id = 0;
 };
 

@@ -45,8 +45,10 @@ void reg_user::on_pb_register_clicked()
     if(ch_haslo==0 or ch_haslo_2==0 or ch_imie==0 or ch_login==0 or ch_mail==0 or ch_nazwisko==0){
         ui->l_info->setText("Sprawdź poprawność wprowadzonych danych");
     }else{
-        if(connector->insert_user(ui->le_login->text(),ui->le_haslo->text(),ui->le_imie->text(),ui->le_nazwisko->text(),ui->le_mail->text(),1)==true){
+        if(connector->insert_user(ui->le_login->text(),ui->le_haslo->text(),ui->le_imie->text(),ui->le_nazwisko->text(),ui->le_mail->text(),1,1)==true){
             ui->l_info->setText("Konto stworzone pomyślnie");
+            ui->pb_register->setVisible(false);
+            ui->pb_back->setText("Zamknij");
         }else{
             ui->l_info->setText("Błąd tworzenia konta SQL-MYSQL");
         }

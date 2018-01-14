@@ -19,7 +19,7 @@ public:
     ~SQL();
     void test();
     bool insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QString YEAR,QString INSURANCE,int TANKS,int MILAGE, float TANK1,float TANK2);
-    bool insert_user(QString LOGIN, QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL);
+    bool insert_user(QString LOGIN, QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL, int ch_pass);
     void insert_cost(QString TITLE, QString DATE, int TYPE, QString NOTES, int MILAGE, float COST, int CARID);
     void insert_fuel(QString DATE, float FUEL, float PRICE, int MILAGE, float COMBUSTION, int TANK, QString NOTES, int CARID);
     QSqlQuery list_costs(int carID, QString date_start, QString date_end);
@@ -69,7 +69,7 @@ public:
 
     //--- For ed_user ---//
     bool getLvl(QString &stream, int &idLvl);
-    bool editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL);
+    bool editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL, int ch_pass);
     void Lvl();
     QString select_u_fname(int id);
     QString select_u_lname(int id);
@@ -78,7 +78,10 @@ public:
     int select_u_lvl(int id);
     bool del_user(int id);
 
-    //--- Test Area ---//
+    //--- For ed_pass ---//
+
+    bool change_pass(QString pass);
+    int select_pass_change();
 
 private:
 

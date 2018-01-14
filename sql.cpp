@@ -93,17 +93,18 @@ bool SQL::insert_car(QString MARK,QString MODEL,QString PLATE,QString VIN,QStrin
  
 }
 
-bool SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL)
+bool SQL::insert_user(QString LOGIN,QString PASS, QString FNAME, QString LNAME, QString EMAIL, int LVL, int ch_pass)
 {
     QSqlQuery insert;
-    insert.prepare("INSERT INTO users (`FIRST_NAME`, `LAST_NAME`, `LOGIN`, `PASS`, `EMAIL`, `LVL`) "
-                    "VALUES (:FNAME,:LNAME,:LOGIN,:PASS,:EMAIL,:LVL)");
+    insert.prepare("INSERT INTO users (`FIRST_NAME`, `LAST_NAME`, `LOGIN`, `PASS`, `EMAIL`, `LVL`, `PASS_CHANGE`) "
+                    "VALUES (:FNAME,:LNAME,:LOGIN,:PASS,:EMAIL,:LVL,:ch_pass)");
     insert.bindValue(0,FNAME);
     insert.bindValue(1,LNAME);
     insert.bindValue(2,LOGIN);
     insert.bindValue(3,PASS);
     insert.bindValue(4,EMAIL);
-    insert.bindValue(5,LVL);
+    insert.bindValue(5,ch_pass);
+    insert.bindValue(6,LVL);
 
     if(!insert.exec()){
 //        qDebug() << "Błąd dodania użytkownika";
@@ -594,17 +595,18 @@ bool SQL::getLvl(QString &stream, int &idLvl)
         return false;
 }
 
-bool SQL::editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL)
+bool SQL::editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL, int ch_pass)
 {
     QSqlQuery update;
     update.prepare("UPDATE users SET FIRST_NAME = :FNAME, LAST_NAME = :LNAME, "
-                   "PASS = :PASS, EMAIL = :EMAIL, LVL = :LVL WHERE ID = :ID_USER");
+                   "PASS = :PASS, EMAIL = :EMAIL, LVL = :LVL, PASS_CHANGE = :ch_pass WHERE ID = :ID_USER");
     update.bindValue(0,FNAME);
     update.bindValue(1,LNAME);
     update.bindValue(2,PASS);
     update.bindValue(3,EMAIL);
     update.bindValue(4,LVL);
-    update.bindValue(5,id_user);
+    update.bindValue(5,ch_pass);
+    update.bindValue(6,id_user);
 
     if(!update.exec()){
         qDebug() << "Nie udało się edytować użytkownika";
@@ -693,6 +695,30 @@ bool SQL::del_user(int id)
     }else{
         return false;
     }
+}
+
+int SQL::select_pass_change()
+{
+    QSqlQuery select;
+    select.prepare(" SELECT PASS_CHANGE FROM users WHERE ID = :id");
+    select.bindValue(0,userId);
+    select.exec();
+    select.first();
+    return select.value(0).toInt();
+}
+
+bool SQL::change_pass(QString pass)
+{
+        QSqlQuery update;
+        update.prepare("UPDATE users SET PASS=:PASS, PASS_CHANGE=0 WHERE ID=:id");
+        update.bindValue(0,pass);
+        update.bindValue(1, userId);
+
+        if(!update.exec()){
+            return false;
+        }else{
+            return true;
+        }
 }
 
 // wyciąganie kosztów

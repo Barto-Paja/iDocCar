@@ -119,6 +119,11 @@ void ed_user::on_le_mail_textEdited()
 
 void ed_user::on_pushButton_2_clicked()
 {
+    if(ui->checkBox->isChecked()){
+        chck_bx=1;
+    }else{
+        chck_bx=0;
+    }
     if((ui->le_haslo->text().length()>4) and (ui->le_haslo_2->text().length()>4) and (ui->le_haslo->text()==ui->le_haslo_2->text())){
             ch_haslo=1;
             ch_haslo_2=1;
@@ -126,7 +131,7 @@ void ed_user::on_pushButton_2_clicked()
     if(ch_haslo==0 or ch_haslo_2==0 or ch_imie==0 or ch_mail==0 or ch_nazwisko==0){
         ui->l_info->setText("Sprawdź poprawność wprowadzonych danych");
     }else{
-        if(connector->editUser(ch_u_id,ui->le_imie->text(),ui->le_nazwisko->text(),ui->le_haslo->text(),ui->le_mail->text(),ui->cb_grupa->currentData().toInt())==true){
+        if(connector->editUser(ch_u_id,ui->le_imie->text(),ui->le_nazwisko->text(),ui->le_haslo->text(),ui->le_mail->text(),ui->cb_grupa->currentData().toInt(), chck_bx)==true){
             ui->l_info->setText("Zapisano zmiany");
             ui->pushButton->setText("Zamknij");
         }else{

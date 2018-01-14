@@ -116,7 +116,7 @@
     <item>
      <widget class="QPushButton" name="pb_register">
       <property name="text">
-       <string>Zarejestruj się</string>
+       <string>Zarejestruj</string>
       </property>
      </widget>
     </item>
