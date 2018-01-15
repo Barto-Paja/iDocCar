@@ -832,51 +832,73 @@ void r_Costs::on_pushButton_3_clicked()
 {
     //ui->widget_2->grab().save("image2.jpg");
     //ui->widget_3->resize();
-    ui->widget_3->grab().save("imageTest.jpg");
+    //ui->widget_3->grab().save("imageTest.jpg");
 
-   QTextDocument doc;
-   doc.setDefaultFont(QFont("Times",14));
+   if(ui->le_raporttitle->text().length()>0)
+   {
+       //ui->widget_2->grab().save("image2.jpg");
+          //ui->widget_3->resize();
+          ui->widget_3->grab().save("imageTest.jpg");
 
-   QTextBlockFormat tbf; // Text na środku
-   QTextBlockFormat tbf1; // Łamacz stron
+         QTextDocument doc;
+         doc.setDefaultFont(QFont("Times",14));
 
-   tbf.setAlignment(Qt::AlignCenter);
-   tbf.setLineHeight(2,QTextBlockFormat::LineDistanceHeight);
-   tbf1.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
+         QTextBlockFormat tbf; // Text na środku
+         QTextBlockFormat tbf1; // Łamacz stron
+         QTextBlockFormat tbf2; // Text do lewej
 
-   QTextCursor tc(&doc);
-   tc.setBlockFormat(tbf);
-   QImage image2(":/images/images/data-analysis-symbol.png");
+         tbf.setAlignment(Qt::AlignCenter);
+         tbf.setLineHeight(2,QTextBlockFormat::LineDistanceHeight);
+         tbf1.setPageBreakPolicy(QTextFormat::PageBreak_AlwaysAfter);
+         tbf2.setAlignment(Qt::AlignLeft);
 
-   QTextCharFormat tcf;
-   int p = 32;
-   qreal Psize = p;
-   tcf.setFontPointSize(Psize);
+         QTextCursor tc(&doc);
+         tc.setBlockFormat(tbf);
+         //QImage image2(":/images/images/data-analysis-symbol.png");
 
-   tc.insertImage(image2.scaled(512,512,Qt::KeepAspectRatio),"Test");
-   tc.insertText("\n");
-   tc.mergeCharFormat(tcf);
-   tc.insertText("Analiza v0.3 alpha - Raport");
+         QTextCharFormat tcf;
+         int p = 32;
+         qreal Psize = p;
+         tcf.setFontPointSize(Psize);
 
-   tc.mergeBlockFormat(tbf1);
-   tc.setBlockFormat(tbf);
+         //tc.insertImage(image2.scaled(512,512,Qt::KeepAspectRatio),"Test");
+         tc.insertText("\n");
+         tc.mergeCharFormat(tcf);
+         tc.insertText(ui->le_raporttitle->text());
 
-   auto temp = ui->widget_3->grab();
+         tc.mergeBlockFormat(tbf1);
+         tc.setBlockFormat(tbf);
 
-   QImage image = temp.toImage();
-   image.scaled(200,70,Qt::KeepAspectRatio);
-   tc.insertImage(image,QString("Raport"));
+         auto temp = ui->widget_3->grab();
 
-   //tc.mergeBlockFormat(tbf1);
-   //tc.setBlockFormat(tbf);
-   //tc.insertText("Jakiś tekst");
+         QImage image = temp.toImage();
+         image.scaled(200,70,Qt::KeepAspectRatio);
+         tc.insertImage(image,QString("Raport"));
+         tc.insertText("\n");
+         tc.insertText("\n");
+         tc.insertText("\n");
 
-   QPrinter printer(QPrinter::HighResolution); //= new QPrinter(QPrinter::HighResolution);
-            printer.setOutputFormat(QPrinter::PdfFormat);
-            printer.setOutputFileName("output.pdf");
-            printer.setPaperSize(QSizeF(297,210),QPrinter::Millimeter);
-            printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
-            doc.print(&printer);
+         tc.mergeBlockFormat(tbf1);
+         tc.setBlockFormat(tbf2);
+
+         tc.insertText(ui->plainTextEdit->toPlainText());
+
+         //tc.mergeBlockFormat(tbf1);
+         //tc.setBlockFormat(tbf);
+         //tc.insertText("Jakiś tekst");
+
+         QPrinter printer(QPrinter::HighResolution); //= new QPrinter(QPrinter::HighResolution);
+                  printer.setOutputFormat(QPrinter::PdfFormat);
+                  printer.setOutputFileName("output.pdf");
+                  printer.setPaperSize(QSizeF(297,210),QPrinter::Millimeter);
+                  printer.setPageMargins(5, 5, 5, 5, QPrinter::Millimeter);
+                  doc.print(&printer);
+   }
+   else
+   {
+       QMessageBox::information(0,"Błąd","Wprowadź tytuł raportu");
+   }
+
 }
 
 void r_Costs::keyPressEvent(QKeyEvent *event)

@@ -623,6 +623,15 @@ void SQL::Lvl()
     query->exec();
 }
 
+int SQL::getLvl()
+{
+    query->prepare("select lvl from users where id =:userid ");
+    query->bindValue(0,userId);
+    query->exec();
+    query->next();
+    return query->value(0).toInt();
+}
+
 QString SQL::select_u_fname(int id)
 {
     QSqlQuery select;

@@ -271,6 +271,12 @@
      </item>
      <item row="10" column="1">
       <widget class="QLabel" name="l_vKonserwacja">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>20 073</string>
        </property>
@@ -312,6 +318,12 @@
      </item>
      <item row="2" column="1">
       <widget class="QLabel" name="l_vf1f2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>30 456</string>
        </property>

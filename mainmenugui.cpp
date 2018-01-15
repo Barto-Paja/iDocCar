@@ -9,6 +9,18 @@ MainMenuGUI::MainMenuGUI(QWidget *parent) :
     connector = new SQL();
 
     ui->l_welcome->setText("Witaj "+connector->welcomeFunc()+" !");
+
+
+    int userLvl = connector->getLvl();
+    if(userLvl==9)
+    {
+        ui->page_4->setEnabled(true);
+    }
+    else
+    {
+        ui->page_4->setEnabled(false);
+    }
+
 }
 
 MainMenuGUI::~MainMenuGUI()

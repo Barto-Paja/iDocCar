@@ -3,6 +3,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlQueryModel>
 #include <QDebug>
 #include <QString>
 #include <QSqlError>
@@ -50,7 +51,6 @@ public:
     float fuelQuantity(int fuelType, int elderyear, int nowyear, int month, int carID);
     double carTankInfo(int carId, int tankId);
 
-
     //--- For Workshop --- //
     void CostNames();
     bool getCostName(QString &stream, int &idCost);
@@ -71,6 +71,7 @@ public:
     bool getLvl(QString &stream, int &idLvl);
     bool editUser(int id_user, QString FNAME, QString LNAME, QString PASS, QString EMAIL, int LVL, int ch_pass);
     void Lvl();
+    int getLvl();
     QString select_u_fname(int id);
     QString select_u_lname(int id);
     QString selec_u_mail(int id);
@@ -82,6 +83,8 @@ public:
 
     bool change_pass(QString pass);
     int select_pass_change();
+
+
 
 private:
 

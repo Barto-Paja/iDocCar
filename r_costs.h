@@ -17,6 +17,8 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QChartView>
 
+#include <QSqlQueryModel>
+
 QT_CHARTS_USE_NAMESPACE
 
 #include <sql.h>
@@ -122,6 +124,7 @@ private:
 
     QBarSeries *seriesX;
     QBarCategoryAxis *axis;
+
 };
 
 #endif // R_COSTS_H
