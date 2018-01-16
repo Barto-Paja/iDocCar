@@ -66,6 +66,11 @@ public:
     //--- For admin ---//
     bool getUsers(QString &stream, int &idUser);
     void Users();
+    void CarNames();
+    QString select_cmark(int id);
+    QString select_cmodel(int id);
+    QString select_login_n(int id);
+    bool conn_car_user(int idUser, int idCar);
 
     //--- For ed_user ---//
     bool getLvl(QString &stream, int &idLvl);

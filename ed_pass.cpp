@@ -23,7 +23,7 @@ void ed_pass::on_pb_cancel_clicked()
 
 void ed_pass::on_pb_ok_clicked()
 {
-    if((ui->le_pass->text().length()>4) and (ui->le_pass_2->text().length()>4) and (ui->le_pass->text()==ui->le_pass_2->text())){
+    if((ui->le_pass->text().length()>=4) and (ui->le_pass_2->text().length()>=4) and (ui->le_pass->text()==ui->le_pass_2->text())){
             ch_haslo=1;
             ch_haslo_2=1;
     }

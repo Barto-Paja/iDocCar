@@ -581,6 +581,59 @@ void SQL::Users()
     query->exec();
 }
 
+void SQL::CarNames()
+{
+        query->prepare("SELECT id,mark, model FROM cars");
+        query->exec();
+}
+
+QString SQL::select_cmark(int id)
+{
+        query->prepare("SELECT mark FROM cars WHERE id =:carid");
+        query->bindValue(0,id);
+        query->exec();
+        query->first();
+        return query->value(0).toString();
+}
+
+QString SQL::select_cmodel(int id)
+{
+    query->prepare("SELECT model FROM cars WHERE id =:carid");
+    query->bindValue(0,id);
+    query->exec();
+    query->first();
+    return query->value(0).toString();
+}
+
+QString SQL::select_login_n(int id)
+{
+    QSqlQuery select;
+    select.prepare(" SELECT LOGIN FROM users WHERE ID = :id");
+    select.bindValue(0,id);
+    select.exec();
+    if (select.first()){
+        return select.value(0).toString();
+    }else{
+        return "Error";
+    }
+}
+
+bool SQL::conn_car_user(int idUser, int idCar)
+{
+    QSqlQuery update;
+    update.prepare("UPDATE cars SET USER = :USER WHERE ID = :CAR");
+    update.bindValue(0,idUser);
+    update.bindValue(1,idCar);
+
+    if(!update.exec()){
+        qDebug() << "Nie udało się przypisac pojazdu";
+        return false;
+    }else{
+        qDebug() << "Przypisano pojazd";
+        return true;
+    }
+}
+
 bool SQL::getLvl(QString &stream, int &idLvl)
 {
     if(query->next())

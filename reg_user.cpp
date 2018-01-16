@@ -38,7 +38,7 @@ void reg_user::on_le_login_textEdited(const QString &arg1)
 
 void reg_user::on_pb_register_clicked()
 {
-    if((ui->le_haslo->text().length()>4) and (ui->le_haslo_2->text().length()>4) and (ui->le_haslo->text()==ui->le_haslo_2->text())){
+    if((ui->le_haslo->text().length()>=4) and (ui->le_haslo_2->text().length()>=4) and (ui->le_haslo->text()==ui->le_haslo_2->text())){
             ch_haslo=1;
             ch_haslo_2=1;
     }
