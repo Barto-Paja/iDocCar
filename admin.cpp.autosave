@@ -86,7 +86,6 @@ void admin::on_cb_user_currentIndexChanged(const QString &arg1)
 
 void admin::on_cb_car_activated(const QString &arg1)
 {
-    //SQL *testowa = new SQL;
     connector->CarQuest(ui->cb_car->currentData().toInt());
     ui->l_marka->setText(connector->CarInfo(0));
     ui->l_model->setText(connector->CarInfo(1));

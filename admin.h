@@ -22,9 +22,9 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_cb_car_currentIndexChanged();
+    void on_cb_user_currentIndexChanged(const QString &arg1);
 
-    void on_cb_user_currentIndexChanged();
+    void on_cb_car_activated(const QString &arg1);
 
 private:
     Ui::admin *ui;

@@ -583,8 +583,21 @@ void SQL::Users()
 
 void SQL::CarNames()
 {
-        query->prepare("SELECT id,mark, model FROM cars");
+        query->prepare("SELECT id,mark, model, plate FROM cars");
         query->exec();
+}
+
+void SQL::CarQuest(int id_car)
+{
+    query->prepare("SELECT mark, model, plate FROM cars where id =:idcar");
+    query->bindValue(0,id_car);
+    query->exec();
+}
+
+QString SQL::CarInfo(int nr_colmn)
+{
+    query->first();
+    return query->value(nr_colmn).toString();
 }
 
 QString SQL::select_cmark(int id)

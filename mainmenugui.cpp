@@ -9,7 +9,7 @@ MainMenuGUI::MainMenuGUI(QWidget *parent) :
     connector = new SQL();
 
     ui->l_welcome->setText("Witaj "+connector->welcomeFunc()+" !");
-
+    //ui->page_3->hide();
 
     int userLvl = connector->getLvl();
     if(userLvl==9)

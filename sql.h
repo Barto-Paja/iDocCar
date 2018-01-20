@@ -67,6 +67,10 @@ public:
     bool getUsers(QString &stream, int &idUser);
     void Users();
     void CarNames();
+
+    void CarQuest(int id_car);
+    QString CarInfo(int nr_colmn);
+
     QString select_cmark(int id);
     QString select_cmodel(int id);
     QString select_login_n(int id);
