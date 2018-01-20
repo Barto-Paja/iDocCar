@@ -15,6 +15,7 @@ admin::admin(QWidget *parent) :
 
     //update_car(ch_c_id);
     //update_driver(ch_u_id);
+    on_cb_car_activated(QString("start0"));
 }
 
 admin::~admin()
