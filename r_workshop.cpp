@@ -69,26 +69,30 @@ void r_Workshop::on_b_load_clicked()
     ui->l_vtanktype->setText(connector->fuelWInfo(i));
     QString date = QString::number(ui->dateEdit->date().year());
 
-    if(connector->fuelWInfo(i)=="Diesel")
+    if(connector->fWInfo(i)==0)
     {
         ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,0,date)));
         ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,0,date))+" zł");
         w = connector->fuelCountCost(i,0,date);
+        ui->l_vtanktype->setText("Diesel");
     }
-    else if(connector->fuelWInfo(i)=="Pb")
+    else if(connector->fWInfo(i)==1)
     {
         ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1,date)));
         ui->l_vf1f2->setText(QString::number(connector->fuelCountCost(i,1,date))+" zł");
         w = connector->fuelCountCost(i,1,date);
+        ui->l_vtanktype->setText("Pb");
     }
-    else if(connector->fuelWInfo(i)=="Pb+LPG")
+    else if(connector->fWInfo(i)==2)
     {
         ui->l_vfuel1->setText(QString::number(connector->fuelCountCost(i,1,date)));
         ui->l_vfuel2->setText(QString::number(connector->fuelCountCost(i,2,date)));
+        ui->l_vfuel2->show();
 
         float temp = connector->fuelCountCost(i,1,date) + connector->fuelCountCost(i,2,date);
         ui->l_vf1f2->setText(QString::number(temp)+" zł");
         w = temp;
+        ui->l_vtanktype->setText("Pb+LPG");
     }
     else
         ui->l_vfuel1->setText("Error");

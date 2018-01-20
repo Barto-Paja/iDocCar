@@ -57,6 +57,7 @@ public:
     QString CarName(int carid);
     QString getPlate(int carid);
     QString fuelWInfo(int carid);
+    int fWInfo(int carid);
     float fuelCountCost(int carid, int tType, QString date);
     float costCountCost(int carid, int costtype);
 

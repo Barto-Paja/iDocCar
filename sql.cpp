@@ -519,6 +519,29 @@ QString SQL::fuelWInfo(int carid)
         return "error: błąd baku w bazie";
 }
 
+int SQL::fWInfo(int carid)
+{
+    query->prepare("SELECT tanks from cars where id =:carid");
+    query->bindValue(0,carid);
+    query->exec();
+    query->next();
+    int temp = query->value(0).toInt();
+    if(temp==0)
+    {
+        return 0;
+    }
+    else if(temp==1)
+    {
+        return 1;
+    }
+    else if(temp==2)
+    {
+        return 2;
+    }
+    else
+        return -1;
+}
+
 float SQL::fuelCountCost(int carid, int tType, QString date)
 {
     QDate today;

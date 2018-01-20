@@ -74,7 +74,7 @@
      <item row="5" column="1">
       <widget class="QLabel" name="l_vtanktype">
        <property name="text">
-        <string>Diesel</string>
+        <string>xxx</string>
        </property>
       </widget>
      </item>
