@@ -269,7 +269,7 @@ void SQL::fuelInfo(int carId)
 
 void SQL::fuelInfo(int carId, int elderyear, int nowyear, int tt)
 {
-    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231' order by DATE asc");
+    query->prepare("SELECT * FROM `fuel` where CARID =:carid AND TANK =:tankType AND DATE BETWEEN '"+QString::number(elderyear)+"0000' AND '"+QString::number(nowyear)+"1231' order by MONTH(DATE), DAY(DATE) asc");
     query->bindValue(0,carId);
     query->bindValue(1,tt);
     query->exec();
@@ -312,19 +312,24 @@ int SQL::fuelInfoQuest()
 
 float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month)
 {
+
+//    if(nowyear>elderyear)
+//    {
+//        nowyear=elderyear;
+//    }
     int cost =0;
     QString temp_numb, temp_numb2;
     if(month < 10)
     {
         temp_numb =("'"+QString::number(elderyear)+"0"+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+"0"+QString::number(month)+"31'");
-        //qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        qDebug() << "Temp < 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     else
     {
         temp_numb =("'"+QString::number(elderyear)+""+QString::number(month)+"00'");
         temp_numb2 =("'"+QString::number(nowyear)+""+QString::number(month)+"31'");
-        //qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
+        qDebug() << "Temp > 10: " +temp_numb + " Temp2: "+ temp_numb2;
     }
     query->prepare("SELECT price FROM fuel WHERE tank =:fuelType AND DATE BETWEEN "+temp_numb+" AND "+temp_numb2);
     query->bindValue(0,fuelType);
@@ -340,6 +345,12 @@ float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month)
 
 float SQL::fuelsCosts(int fuelType, int elderyear, int nowyear, int month, int carID)
 {
+
+    if(nowyear>elderyear)
+    {
+        nowyear=elderyear;
+    }
+
     int cost =0;
     QString temp_numb, temp_numb2;
     if(month < 10)
