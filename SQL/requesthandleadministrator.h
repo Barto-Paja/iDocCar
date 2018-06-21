@@ -1,6 +1,7 @@
 #ifndef REQUESTHANDLEADMINISTRATOR_H
 #define REQUESTHANDLEADMINISTRATOR_H
 
+#include <sql.h>
 
 class RequestHandleAdministrator : public SQL
 {

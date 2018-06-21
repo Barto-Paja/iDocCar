@@ -1,9 +1,6 @@
 #include "sql.h"
 
-
-
-
-QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+QSqlDatabase SQL::db = QSqlDatabase::addDatabase("QOCI");
 
 int SQL::userId = -1;
 
@@ -195,13 +192,13 @@ bool SQL::isOpen()
 
 bool SQL::isUser(QString login, QString password)
 {
-    query->prepare("SELECT * FROM users WHERE LOGIN = :login AND PASS = :password");
+    query->prepare("SELECT * FROM usr WHERE LOGIN = :login AND PASSWORD = :password");
     query->bindValue(0,login);
     query->bindValue(1,password);
     query->exec();
     if(query->next())
     {
-        query->prepare("SELECT users.id FROM users WHERE LOGIN =:login");
+        query->prepare("SELECT usr.id FROM usr WHERE LOGIN =:login");
         query->bindValue(0,login);
         query->exec();
         query->first();

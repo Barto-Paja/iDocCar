@@ -12,6 +12,7 @@ r_Costs::r_Costs(QWidget *parent) :
     ui->setupUi(this);
 
     connector = new SQL();
+    hanler = new RequestHandleAnalysis;
 
 //    series = new QAreaSeries();
     series0 = new QLineSeries();
@@ -45,41 +46,38 @@ r_Costs::~r_Costs()
 
 void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
 {
-    combo->clear();
-    QString stream;
-    int i=0;
+    QVector<QString> carnames;
 
-    if(tanktype==0)
-    {
+    switch (tanktype) {
+    case 0:
+        carnames.clear();
         combo->clear();
-        connector->tankType(0); // dla diesla tu musi być 0
-        while (connector->getCarName(stream,i)) {
-          combo->addItem(stream,i);
+        hanler->loadCarNamesList(QString("DIESEL"),carnames);
+        for(int i = 0; i<carnames.count();++i) {
+            combo->addItem(carnames[i],i);
+        }
+        break;
+    case 1:
+        carnames.clear();
+        combo->clear();
+        hanler->loadCarNamesList(QString("PB"),carnames);
+        for(int i = 0; i<carnames.count();++i) {
+            combo->addItem(carnames[i],i);
+        }
+        break;
+    case 2:
+        carnames.clear();
+        combo->clear();
+        hanler->loadCarNamesList(QString("PBAndLPG"),carnames);
+        for(int i = 0; i<carnames.count();++i) {
+            combo->addItem(carnames[i],i);
+        }
+        break;
+    default:
+        break;
     }
-    }
-    else if(tanktype==1)
-    {
-         combo->clear();
-         connector->tankType(1); // dla Pb tu musi być 1
-         while (connector->getCarName(stream,i)) {
-         combo->addItem(stream,i);}
-         connector->tankType(2);
-         while(connector->getCarName(stream,i)){ // dołożenie aut Pb+LPG
-         combo->addItem(stream,i);}
-    }
-    else if(tanktype==2)
-    {
-          combo->clear();
-          connector->tankType(2); // dla Pb+LPG tu musi być 2
-          while (connector->getCarName(stream,i)) {
-          combo->addItem(stream,i);
-    }
-    }
-    else
-      qDebug() << "Błąd wyboru baku";
 
-
-        ui->cb_carid->update();
+    ui->cb_carid->update();
 
 }
 

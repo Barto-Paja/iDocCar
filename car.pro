@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     r_workshop.cpp \
     admin.cpp \
     ed_user.cpp \
-    ed_pass.cpp
+    ed_pass.cpp \
+    SQL/requesthandleadministrator.cpp \
+    SQL/requesthandleanalysis.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
@@ -42,7 +44,9 @@ HEADERS  += mainwindow.h \
     r_workshop.h \
     admin.h \
     ed_user.h \
-    ed_pass.h
+    ed_pass.h \
+    SQL/requesthandleadministrator.h \
+    SQL/requesthandleanalysis.h
 
 
 FORMS += \

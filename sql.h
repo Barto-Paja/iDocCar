@@ -96,10 +96,15 @@ public:
 
 
 
+    static QSqlDatabase db;
+    static int userId;
+
 private:
 
     QSqlQuery *query;
-    static int userId;
+
+
+
 };
 
 #endif // SQL_H
