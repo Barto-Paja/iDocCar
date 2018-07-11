@@ -42,7 +42,8 @@ void MainMenuGUI::on_pushButton_2_clicked()
 
 void MainMenuGUI::on_pushButton_3_clicked()
 {
-    r_Costs *form = new r_Costs;
+    FormAnalysis *form = new FormAnalysis;
+    //r_Costs *form = new r_Costs;
     form->show();
 }
 

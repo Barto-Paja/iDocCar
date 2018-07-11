@@ -16,11 +16,10 @@ public:
 
     static const QMap<QString, int> tankTypes;
 
-    void loadCarNamesList(QString tanktype, QVector<QString> &carnames);
+    void loadCarNamesList(QString tanktype, QMap<QString, int> &carnames);
+    float fuelsCosts(QString tanktype, QString laterDate, QString earlierDate, int carID);
 
 private:
-
-
 
 };
 

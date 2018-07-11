@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     ed_user.cpp \
     ed_pass.cpp \
     SQL/requesthandleadministrator.cpp \
-    SQL/requesthandleanalysis.cpp
+    SQL/requesthandleanalysis.cpp \
+    formanalysis.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     ed_user.h \
     ed_pass.h \
     SQL/requesthandleadministrator.h \
-    SQL/requesthandleanalysis.h
+    SQL/requesthandleanalysis.h \
+    formanalysis.h
 
 
 FORMS += \
@@ -60,7 +62,8 @@ FORMS += \
     r_workshop.ui \
     admin.ui \
     ed_user.ui \
-    ed_pass.ui
+    ed_pass.ui \
+    formanalysis.ui
 
 RESOURCES += \
     gui_icons.qrc

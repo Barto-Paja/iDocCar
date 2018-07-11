@@ -12,9 +12,8 @@ r_Costs::r_Costs(QWidget *parent) :
     ui->setupUi(this);
 
     connector = new SQL();
-    hanler = new RequestHandleAnalysis;
+    handler = new RequestHandleAnalysis;
 
-//    series = new QAreaSeries();
     series0 = new QLineSeries();
     series1 = new QLineSeries();
     series2 = new QLineSeries();
@@ -42,6 +41,10 @@ r_Costs::r_Costs(QWidget *parent) :
 r_Costs::~r_Costs()
 {
     delete ui;
+    delete series0; delete series1; delete series2; delete series3;
+    delete seriesX; delete barChart; delete barChartView;
+    delete barset0; delete barset1; delete barset2;
+    delete mainChart; delete axisX; delete axisY;
 }
 
 void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
@@ -52,7 +55,7 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     case 0:
         carnames.clear();
         combo->clear();
-        hanler->loadCarNamesList(QString("DIESEL"),carnames);
+        //handler->loadCarNamesList(QString("DIESEL"),carnames);
         for(int i = 0; i<carnames.count();++i) {
             combo->addItem(carnames[i],i);
         }
@@ -60,7 +63,7 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     case 1:
         carnames.clear();
         combo->clear();
-        hanler->loadCarNamesList(QString("PB"),carnames);
+        //handler->loadCarNamesList(QString("PB"),carnames);
         for(int i = 0; i<carnames.count();++i) {
             combo->addItem(carnames[i],i);
         }
@@ -68,7 +71,7 @@ void r_Costs::loadComboBox(int tanktype, QComboBox *combo)
     case 2:
         carnames.clear();
         combo->clear();
-        hanler->loadCarNamesList(QString("PBAndLPG"),carnames);
+        //handler->loadCarNamesList(QString("PBAndLPG"),carnames);
         for(int i = 0; i<carnames.count();++i) {
             combo->addItem(carnames[i],i);
         }
@@ -323,11 +326,12 @@ void r_Costs::loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelTyp
 {
     SQL *bS = new SQL;
 
+
     if(typeChart==1)
     {
         int i=1;
         while (i<13) {
-            *barsetN << (bS->fuelsCosts(fuelType,elderyear,nowyear,i,carID));
+            *barsetN << (handler->fuelsCosts(QString("DIESEL"),QString("17/01/01/"),QString("18/01/01"),carID));//(bS->fuelsCosts(fuelType,elderyear,nowyear,i,carID));
             setyMaxMin(bS->fuelsCosts(fuelType,elderyear,nowyear,i,carID),temp_ymin,temp_ymax);
             ++i;
         }

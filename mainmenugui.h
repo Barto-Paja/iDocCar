@@ -9,6 +9,7 @@
 
 #include <r_costs.h>
 #include <r_workshop.h>
+#include <formanalysis.h>
 
 #include <sql.h>
 #include <admin.h>

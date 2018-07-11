@@ -82,7 +82,7 @@ private:
     void loadBars(QBarSet *barsetN, int elderyear, int nowyear, int fuelType, int typeChart, int carID, float &temp_ymin, float &temp_ymax);
 
     SQL *connector;
-    RequestHandleAnalysis *hanler;
+    RequestHandleAnalysis *handler;
 
     //--- Axises ---
 
