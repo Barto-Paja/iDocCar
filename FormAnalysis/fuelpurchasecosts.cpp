@@ -20,22 +20,22 @@ void FuelPurchaseCosts::LoadSeries(QDate early, QDate late, char fuelType)
     int monthsTo =(late.year()-early.year())*12+late.month()-early.month();
     qDebug() << monthsTo;
 
-    if(ui->radioButton->isChecked()){
+    if(fuelType=="DIESEL"){
 
         for(int i=0;i<monthsTo;++i){
-           *series << handler->fuelsCosts(QString("DIESEL"),early.addMonths(i).toString("yy/MM/dd"),
+           *seriesFuelPurchaseCosts << handler->fuelsCosts(QString("DIESEL"),early.addMonths(i).toString("yy/MM/dd"),
            early.addMonths(i+1).toString("yy/MM/dd"),ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt());
         }
     }
-    else if(ui->radioButton_2->isChecked()){
+    else if(fuelType=="PB"){
         for(int i=0;i<monthsTo;++i){
-           *series << handler->fuelsCosts(QString("PB"),early.addMonths(i).toString("yy/MM/dd"),
+           *seriesFuelPurchaseCosts << handler->fuelsCosts(QString("PB"),early.addMonths(i).toString("yy/MM/dd"),
            early.addMonths(i+1).toString("yy/MM/dd"),ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt());
         }
     }
-    else if(ui->radioButton_3->isChecked()){
+    else if(fuelType=="LPG"){
         for(int i=0;i<monthsTo;++i){
-           *series << handler->fuelsCosts(QString("LPG"),early.addMonths(i).toString("yy/MM/dd"),
+           *seriesFuelPurchaseCosts << handler->fuelsCosts(QString("LPG"),early.addMonths(i).toString("yy/MM/dd"),
            early.addMonths(i+1).toString("yy/MM/dd"),ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt());
         }
     }
