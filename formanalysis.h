@@ -43,7 +43,7 @@ private:
     /* Series Chart */
     QChart *seriesChart;
     QChartView *chartView;
-    QBarSet *series0;
+    QBarSet *seriesFuelPurchaseCosts;
     
     QVector<QLineSeries> *series;
     QStringList categories;

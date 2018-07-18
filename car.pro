@@ -32,7 +32,9 @@ SOURCES += main.cpp\
     ed_pass.cpp \
     SQL/requesthandleadministrator.cpp \
     SQL/requesthandleanalysis.cpp \
-    formanalysis.cpp
+    formanalysis.cpp \
+    FormAnalysis/fuelpurchasecosts.cpp \
+    FormAnalysis/fuelpurchasetimeline.cpp
 
 HEADERS  += mainwindow.h \
     sql.h \
@@ -48,7 +50,9 @@ HEADERS  += mainwindow.h \
     ed_pass.h \
     SQL/requesthandleadministrator.h \
     SQL/requesthandleanalysis.h \
-    formanalysis.h
+    formanalysis.h \
+    FormAnalysis/fuelpurchasecosts.h \
+    FormAnalysis/fuelpurchasetimeline.h
 
 
 FORMS += \

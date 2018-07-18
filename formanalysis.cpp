@@ -12,7 +12,7 @@ FormAnalysis::FormAnalysis(QWidget *parent) :
     chartView = new QChartView(seriesChart);
 
     series = new QVector<QLineSeries>();
-    series0 = new QBarSet("DIESEL");
+    seriesFuelPurchaseCosts = new QBarSet("Koszt zakupu paliw");
     barSeries = new QBarSeries();
 
     axisX = new QCategoryAxis();
@@ -29,7 +29,7 @@ FormAnalysis::~FormAnalysis()
     delete handler;
     delete seriesChart;
     delete chartView;
-    delete series0;
+    delete seriesFuelPurchaseCosts;
 }
 
 void FormAnalysis::LoadComboBox(QString tankType, QComboBox *comboBox)
@@ -109,9 +109,9 @@ void FormAnalysis::on_radioButton_3_clicked()
 
 void FormAnalysis::on_pushButton_ShowResults_clicked()
 {
-    LoadSeries(series0);
+    LoadSeries(seriesFuelPurchaseCosts);
     setUpAxisX();
-    barSeries->append(series0);
+    barSeries->append(seriesFuelPurchaseCosts);
     seriesChart->addSeries(barSeries);
     seriesChart->setAxisX(barCategory,barSeries);
     chartView->repaint();
