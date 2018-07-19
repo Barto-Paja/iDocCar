@@ -21,12 +21,15 @@ public:
     FuelPurchaseCosts();
     ~FuelPurchaseCosts();
 
-    void LoadSeries(QDate early, QDate late, char fuelType);
+    void LoadSeries(QDate early, QDate late, QString fuelType, int carID);
+    QBarSet* showSet(){return seriesFuelPurchaseCosts;}
 
 private:
 
     RequestHandleAnalysis *handler;
     QBarSet *seriesFuelPurchaseCosts;
+
+    void clearCache();
 };
 
 #endif // FUELPURCHASECOSTS_H

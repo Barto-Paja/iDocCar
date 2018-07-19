@@ -7,6 +7,7 @@ FormAnalysis::FormAnalysis(QWidget *parent) :
 {
     ui->setupUi(this);
     handler = new RequestHandleAnalysis;
+    seriesFuelCosts = new FuelPurchaseCosts;
 
     seriesChart = new QChart();
     chartView = new QChartView(seriesChart);
@@ -30,6 +31,7 @@ FormAnalysis::~FormAnalysis()
     delete seriesChart;
     delete chartView;
     delete seriesFuelPurchaseCosts;
+    delete seriesFuelCosts;
 }
 
 void FormAnalysis::LoadComboBox(QString tankType, QComboBox *comboBox)
@@ -109,9 +111,11 @@ void FormAnalysis::on_radioButton_3_clicked()
 
 void FormAnalysis::on_pushButton_ShowResults_clicked()
 {
-    LoadSeries(seriesFuelPurchaseCosts);
+    //LoadSeries(seriesFuelPurchaseCosts);
+    seriesFuelPurchaseCosts->remove(0,seriesFuelPurchaseCosts->count());
+    seriesFuelCosts->LoadSeries(ui->dateEdit_early->date(),ui->dateEdit_late->date(),"DIESEL",ui->comboBox->currentData().toInt());
     setUpAxisX();
-    barSeries->append(seriesFuelPurchaseCosts);
+    barSeries->append(seriesFuelCosts->showSet());
     seriesChart->addSeries(barSeries);
     seriesChart->setAxisX(barCategory,barSeries);
     chartView->repaint();

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <SQL/requesthandleanalysis.h>
+#include <FormAnalysis/fuelpurchasecosts.h>
 #include <QComboBox>
 
 #include <QtCharts>
@@ -38,6 +39,7 @@ private slots:
 
 private:
     RequestHandleAnalysis *handler;
+    FuelPurchaseCosts *seriesFuelCosts;
     Ui::FormAnalysis *ui;
 
     /* Series Chart */
@@ -51,6 +53,7 @@ private:
     QCategoryAxis *axisX;
     QBarCategoryAxis *barCategory;
     QBarSeries *barSeries;
+
 
     void LoadComboBox(QString tankType, QComboBox *comboBox);
     void LoadSeries(QBarSet *series);
